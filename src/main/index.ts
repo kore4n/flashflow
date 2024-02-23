@@ -2,8 +2,10 @@ import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import setupElectronStore from './store'
+import setupOpenAddCardWindow from './openAddCardWindow'
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -33,12 +35,16 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  return mainWindow
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  setupElectronStore()
+
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
@@ -49,7 +55,10 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  createWindow()
+  const mainWindow = createWindow()
+
+  // Freeze main window to prevent bugs (i.e. opening up multiple addCard windows)
+  setupOpenAddCardWindow(mainWindow)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
