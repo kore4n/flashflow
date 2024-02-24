@@ -1,5 +1,7 @@
 import React, { ReactNode, useState } from 'react'
 import { Card } from 'src/types/types'
+import AddCardWarnings from './AddCardWarnings'
+import AddCardSubmitButton from './AddCardSubmitButton'
 
 function InputColumn({ children }: { children: ReactNode }): JSX.Element {
   return <div className="flex flex-col">{children}</div>
@@ -18,8 +20,6 @@ function AddCardForm(): JSX.Element {
     }
 
     window.api.store.addCard(cardToAdd)
-
-    // console.log('adding card to database')
   }
 
   const [cardToAddName, setCardNameToAdd] = useState<string>('')
@@ -27,7 +27,8 @@ function AddCardForm(): JSX.Element {
   const [cardBackInput, setCardBack] = useState<string>('')
 
   function changeCardToAddName(event: React.ChangeEvent<HTMLInputElement>): void {
-    setCardNameToAdd(event.target.value)
+    const newCardToAddName = event.target.value
+    setCardNameToAdd(newCardToAddName)
   }
 
   function changeCardToAddFront(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -54,9 +55,17 @@ function AddCardForm(): JSX.Element {
           <InputLabel>Back</InputLabel>
           <input onChange={changeCardToAddBack} type="text" placeholder={'Back'}></input>
         </InputColumn>
-        <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
-          Submit
-        </button>
+        <AddCardSubmitButton
+          onClick={addCard}
+          cardName={cardToAddName}
+          cardFront={cardFrontInput}
+          cardBack={cardBackInput}
+        />
+        <AddCardWarnings
+          cardToAddName={cardToAddName}
+          cardFrontInput={cardFrontInput}
+          cardBackInput={cardBackInput}
+        />
       </div>
     </div>
   )
