@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron'
 import Store from 'electron-store'
-import { Card, DatabaseSchema } from '../types/types'
+import { Card, DatabaseSchema, Deck } from '../types/types'
 
 const store = new Store<DatabaseSchema>()
 
@@ -27,6 +27,30 @@ function setupElectronStore(): void {
   // ipcMain.on('electron-store-set', async (event, key, val) => {
   //   store.set(key, val)
   // })
+
+  ipcMain.on('electron-store-add-deck', async (event, newDeck: Deck) => {
+    if (!store.has('decks')) {
+      store.set('decks', [newDeck]);
+    }
+    else {
+      // enforce unique name later maybe?
+      var decks = [...store.get('decks'), newDeck];
+      store.set('decks', decks);
+    }
+  })
+  ipcMain.on('electron-store-delete-deck', async (event, name: string) => {
+
+    var currentDeckList = store.get('decks');
+    var newDeckList = currentDeckList.filter(x => x.name.localeCompare(name) != 0);
+    store.set('decks', newDeckList);
+  })
+  ipcMain.handle('electron-store-get-deck', async (event, name: string) => {
+    return store.get('decks').find(x => x.name = name);
+  })
+  ipcMain.handle('electron-store-get-all-decks', async (event) => {
+    return store.has('decks') ? store.get('decks') : [];
+  })
+
   ipcMain.on('electron-store-add-card', async (event, cardToAdd: Card) => {
     // Store has no cards
     if (!store.has('cards')) {
