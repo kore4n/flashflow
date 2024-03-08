@@ -5,6 +5,7 @@ type Card = {
   front: string
   back: string
   tags?: string[]
+  deckName: string
   // Any other properties cards should hold
 }
 

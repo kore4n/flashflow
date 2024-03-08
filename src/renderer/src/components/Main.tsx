@@ -4,9 +4,20 @@ import Stats from './stats/Stats'
 import NavButton from './navigation/MenuCard'
 import Navbar from './navigation/Navbar'
 import { useState } from 'react'
+import ToCardsByDeckBtn from './navigation/ToCardsByDeckBtn'
 
 function Main(): JSX.Element {
   const [activeTab, setActiveTab] = useState<ActiveTab>('Decks')
+
+  var toCardsByDeckBtn = (selectedDeckName) => { 
+    return (
+      <div>
+        <ToCardsByDeckBtn activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Cards" deckSelected={selectedDeckName}>
+          {selectedDeckName}
+        </ToCardsByDeckBtn>
+      </div>
+    )
+  };
 
   return (
     <div>
@@ -21,7 +32,7 @@ function Main(): JSX.Element {
           Stats
         </NavButton>
       </Navbar>
-      <Deck activeTab={activeTab} />
+      <Deck activeTab={activeTab} toCardsByDeckBtn={toCardsByDeckBtn} />
       <Cards activeTab={activeTab} />
       <Stats activeTab={activeTab} />
     </div>

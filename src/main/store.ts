@@ -28,6 +28,12 @@ function setupElectronStore(): void {
   //   store.set(key, val)
   // })
 
+  ipcMain.on('electron-store-push-deck-to-show', async (event, name: string) => {
+      store.set('deckToShow', name);
+  })
+  ipcMain.handle('electron-store-get-deck-to-show', async (event) => {
+    return store.get('deckToShow');
+  })
   ipcMain.on('electron-store-add-deck', async (event, newDeck: Deck) => {
     if (!store.has('decks')) {
       store.set('decks', [newDeck]);
@@ -45,7 +51,7 @@ function setupElectronStore(): void {
     store.set('decks', newDeckList);
   })
   ipcMain.handle('electron-store-get-deck', async (event, name: string) => {
-    return store.get('decks').find(x => x.name = name);
+    return store.get('cards').filter(x => x.deckName.localeCompare(name) == 0); // delete cards with no deck, error will occur
   })
   ipcMain.handle('electron-store-get-all-decks', async (event) => {
     return store.has('decks') ? store.get('decks') : [];

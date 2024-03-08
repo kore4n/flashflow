@@ -19,7 +19,7 @@ function AddDeckForm(): JSX.Element | string {
 
   return (
     <form>
-      <input id="deckNameInput" placeholder="Deck Name">
+      <input id="deckNameInput" placeholder="Enter new deck...">
       </input>
       <button onClick={addDeck}>
         Add
@@ -28,27 +28,39 @@ function AddDeckForm(): JSX.Element | string {
   )
 }
 
-function DeckTable({ decks }: { decks: Deck[] }): JSX.Element | string {
+function DeckTable({ decks, toCardsByDeckBtn }: { decks: Deck[], toCardsByDeckBtn: Function }): JSX.Element | string {
   
   function deleteDeck(name: string): void {
     window.api.store.deleteDeck(name);
   }
   var deckEntries = decks.map((deck) => (
     <tr className="even: bg-slate-600 odd:bg-slate-800 shadow" key={deck.name}>
-      <td>{deck.name}</td>
-      <button onClick={() => deleteDeck(deck.name)}>
-        Delete
-      </button>
+      <td>
+        {toCardsByDeckBtn(deck.name)}
+      </td>
+
+      <td >
+        <button onClick={() => deleteDeck(deck.name)}>
+          Delete
+        </button>
+      </td>
     </tr>
   ))
   return (
-    <table>
+    <table width="600px">
+        <thead>
+          <tr>
+            <th>Deck</th>
+
+
+          </tr>
+        </thead>
      <tbody>{deckEntries}</tbody>
     </table>
   )
 }
 
-function DecksPage(): JSX.Element {
+function DecksPage({ toCardsByDeckBtn }: { toCardsByDeckBtn: Function }): JSX.Element {
   const [decks, setDecks] = useState<Deck[]>([])
   const [isLoading, setLoading] = useState(true)
   
@@ -65,9 +77,9 @@ function DecksPage(): JSX.Element {
   if (isLoading) return <p>Loading...</p>
   
   return (
-    <div>
+    <div className="pt-5">
       <AddDeckForm />
-      <DeckTable decks={decks} />
+      <DeckTable decks={decks} toCardsByDeckBtn={toCardsByDeckBtn}/>
     </div>
     )
   }

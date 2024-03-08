@@ -1,12 +1,12 @@
 import { ActiveTab } from 'src/types/types'
 import DeckPage from './DeckPage'
 
-function Deck({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
+function Deck({ activeTab, toCardsByDeckBtn }: { activeTab: ActiveTab, toCardsByDeckBtn: Function}): JSX.Element {
   if (activeTab != 'Decks') return <></>
 
   return (
-    <div id="Decks">
-      <DeckPage />
+    <div id="Decks" className="grid place-items-center">
+      <DeckPage toCardsByDeckBtn={toCardsByDeckBtn} />
     </div>
   )
 }

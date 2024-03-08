@@ -19,13 +19,19 @@ const api = {
     //   ipcRenderer.send('electron-store-set', property, val)
     // },
 
+    pushDeckToShow(name: string): void {
+      ipcRenderer.send('electron-store-push-deck-to-show', name);
+    },
+    getDeckToShow(): Promise<string> {
+      return ipcRenderer.invoke('electron-store-get-deck-to-show');
+    },
     addDeck(deck: Deck): void {
       ipcRenderer.send('electron-store-add-deck', deck);
     },
     deleteDeck(name: string): void {
       ipcRenderer.send('electron-store-delete-deck', name);
     },
-    getDeckByName(name: string): Promise<Deck> {
+    getDeckByName(name: string): Promise<Card[]> {
       return ipcRenderer.invoke('electron-store-get-deck', name);
     },
     getAllDecks(): Promise<Deck[]> {
