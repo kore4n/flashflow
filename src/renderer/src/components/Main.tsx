@@ -4,6 +4,7 @@ import Stats from './stats/Stats'
 import NavButton from './navigation/MenuCard'
 import Navbar from './navigation/Navbar'
 import { useState } from 'react'
+import { ActiveTab } from 'src/types/types'
 
 function Main(): JSX.Element {
   const [activeTab, setActiveTab] = useState<ActiveTab>('Decks')

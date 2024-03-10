@@ -1,5 +1,7 @@
 import React, { ReactNode, useState } from 'react'
-import { Card } from 'src/types/types'
+import { Card, Tag, ExpertNote } from 'src/types/types'
+import CardTagging from './CardTagging'
+import { largestCardID } from '../CardsTable'
 
 function InputColumn({ children }: { children: ReactNode }): JSX.Element {
   return <div className="flex flex-col">{children}</div>
@@ -12,9 +14,14 @@ function InputLabel({ children }: { children: ReactNode }): JSX.Element {
 function AddCardForm(): JSX.Element {
   function addCard(): void {
     const cardToAdd: Card = {
-      name: cardToAddName,
-      front: cardFrontInput,
-      back: cardBackInput
+      cardID: largestCardID + 1,
+      cardFront: cardFrontInput,
+      cardBack: cardBackInput,
+      sideNote: sideNoteInput,
+      expertNotes: expertNotesInput,
+      tags: tagsInput,
+      belongsToDeck: belongsToDeckInput,
+      cardStatus: 0 // can be some other type
     }
 
     window.api.store.addCard(cardToAdd)
@@ -22,13 +29,12 @@ function AddCardForm(): JSX.Element {
     // console.log('adding card to database')
   }
 
-  const [cardToAddName, setCardNameToAdd] = useState<string>('')
   const [cardFrontInput, setCardFront] = useState<string>('')
   const [cardBackInput, setCardBack] = useState<string>('')
-
-  function changeCardToAddName(event: React.ChangeEvent<HTMLInputElement>): void {
-    setCardNameToAdd(event.target.value)
-  }
+  const [sideNoteInput, setSideNote] = useState<string>('')
+  const [expertNotesInput, setExpertNotes] = useState<ExpertNote[]>([])
+  const [tagsInput, setCardTags] = useState<Tag[]>([])
+  const [belongsToDeckInput, setBelongsToDeck] = useState<string>('')
 
   function changeCardToAddFront(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardFront(event.target.value)
@@ -38,24 +44,59 @@ function AddCardForm(): JSX.Element {
     setCardBack(event.target.value)
   }
 
+  function changeCardToAddSideNote(event: React.ChangeEvent<HTMLInputElement>): void {
+    setSideNote(event.target.value)
+  }
+
+  function changeCardToAddExpertNotes(event: ExpertNote): void {} // needs a boolean as a toggle switch to Expert Mode
+
+  function changeCardToAddBelongsToDeck(event: React.ChangeEvent<HTMLInputElement>): void {
+    setBelongsToDeck(event.target.value.toUpperCase())
+  }
+
   return (
     <div className="grid place-items-center">
-      <h1 className="text-2xl font-bold">Add cards to the database here!</h1>
+      <h1 className="text-2xl font-bold">New Card</h1>
       <div className="flex flex-col gap-4">
         <InputColumn>
-          <InputLabel>Name</InputLabel>
-          <input onChange={changeCardToAddName} type="text" placeholder={'Name'}></input>
-        </InputColumn>
-        <InputColumn>
           <InputLabel>Front</InputLabel>
-          <input onChange={changeCardToAddFront} type="text" placeholder={'Front'}></input>
+          <input
+            onChange={changeCardToAddFront}
+            type="text"
+            placeholder={'Front of the card'}
+          ></input>
         </InputColumn>
         <InputColumn>
           <InputLabel>Back</InputLabel>
-          <input onChange={changeCardToAddBack} type="text" placeholder={'Back'}></input>
+          <input
+            onChange={changeCardToAddBack}
+            type="text"
+            placeholder={'Back of the card'}
+          ></input>
         </InputColumn>
+        <InputColumn>
+          <InputLabel>Side Note</InputLabel>
+          <input
+            onChange={changeCardToAddSideNote}
+            type="text"
+            placeholder={'Your side note goes here ...'}
+          ></input>
+        </InputColumn>
+        <InputColumn>
+          <InputLabel>Deck</InputLabel>
+          <input
+            onChange={changeCardToAddBelongsToDeck}
+            type="text"
+            placeholder={'Name of the deck'}
+          ></input>
+        </InputColumn>
+        <InputColumn>
+          <InputLabel>Tags</InputLabel>
+          <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
+        </InputColumn>
+        <br></br>
         <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
-          Submit
+          Add Card
         </button>
       </div>
     </div>
