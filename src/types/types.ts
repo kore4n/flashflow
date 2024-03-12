@@ -1,4 +1,4 @@
-type ActiveTab = 'Decks' | 'Cards' | 'Stats'
+type ActiveTab = 'Decks' | 'Cards' | 'Stats' | 'Study' 
 
 type Card = {
   name: string
@@ -19,4 +19,8 @@ type DatabaseSchema = {
   decks: Deck[]
 }
 
-export { type ActiveTab, type DatabaseSchema, type Card, type Deck }
+type Study = {
+	decks: Deck[]
+}
+
+export { type ActiveTab, type DatabaseSchema, type Card, type Deck, type Study}

@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import setupElectronStore from './store'
 import setupOpenAddCardWindow from './openAddCardWindow'
+import setupOpenStudySessionWindow from './openStudySessionWindow'
 
 function createWindow(): BrowserWindow {
   // Create the browser window.
@@ -35,7 +36,6 @@ function createWindow(): BrowserWindow {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
-
   return mainWindow
 }
 
@@ -59,6 +59,7 @@ app.whenReady().then(() => {
 
   // Freeze main window to prevent bugs (i.e. opening up multiple addCard windows)
   setupOpenAddCardWindow(mainWindow)
+  setupOpenStudySessionWindow(mainWindow)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

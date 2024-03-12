@@ -6,10 +6,12 @@ import { Card } from '../types/types'
 const api = {
   test: (): void => console.log('Hello world'),
   openAddCardWindow: (): void => ipcRenderer.send('open-add-card-window'),
+  openStudySessionWindow: (): void => ipcRenderer.send('open-study-session-window'),
   onChangeRoute: (callback): IpcRenderer =>
     ipcRenderer.on('changeRoute', (event, args) => {
       callback(args)
     }),
+
   store: {
     // Just for testing. Make your own
     // get(key): any {
