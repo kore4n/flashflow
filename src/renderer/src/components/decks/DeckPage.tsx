@@ -18,7 +18,7 @@ function AddDeckForm(): JSX.Element | string {
   }
 
   return (
-    <form>
+    <form className="pt-2">
       <input id="deckNameInput" placeholder="Enter new deck...">
       </input>
       <button onClick={addDeck}>
@@ -34,25 +34,23 @@ function DeckTable({ decks, toCardsByDeckBtn }: { decks: Deck[], toCardsByDeckBt
     window.api.store.deleteDeck(name);
   }
   var deckEntries = decks.map((deck) => (
-    <tr className="even: bg-slate-600 odd:bg-slate-800 shadow" key={deck.name}>
-      <td>
+    <tr className="bg-slate-800 border" height="50px" key={deck.name}>
+      <td className="pl-5" width="300px">
         {toCardsByDeckBtn(deck.name)}
       </td>
 
       <td >
-        <button onClick={() => deleteDeck(deck.name)}>
+        <button className="pl-10" onClick={() => deleteDeck(deck.name)}>
           Delete
         </button>
       </td>
     </tr>
   ))
   return (
-    <table width="600px">
+    <table width="400px">
         <thead>
           <tr>
             <th>Deck</th>
-
-
           </tr>
         </thead>
      <tbody>{deckEntries}</tbody>
@@ -78,8 +76,8 @@ function DecksPage({ toCardsByDeckBtn }: { toCardsByDeckBtn: Function }): JSX.El
   
   return (
     <div className="pt-5">
-      <AddDeckForm />
       <DeckTable decks={decks} toCardsByDeckBtn={toCardsByDeckBtn}/>
+      <AddDeckForm />
     </div>
     )
   }

@@ -80,7 +80,6 @@ function CardsTable(): JSX.Element {
 
   return (
     <div>
-      {/* fix error below */}
       <DisplayCards cards={cards} selectedDeckName={selectedDeckName} />
     </div>
   )

@@ -13,6 +13,7 @@ function NavButton({
   setActiveTab: (apage: ActiveTab) => void
 }): JSX.Element {
   function switchTab(): void {
+    window.api.store.pushDeckToShow("");
     setActiveTab(tabToOpenOnClick)
   }
 

@@ -39,7 +39,6 @@ function setupElectronStore(): void {
       store.set('decks', [newDeck]);
     }
     else {
-      // enforce unique name later maybe?
       var decks = [...store.get('decks'), newDeck];
       store.set('decks', decks);
     }
@@ -49,9 +48,13 @@ function setupElectronStore(): void {
     var currentDeckList = store.get('decks');
     var newDeckList = currentDeckList.filter(x => x.name.localeCompare(name) != 0);
     store.set('decks', newDeckList);
+
+    var currentCardList = store.get('cards');
+    var newCardList = currentCardList.filter(x => x.deckName.localeCompare(name) != 0);
+    store.set('cards', newCardList);
   })
   ipcMain.handle('electron-store-get-deck', async (event, name: string) => {
-    return store.get('cards').filter(x => x.deckName.localeCompare(name) == 0); // delete cards with no deck, error will occur
+    return store.get('cards').filter(x => x.deckName.localeCompare(name) == 0);
   })
   ipcMain.handle('electron-store-get-all-decks', async (event) => {
     return store.has('decks') ? store.get('decks') : [];

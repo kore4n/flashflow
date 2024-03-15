@@ -4,13 +4,11 @@ import { ActiveTab } from 'src/types/types'
 function ToCardsByDeckBtn({
   children,
   tabToOpenOnClick,
-  activeTab,
   setActiveTab,
   deckSelected
 }: {
   children: React.ReactNode
   tabToOpenOnClick: ActiveTab
-  activeTab: ActiveTab
   setActiveTab: (apage: ActiveTab) => void
   deckSelected: string
 }): JSX.Element {

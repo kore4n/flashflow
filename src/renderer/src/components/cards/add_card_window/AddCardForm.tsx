@@ -28,15 +28,6 @@ function AddCardForm(): JSX.Element {
   const [cardBackInput, setCardBack] = useState<string>('')
   const [deckName, setDeckName] = useState<string>('')
 
-  async function getDeck(): Promise<void>{
-    var deckName;
-
-    deckName = await window.api.store.getDeckToShow();
-    setDeckName(deckName);
-  }
-
-  getDeck()
-
   function changeCardToAddName(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardNameToAdd(event.target.value)
   }
@@ -47,6 +38,10 @@ function AddCardForm(): JSX.Element {
 
   function changeCardToAddBack(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardBack(event.target.value)
+  }
+
+  function changeCardToAddDeck(event: React.ChangeEvent<HTMLInputElement>): void {
+    setDeckName(event.target.value)
   }
 
   return (
@@ -67,7 +62,7 @@ function AddCardForm(): JSX.Element {
         </InputColumn>
         <InputColumn>
           <InputLabel>Deck</InputLabel>
-          <input type="text" placeholder={deckName} disabled></input>
+          <input onChange={changeCardToAddDeck} type="text" placeholder={"Deck"}></input>
         </InputColumn>
         <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
           Submit

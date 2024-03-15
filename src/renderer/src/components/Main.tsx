@@ -12,7 +12,7 @@ function Main(): JSX.Element {
   var toCardsByDeckBtn = (selectedDeckName) => { 
     return (
       <div>
-        <ToCardsByDeckBtn activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Cards" deckSelected={selectedDeckName}>
+        <ToCardsByDeckBtn setActiveTab={setActiveTab} tabToOpenOnClick="Cards" deckSelected={selectedDeckName}>
           {selectedDeckName}
         </ToCardsByDeckBtn>
       </div>

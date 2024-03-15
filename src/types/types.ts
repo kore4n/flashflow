@@ -6,6 +6,9 @@ type Card = {
   back: string
   tags?: string[]
   deckName: string
+  // if you generated cards without deckName property,
+  // delete them or else it will throw errors
+
   // Any other properties cards should hold
 }
 
