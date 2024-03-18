@@ -1,15 +1,10 @@
-import React, { ReactNode, useState } from 'react'
+import React, { useState } from 'react'
 import { Card } from 'src/types/types'
 import AddCardWarnings from './AddCardWarnings'
 import AddCardSubmitButton from './AddCardSubmitButton'
 
-function InputColumn({ children }: { children: ReactNode }): JSX.Element {
-  return <div className="flex flex-col">{children}</div>
-}
-
-function InputLabel({ children }: { children: ReactNode }): JSX.Element {
-  return <label className="font-bold text-xl">{children}</label>
-}
+import InputColumn from '../InputColumn'
+import InputLabel from '../InputLabel'
 
 function AddCardForm(): JSX.Element {
   function addCard(): void {
@@ -20,6 +15,8 @@ function AddCardForm(): JSX.Element {
     }
 
     window.api.store.addCard(cardToAdd)
+
+    window.api.closeCurrentWindow()
   }
 
   const [cardToAddName, setCardNameToAdd] = useState<string>('')

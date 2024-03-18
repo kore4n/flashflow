@@ -6,8 +6,9 @@ function App(): JSX.Element {
   const navigate = useNavigate()
 
   useEffect(() => {
-    window.api.onChangeRoute((value) => {
-      navigate(value)
+    window.api.onChangeRoute((value, nameOfCard: string) => {
+      navigate(value, { state: { key: nameOfCard } })
+      // console.log('Changing route and card name is ' + nameOfCard)
     })
   }, [])
 

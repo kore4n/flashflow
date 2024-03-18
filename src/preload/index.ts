@@ -5,10 +5,16 @@ import { Card } from '../types/types'
 // Custom APIs for renderer
 const api = {
   test: (): void => console.log('Hello world'),
+  closeCurrentWindow: (): void => {
+    console.log('Should be closing focused window')
+    ipcRenderer.send('close-current-window')
+  },
   openAddCardWindow: (): void => ipcRenderer.send('open-add-card-window'),
+  openEditCardWindow: (cardNameToEdit: string): void =>
+    ipcRenderer.send('open-edit-card-window', cardNameToEdit),
   onChangeRoute: (callback): IpcRenderer =>
-    ipcRenderer.on('changeRoute', (event, args) => {
-      callback(args)
+    ipcRenderer.on('changeRoute', (event, routeToChangeTo, cardName) => {
+      callback(routeToChangeTo, cardName)
     }),
   store: {
     // Just for testing. Make your own
@@ -26,6 +32,12 @@ const api = {
     },
     getAllCards(): Promise<Card[]> {
       return ipcRenderer.invoke('electron-store-get-all-cards')
+    },
+    deleteCardByName(cardName): Promise<Card> {
+      return ipcRenderer.invoke('electron-store-delete-card-by-name', cardName)
+    },
+    onCardsUpdated(callback): void {
+      ipcRenderer.on('on-electron-store-cards-updated', (event, args) => callback())
     }
   }
 }

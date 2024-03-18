@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron'
 import Store from 'electron-store'
 import { Card, DatabaseSchema } from '../types/types'
+import { BrowserWindow } from 'electron/main'
 
 const store = new Store<DatabaseSchema>()
 
@@ -18,7 +19,7 @@ function storeContainsCardWithName(nameOfCardToGet: string): Card | null {
   return null
 }
 
-function setupElectronStore(): void {
+function setupElectronStore(window: BrowserWindow): void {
   // // Just for testing. Don't use, make your own
   // ipcMain.on('electron-store-get', async (event, val) => {
   //   event.returnValue = store.get(val)
@@ -35,11 +36,25 @@ function setupElectronStore(): void {
     }
 
     // Store already has cards
-    if (storeContainsCardWithName(cardToAdd.name)) return
+    if (storeContainsCardWithName(cardToAdd.name)) {
+      // Remove old card
+      const cardsWithoutOldCard = [...store.get('cards')].filter(
+        (card) => card.name != cardToAdd.name
+      )
+
+      const cardsWithNewCard = [...cardsWithoutOldCard, cardToAdd]
+
+      store.set('cards', cardsWithNewCard)
+      // console.log('updating card')
+      window.webContents.send('on-electron-store-cards-updated')
+      return
+    }
 
     // Only add to store if no card in the store has the card to add's name
     const cards = [...store.get('cards'), cardToAdd]
     store.set('cards', cards)
+    // console.log('adding card')
+    window.webContents.send('on-electron-store-cards-updated')
     return
   })
   ipcMain.handle('electron-store-get-card-by-name', async (event, nameOfCardToGet) => {
@@ -54,6 +69,17 @@ function setupElectronStore(): void {
     else {
       return []
     }
+  })
+  ipcMain.handle('electron-store-delete-card-by-name', async (event, nameOfCardToDelete) => {
+    const cards = [...store.get('cards')]
+
+    const newCards = cards.filter((card) => {
+      return card.name != nameOfCardToDelete
+    })
+
+    store.set('cards', newCards)
+
+    window.webContents.send('on-electron-store-cards-updated')
   })
 }
 
