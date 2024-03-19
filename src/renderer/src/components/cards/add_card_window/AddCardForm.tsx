@@ -18,6 +18,7 @@ function AddCardForm(): JSX.Element {
       deckName: deckName
     }
 
+    cardToast()
     window.api.store.addCard(cardToAdd)
 
     // console.log('adding card to database')
@@ -67,9 +68,27 @@ function AddCardForm(): JSX.Element {
         <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
           Submit
         </button>
+        <div id="addCardToast" className="invisible"></div>
       </div>
     </div>
   )
+}
+
+function cardToast(){
+
+  var timeVisible = 3;
+  var uptime = setInterval(function(){
+
+    if(timeVisible <= 0) {
+      (document.getElementById("addCardToast")! as HTMLElement).className =  "invisible";
+      clearInterval(uptime);
+    }
+    else {
+      (document.getElementById("addCardToast")! as HTMLElement).className =  "rounded p-2 outline outline-green-500 bg-white absolute top-10 right-12";
+      (document.getElementById("addCardToast")! as HTMLElement).innerHTML =  "Card Added! " + timeVisible.toString();
+      timeVisible -= 1;
+    }
+  }, 1000);
 }
 
 export default AddCardForm
