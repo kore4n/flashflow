@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron'
 import Store from 'electron-store'
-import { Card, DatabaseSchema } from '../types/types'
+import { Card, DatabaseSchema, Deck } from '../types/types'
 
 const store = new Store<DatabaseSchema>()
 
@@ -27,6 +27,39 @@ function setupElectronStore(): void {
   // ipcMain.on('electron-store-set', async (event, key, val) => {
   //   store.set(key, val)
   // })
+
+  ipcMain.on('electron-store-push-deck-to-show', async (event, name: string) => {
+      store.set('deckToShow', name);
+  })
+  ipcMain.handle('electron-store-get-deck-to-show', async (event) => {
+    return store.get('deckToShow');
+  })
+  ipcMain.on('electron-store-add-deck', async (event, newDeck: Deck) => {
+    if (!store.has('decks')) {
+      store.set('decks', [newDeck]);
+    }
+    else {
+      var decks = [...store.get('decks'), newDeck];
+      store.set('decks', decks);
+    }
+  })
+  ipcMain.on('electron-store-delete-deck', async (event, name: string) => {
+
+    var currentDeckList = store.get('decks');
+    var newDeckList = currentDeckList.filter(x => x.name.localeCompare(name) != 0);
+    store.set('decks', newDeckList);
+
+    var currentCardList = store.get('cards');
+    var newCardList = currentCardList.filter(x => x.deckName.localeCompare(name) != 0);
+    store.set('cards', newCardList);
+  })
+  ipcMain.handle('electron-store-get-deck', async (event, name: string) => {
+    return store.get('cards').filter(x => x.deckName.localeCompare(name) == 0);
+  })
+  ipcMain.handle('electron-store-get-all-decks', async (event) => {
+    return store.has('decks') ? store.get('decks') : [];
+  })
+
   ipcMain.on('electron-store-add-card', async (event, cardToAdd: Card) => {
     // Store has no cards
     if (!store.has('cards')) {

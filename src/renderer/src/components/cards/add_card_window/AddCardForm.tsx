@@ -14,7 +14,8 @@ function AddCardForm(): JSX.Element {
     const cardToAdd: Card = {
       name: cardToAddName,
       front: cardFrontInput,
-      back: cardBackInput
+      back: cardBackInput,
+      deckName: deckName
     }
 
     window.api.store.addCard(cardToAdd)
@@ -25,6 +26,7 @@ function AddCardForm(): JSX.Element {
   const [cardToAddName, setCardNameToAdd] = useState<string>('')
   const [cardFrontInput, setCardFront] = useState<string>('')
   const [cardBackInput, setCardBack] = useState<string>('')
+  const [deckName, setDeckName] = useState<string>('')
 
   function changeCardToAddName(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardNameToAdd(event.target.value)
@@ -36,6 +38,10 @@ function AddCardForm(): JSX.Element {
 
   function changeCardToAddBack(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardBack(event.target.value)
+  }
+
+  function changeCardToAddDeck(event: React.ChangeEvent<HTMLInputElement>): void {
+    setDeckName(event.target.value)
   }
 
   return (
@@ -53,6 +59,10 @@ function AddCardForm(): JSX.Element {
         <InputColumn>
           <InputLabel>Back</InputLabel>
           <input onChange={changeCardToAddBack} type="text" placeholder={'Back'}></input>
+        </InputColumn>
+        <InputColumn>
+          <InputLabel>Deck</InputLabel>
+          <input onChange={changeCardToAddDeck} type="text" placeholder={"Deck"}></input>
         </InputColumn>
         <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
           Submit
