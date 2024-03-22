@@ -28,35 +28,33 @@ function setupElectronStore(): void {
   // })
 
   ipcMain.on('electron-store-push-deck-to-show', async (event, name: string) => {
-      store.set('deckToShow', name);
+    store.set('deckToShow', name)
   })
   ipcMain.handle('electron-store-get-deck-to-show', async (event) => {
-    return store.get('deckToShow');
+    return store.get('deckToShow')
   })
   ipcMain.on('electron-store-add-deck', async (event, newDeck: Deck) => {
     if (!store.has('decks')) {
-      store.set('decks', [newDeck]);
-    }
-    else {
-      var decks = [...store.get('decks'), newDeck];
-      store.set('decks', decks);
+      store.set('decks', [newDeck])
+    } else {
+      const decks = [...store.get('decks'), newDeck]
+      store.set('decks', decks)
     }
   })
   ipcMain.on('electron-store-delete-deck', async (event, name: string) => {
+    const currentDeckList = store.get('decks')
+    const newDeckList = currentDeckList.filter((x) => x.name.localeCompare(name) != 0)
+    store.set('decks', newDeckList)
 
-    var currentDeckList = store.get('decks');
-    var newDeckList = currentDeckList.filter(x => x.name.localeCompare(name) != 0);
-    store.set('decks', newDeckList);
-
-    var currentCardList = store.get('cards');
-    var newCardList = currentCardList.filter(x => x.deckName.localeCompare(name) != 0);
-    store.set('cards', newCardList);
+    const currentCardList = store.get('cards')
+    const newCardList = currentCardList.filter((x) => x.belongsToDeck.localeCompare(name) != 0)
+    store.set('cards', newCardList)
   })
   ipcMain.handle('electron-store-get-deck', async (event, name: string) => {
-    return store.get('cards').filter(x => x.deckName.localeCompare(name) == 0);
+    return store.get('cards').filter((x) => x.belongsToDeck.localeCompare(name) == 0)
   })
   ipcMain.handle('electron-store-get-all-decks', async (event) => {
-    return store.has('decks') ? store.get('decks') : [];
+    return store.has('decks') ? store.get('decks') : []
   })
 
   ipcMain.on('electron-store-add-card', async (event, cardToAdd: Card) => {

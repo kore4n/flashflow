@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Card } from 'src/types/types'
 
-function DisplayCards({ cards, selectedDeckName }: { cards: Card[], selectedDeckName: string }): JSX.Element | string {
+let largestCardID: number
+function DisplayCards({
+  cards,
+  selectedDeckName
+}: {
+  cards: Card[]
+  selectedDeckName
+}): JSX.Element | string {
   if (cards.length == 0 && selectedDeckName.localeCompare('') != 0) {
     return selectedDeckName + ' has no cards!'
   } else if (cards.length == 0) return 'You have no cards!'
-let largestCardID: number
-function DisplayCards({ cards }: { cards: Card[] }): JSX.Element | string {
-  if (cards.length == 0) return 'You have no cards!'
 
   const cardsElement = cards.map((card, index) => (
     <tr className="even: bg-slate-600 odd:bg-slate-800 shadow" key={card.cardID}>
@@ -65,20 +69,19 @@ function CardsTable(): JSX.Element {
     // }
 
     async function GetRequestedCards(): Promise<void> {
-      var selectedDeckName = await window.api.store.getDeckToShow()
+      const selectedDeckName = await window.api.store.getDeckToShow()
 
-      var cards: Card[];
-      if(selectedDeckName.localeCompare("") == 0) {
-        cards = await window.api.store.getAllCards();
-      }
-      else {
-        cards = await window.api.store.getDeckByName(selectedDeckName);
+      let cards: Card[]
+      if (selectedDeckName.localeCompare('') == 0) {
+        cards = await window.api.store.getAllCards()
+      } else {
+        cards = await window.api.store.getDeckByName(selectedDeckName)
       }
 
       // console.log('all cards')
       // console.log(JSON.stringify(cards))
 
-      setSelectedDeckName(selectedDeckName);
+      setSelectedDeckName(selectedDeckName)
       setCards(cards)
       setLoading(false)
     }
