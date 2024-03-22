@@ -4,17 +4,16 @@ import { Card, DatabaseSchema, Deck } from '../types/types'
 
 const store = new Store<DatabaseSchema>()
 
-function storeContainsCardWithName(nameOfCardToGet: string): Card | null {
+function storeContainsCardWithID(CardIDToGet: number): Card | null {
   if (!store.has('cards')) return null
 
   const cards = store.get('cards')
   let card: Card
   for (card of cards) {
-    if (card.name == nameOfCardToGet) {
+    if (card.cardID == CardIDToGet) {
       return card
     }
   }
-
   return null
 }
 
@@ -68,15 +67,15 @@ function setupElectronStore(): void {
     }
 
     // Store already has cards
-    if (storeContainsCardWithName(cardToAdd.name)) return
+    if (storeContainsCardWithID(cardToAdd.cardID)) return
 
     // Only add to store if no card in the store has the card to add's name
     const cards = [...store.get('cards'), cardToAdd]
     store.set('cards', cards)
     return
   })
-  ipcMain.handle('electron-store-get-card-by-name', async (event, nameOfCardToGet) => {
-    return storeContainsCardWithName(nameOfCardToGet)
+  ipcMain.handle('electron-store-get-card-by-name', async (_event, nameOfCardToGet) => {
+    return storeContainsCardWithID(nameOfCardToGet)
   })
   ipcMain.handle('electron-store-get-all-cards', async (event) => {
     // If it already has cards

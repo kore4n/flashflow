@@ -5,11 +5,12 @@ import NavButton from './navigation/MenuCard'
 import Navbar from './navigation/Navbar'
 import { useState } from 'react'
 import ToCardsByDeckBtn from './navigation/ToCardsByDeckBtn'
+import { ActiveTab } from 'src/types/types'
 
 function Main(): JSX.Element {
   const [activeTab, setActiveTab] = useState<ActiveTab>('Decks')
 
-  var toCardsByDeckBtn = (selectedDeckName) => { 
+  var toCardsByDeckBtn = (selectedDeckName) => {
     return (
       <div>
         <ToCardsByDeckBtn setActiveTab={setActiveTab} tabToOpenOnClick="Cards" deckSelected={selectedDeckName}>
