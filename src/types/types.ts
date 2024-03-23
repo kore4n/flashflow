@@ -7,13 +7,15 @@ type Card = {
   sideNote: string
   expertNotes: ExpertNote[]
   tags: Tag[]
-  belongsToDeck: string
+  belongsToDeck: DeckName[]
   cardStatus: number // can be some other type
   // Any other properties cards should hold
 }
 
+type DeckName = string
+
 type Deck = {
-  name: string
+  name: DeckName
   cards: Card[]
   // Any other properties decks should hold
 }
@@ -42,6 +44,7 @@ export {
   type ActiveTab,
   type DatabaseSchema,
   type Card,
+  type DeckName,
   type Deck,
   type Tag,
   type TagsInputProps,

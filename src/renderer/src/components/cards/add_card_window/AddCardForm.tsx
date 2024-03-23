@@ -1,8 +1,9 @@
 import React, { ReactNode, useState } from 'react'
-import { Card, Tag, ExpertNote } from 'src/types/types'
+import { Card, DeckName, Tag, ExpertNote } from 'src/types/types'
 import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
+import deck from '../../decks/Deck'
 
 function InputColumn({ children }: { children: ReactNode }): JSX.Element {
   return <div className="flex flex-col">{children}</div>
@@ -13,8 +14,8 @@ function InputLabel({ children }: { children: ReactNode }): JSX.Element {
 }
 function AddCardForm(): JSX.Element {
   async function addCard(): Promise<void> {
-    if (!cardFrontInput.trim() || !cardBackInput.trim() || !belongsToDeckInput.trim()) {
-      alert('The front, back, and deck of the card must be filled out.')
+    if (!cardFrontInput.trim() || !cardBackInput.trim()) {
+      alert('Card front and back must be filled out.')
       return
     }
     const cardToAdd: Card = {
@@ -38,7 +39,7 @@ function AddCardForm(): JSX.Element {
   const [sideNoteInput, setSideNote] = useState<string>('')
   const [expertNotesInput, setExpertNotes] = useState<ExpertNote[]>([])
   const [tagsInput, setCardTags] = useState<Tag[]>([])
-  const [belongsToDeckInput, setBelongsToDeck] = useState<string>('')
+  const [belongsToDeckInput, setBelongsToDeck] = useState<DeckName[]>([])
 
   function changeCardToAddFront(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardFront(event.target.value)
@@ -55,7 +56,8 @@ function AddCardForm(): JSX.Element {
   function changeCardToAddExpertNotes(event: ExpertNote): void {} // needs a boolean as a toggle switch to Expert Mode
 
   function changeCardToAddBelongsToDeck(event: React.ChangeEvent<HTMLInputElement>): void {
-    setBelongsToDeck(event.target.value.toUpperCase())
+    const newArray = event.target.value.split(',').map((value) => value.toUpperCase().trim()) // Here the input is assumed to be comma-separated, but we need a dropdown list of checkboxes
+    setBelongsToDeck(newArray)
   }
 
   return (
