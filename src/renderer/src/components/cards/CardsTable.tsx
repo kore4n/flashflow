@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Card } from 'src/types/types'
 
-let largestCardID: number
 function DisplayCards({
   cards,
   selectedDeckName
@@ -91,13 +90,6 @@ function CardsTable(): JSX.Element {
     GetRequestedCards()
   }, [cards])
 
-  cards.forEach((card) => {
-    largestCardID = 0
-    if (card.cardID > largestCardID) {
-      largestCardID = card.cardID
-    }
-  })
-
   if (isLoading) return <p>Loading...</p>
 
   return (
@@ -107,5 +99,24 @@ function CardsTable(): JSX.Element {
   )
 }
 
+async function getLargestCardID(): Promise<number> {
+  try {
+    const cards = await window.api.store.getAllCards()
+    if (cards.length === 0) {
+      return 0
+    }
+    let largestCardID = 0
+    cards.forEach((card) => {
+      if (card.cardID > largestCardID) {
+        largestCardID = card.cardID
+      }
+    })
+    return largestCardID
+  } catch (error) {
+    console.error('Failed to get cards:', error)
+    return 0
+  }
+}
+
 export default CardsTable
-export { largestCardID }
+export { getLargestCardID }

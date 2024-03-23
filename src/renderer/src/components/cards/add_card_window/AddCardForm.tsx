@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from 'react'
 import { Card, Tag, ExpertNote } from 'src/types/types'
 import CardTagging from './CardTagging'
-import { largestCardID } from '../CardsTable'
 import CloseWindow from '../CloseWindowButton'
+import { getLargestCardID } from '../CardsTable'
 
 function InputColumn({ children }: { children: ReactNode }): JSX.Element {
   return <div className="flex flex-col">{children}</div>
@@ -11,15 +11,14 @@ function InputColumn({ children }: { children: ReactNode }): JSX.Element {
 function InputLabel({ children }: { children: ReactNode }): JSX.Element {
   return <label className="font-bold text-xl">{children}</label>
 }
-
 function AddCardForm(): JSX.Element {
-  function addCard(): void {
+  async function addCard(): Promise<void> {
     if (!cardFrontInput.trim() || !cardBackInput.trim() || !belongsToDeckInput.trim()) {
       alert('The front, back, and deck of the card must be filled out.')
       return
     }
     const cardToAdd: Card = {
-      cardID: largestCardID + 1,
+      cardID: (await getLargestCardID()) + 1,
       cardFront: cardFrontInput,
       cardBack: cardBackInput,
       sideNote: sideNoteInput,
