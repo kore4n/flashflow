@@ -5,6 +5,8 @@ import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
 import deck from '../../decks/Deck'
 
+const DEFAULT_DECK_NAME: string = 'DEFAULT'
+
 function InputColumn({ children }: { children: ReactNode }): JSX.Element {
   return <div className="flex flex-col">{children}</div>
 }
@@ -25,7 +27,7 @@ function AddCardForm(): JSX.Element {
       sideNote: sideNoteInput,
       expertNotes: expertNotesInput,
       tags: tagsInput,
-      belongsToDeck: belongsToDeckInput,
+      belongsToDeck: belongsToDeckInput.length ? belongsToDeckInput : [DEFAULT_DECK_NAME],
       cardStatus: 0 // can be some other type
     }
 
@@ -56,7 +58,17 @@ function AddCardForm(): JSX.Element {
   function changeCardToAddExpertNotes(event: ExpertNote): void {} // needs a boolean as a toggle switch to Expert Mode
 
   function changeCardToAddBelongsToDeck(event: React.ChangeEvent<HTMLInputElement>): void {
-    const newArray = event.target.value.split(',').map((value) => value.toUpperCase().trim()) // Here the input is assumed to be comma-separated, but we need a dropdown list of checkboxes
+    const newArray = event.target.value
+      .split(',') // Here the input is assumed to be comma-separated, but we need a dropdown list of checkboxes
+      .map((value) => {
+        // only allows alphanumeric characters and spaces and converts it to uppercase
+        return value
+          .trim()
+          .toUpperCase()
+          .replace(/[^a-zA-Z0-9\s]/g, '')
+      })
+      .filter(Boolean) // empty deck names are not allowed
+    if (newArray.length === 0) newArray.push(DEFAULT_DECK_NAME) // Assigns <DEFAULT_DECK_NAME> if the array is eventually empty
     setBelongsToDeck(newArray)
   }
 
@@ -93,7 +105,7 @@ function AddCardForm(): JSX.Element {
           <input
             onChange={changeCardToAddBelongsToDeck}
             type="text"
-            placeholder={'Name of the deck'}
+            placeholder={'Deck names'}
           ></input>
         </InputColumn>
         <InputColumn>
