@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-import { Deck } from "src/types/types";
+import { useEffect, useState } from 'react'
+import { Deck } from 'src/types/types'
 
 function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
 
   function addDeck(): void {
+    const deckNameForm = document.getElementById('deckNameInput') as HTMLInputElement
+    const deckName = deckNameForm.value.toUpperCase()
 
-    let deckNameForm = (document.getElementById("deckNameInput") as HTMLInputElement);
-    let deckName = deckNameForm.value;
-
-    let newDeck: Deck = {
-      name: deckName,
+    const newDeck: Deck = {
+      name: deckName.toUpperCase(),
       cards: []
     }
 
@@ -39,19 +38,24 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
   )
 }
 
-function DeckTable({ decks, toCardsByDeckBtn }: { decks: Deck[], toCardsByDeckBtn: Function }): JSX.Element | string {
-  
+function DeckTable({
+  decks,
+  toCardsByDeckBtn
+}: {
+  decks: Deck[]
+  toCardsByDeckBtn: Function
+}): JSX.Element | string {
   function deleteDeck(name: string): void {
     triggerToast(true, "Deleted Card!")
     window.api.store.deleteDeck(name);
   }
-  var deckEntries = decks.map((deck) => (
+  const deckEntries = decks.map((deck) => (
     <tr className="bg-slate-800 border" height="50px" key={deck.name}>
       <td className="pl-5" width="300px">
         {toCardsByDeckBtn(deck.name)}
       </td>
 
-      <td >
+      <td>
         <button className="pl-10" onClick={() => deleteDeck(deck.name)}>
           Delete
         </button>
@@ -60,12 +64,12 @@ function DeckTable({ decks, toCardsByDeckBtn }: { decks: Deck[], toCardsByDeckBt
   ))
   return (
     <table width="400px">
-        <thead>
-          <tr>
-            <th>Deck</th>
-          </tr>
-        </thead>
-     <tbody>{deckEntries}</tbody>
+      <thead>
+        <tr>
+          <th>Deck</th>
+        </tr>
+      </thead>
+      <tbody>{deckEntries}</tbody>
     </table>
   )
 }
@@ -93,17 +97,16 @@ function triggerToast(positive: boolean, text: string){
 function DecksPage({ toCardsByDeckBtn }: { toCardsByDeckBtn: Function }): JSX.Element {
   const [decks, setDecks] = useState<Deck[]>([])
   const [isLoading, setLoading] = useState(true)
-  
+
   useEffect(() => {
-  
     async function GetAllDecks(): Promise<void> {
       setDecks(await window.api.store.getAllDecks())
       setLoading(false)
     }
-  
+
     GetAllDecks()
   }, [decks])
-  
+
   if (isLoading) return <p>Loading...</p>
 
   return (
@@ -112,7 +115,7 @@ function DecksPage({ toCardsByDeckBtn }: { toCardsByDeckBtn: Function }): JSX.El
       <AddDeckForm decks={decks} />
       <div id="deckToast" className="invisible"></div>
     </div>
-    )
-  }
+  )
+}
 
- export default DecksPage
+export default DecksPage

@@ -8,6 +8,7 @@ function Cards({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
   return (
     <div className="min-h-60 grid place-items-center ">
       <CardsTable />
+      <br />
       <OpenAddCard />
     </div>
   )
