@@ -27,13 +27,11 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
 
   return (
     <div>
-      <form className="pt-2">
+      <div className="pt-2">
         <input id="deckNameInput" placeholder="Enter new deck...">
         </input>
-      </form>
-      <button onClick={addDeck}>
-        Add
-      </button>
+        <button onClick={addDeck}>Add</button>
+      </div>
     </div>
   )
 }
@@ -111,8 +109,8 @@ function DecksPage({ toCardsByDeckBtn }: { toCardsByDeckBtn: Function }): JSX.El
 
   return (
     <div className="pt-5">
-      <DeckTable decks={decks} toCardsByDeckBtn={toCardsByDeckBtn}/>
       <AddDeckForm decks={decks} />
+      <DeckTable decks={decks} toCardsByDeckBtn={toCardsByDeckBtn}/>
       <div id="deckToast" className="invisible"></div>
     </div>
   )
