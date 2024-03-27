@@ -21,17 +21,15 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
     else {
       deckNameForm.value = "";
       window.api.store.addDeck(newDeck);
-      triggerToast(true, "Added Card!")
+      triggerToast(true, "Added Deck!")
     }
   }
 
   return (
-    <div>
-      <div className="pt-2">
-        <input id="deckNameInput" placeholder="Enter new deck...">
-        </input>
-        <button onClick={addDeck}>Add</button>
-      </div>
+    <div className="pt-2">
+      <input id="deckNameInput" placeholder="Enter new deck...">
+      </input>
+      <button onClick={addDeck}>Add</button>
     </div>
   )
 }
@@ -109,8 +107,8 @@ function DecksPage({ toCardsByDeckBtn }: { toCardsByDeckBtn: Function }): JSX.El
 
   return (
     <div className="pt-5">
-      <AddDeckForm decks={decks} />
       <DeckTable decks={decks} toCardsByDeckBtn={toCardsByDeckBtn}/>
+      <AddDeckForm decks={decks} />
       <div id="deckToast" className="invisible"></div>
     </div>
   )
