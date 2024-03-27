@@ -45,13 +45,9 @@ function setupElectronStore(): void {
     const currentDeckList = store.get('decks')
     const newDeckList = currentDeckList.filter((x) => x.name.localeCompare(name) != 0)
     store.set('decks', newDeckList)
-
-    const currentCardList = store.get('cards')
-    const newCardList = currentCardList.filter((x) => x.belongsToDeck.localeCompare(name) != 0)
-    store.set('cards', newCardList)
   })
   ipcMain.handle('electron-store-get-deck', async (event, name: string) => {
-    return store.get('cards').filter((x) => x.belongsToDeck.localeCompare(name) == 0)
+    return store.get('cards').filter((x) => !x.belongsToDeck.find(x => x.localeCompare(name)))
   })
   ipcMain.handle('electron-store-get-all-decks', async (event) => {
     return store.has('decks') ? store.get('decks') : []
