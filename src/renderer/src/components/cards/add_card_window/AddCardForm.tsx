@@ -23,9 +23,15 @@ function AddCardForm(): JSX.Element {
       alert('Card front must be filled out.')
       return
     }
-    const lastNote = expertNotesInput[expertNotesInput.length - 1]
-    if (lastNote.subtitle.trim().length == 0 && lastNote.body.trim().length == 0) {
-      expertNotesInput.pop()
+    if (expertNotesInput.length > 0) {
+      const lastNote = expertNotesInput[expertNotesInput.length - 1]
+      if (
+        lastNote !== null &&
+        lastNote.subtitle.trim().length == 0 &&
+        lastNote.body.trim().length == 0
+      ) {
+        expertNotesInput.pop()
+      }
     }
     const cardToAdd: Card = {
       cardID: (await getLargestCardID()) + 1,
@@ -97,7 +103,6 @@ function AddCardForm(): JSX.Element {
       }
       setExpertNotes(updatedExpertNote)
     }
-
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
