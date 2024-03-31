@@ -14,12 +14,16 @@ function Main(): JSX.Element {
   var toCardsByDeckBtn = (selectedDeckName) => {
     return (
       <div>
-        <ToCardsByDeckBtn setActiveTab={setActiveTab} tabToOpenOnClick="Cards" deckSelected={selectedDeckName}>
+        <ToCardsByDeckBtn
+          setActiveTab={setActiveTab}
+          tabToOpenOnClick="Cards"
+          deckSelected={selectedDeckName}
+        >
           {selectedDeckName}
         </ToCardsByDeckBtn>
       </div>
     )
-  };
+  }
 
   return (
     <div>
@@ -33,14 +37,14 @@ function Main(): JSX.Element {
         <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Stats">
           Stats
         </NavButton>
-		<NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Study">
-			Study
-		</NavButton>
+        <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Study">
+          Study
+        </NavButton>
       </Navbar>
       <Deck activeTab={activeTab} toCardsByDeckBtn={toCardsByDeckBtn} />
       <Cards activeTab={activeTab} />
       <Stats activeTab={activeTab} />
-	  <Study activeTab={activeTab} />
+      <Study activeTab={activeTab} />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 type ActiveTab = 'Decks' | 'Cards' | 'Stats' | 'Study'
 
 type Card = {
-  cardID: number
+  cardID?: number
   cardFront: string
   cardBack: string
   sideNote: string
