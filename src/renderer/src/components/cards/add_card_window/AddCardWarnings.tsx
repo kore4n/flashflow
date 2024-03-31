@@ -3,16 +3,15 @@ import AddCardWarning from './AddCardWarning'
 import {
   cardBackIsValid,
   cardFrontIsValid,
-  cardNameAlreadyExists,
-  cardNameIsEmpty
+  frontOfCardAlreadyExists
 } from '@renderer/utils/cardValidity'
 
 function AddCardWarnings({
-  cardToAddName,
+  // cardToAddName,
   cardFrontInput,
   cardBackInput
 }: {
-  cardToAddName: string
+  // cardToAddName: string
   cardFrontInput: string
   cardBackInput: string
 }): JSX.Element {
@@ -20,21 +19,21 @@ function AddCardWarnings({
 
   useEffect(() => {
     async function generateWarnings(): Promise<void> {
-      const nameAlreadyExists = await cardNameAlreadyExists(cardToAddName)
+      const cardFrontAlreadyExists = await frontOfCardAlreadyExists(cardFrontInput)
 
       const localWarnings: JSX.Element[] = []
 
-      if (nameAlreadyExists) {
-        const unique_key = 'CardNameAlreadyExists'
+      if (cardFrontAlreadyExists) {
+        const unique_key = 'CardFrontAlreadyExists'
         localWarnings.push(
-          <AddCardWarning key={unique_key}>Card already exists in database</AddCardWarning>
+          <AddCardWarning key={unique_key}>Card front already exists in database</AddCardWarning>
         )
       }
 
-      if (cardNameIsEmpty(cardToAddName)) {
-        const unique_key = 'CardNameEmptyWarning'
-        localWarnings.push(<AddCardWarning key={unique_key}>Card name is empty</AddCardWarning>)
-      }
+      // if (cardNameIsEmpty(cardToAddName)) {
+      //   const unique_key = 'CardNameEmptyWarning'
+      //   localWarnings.push(<AddCardWarning key={unique_key}>Card name is empty</AddCardWarning>)
+      // }
 
       if (!cardFrontIsValid(cardFrontInput)) {
         const unique_key = 'CardFrontEmptyWarning'
@@ -50,7 +49,7 @@ function AddCardWarnings({
     }
 
     generateWarnings()
-  }, [cardToAddName, cardFrontInput, cardBackInput])
+  }, [cardFrontInput, cardBackInput])
 
   return <div>{warnings}</div>
 }

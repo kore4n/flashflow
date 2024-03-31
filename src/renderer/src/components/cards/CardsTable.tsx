@@ -21,16 +21,16 @@ function DisplayCards({ cards }: { cards: Card[] }): JSX.Element | string {
         // onMouseEnter={showDeleteButton}
         // onMouseLeave={hideDeleteButton}
         className="even: bg-slate-600 odd:bg-slate-800 shadow [&>*]:p-2"
-        key={card.name}
+        key={card.cardID}
       >
-        <td>{index + 1}</td>
-        <td>{card.name}</td>
+        {/* <td>{index + 1}</td> */}
+        <td>{card.cardID}</td>
         <td>{card.front}</td>
         <td>{card.back}</td>
         <td>{card.tags ? card.tags : 'none'}</td>
         {/* <td>{shouldShowDeleteButton ? <DeleteCardButton cardName={card.name} /> : ''}</td> */}
-        <DeleteCardButton cardName={card.name} />
-        <EditCardButton cardName={card.name} />
+        <DeleteCardButton cardID={card.cardID!} />
+        <EditCardButton cardID={card.cardID!} />
       </tr>
     )
   })
@@ -41,8 +41,8 @@ function DisplayCards({ cards }: { cards: Card[] }): JSX.Element | string {
       <table className="list-decimal">
         <thead>
           <tr>
-            <th>Number</th>
-            <th>Name</th>
+            {/* <th>Number</th> */}
+            <th>ID</th>
             <th>Front</th>
             <th>Back</th>
             <th>Tags</th>

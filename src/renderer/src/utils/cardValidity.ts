@@ -1,5 +1,5 @@
-async function cardNameAlreadyExists(cardName: string): Promise<boolean> {
-  const cardInDatabase = await window.api.store.getCardByName(cardName)
+async function frontOfCardAlreadyExists(cardFront: string): Promise<boolean> {
+  const cardInDatabase = await window.api.store.getCardByFront(cardFront)
 
   if (cardInDatabase) return true
 
@@ -19,18 +19,18 @@ function cardBackIsValid(cardBack: string): boolean {
 }
 
 async function cardIsValid(
-  cardName: string,
+  // cardName: string,
   cardFront: string,
   cardBack: string
 ): Promise<boolean> {
-  const cardNameExists = await cardNameAlreadyExists(cardName.trim())
+  const frontOfCardExists = await frontOfCardAlreadyExists(cardFront.trim())
 
-  if (cardNameExists) return false
-  if (cardNameIsEmpty(cardName.trim())) return false
+  if (frontOfCardExists) return false
+  // if (cardNameIsEmpty(cardName.trim())) return false
   if (!cardFrontIsValid(cardFront.trim())) return false
   if (!cardBackIsValid(cardBack.trim())) return false
 
   return true
 }
 
-export { cardNameAlreadyExists, cardFrontIsValid, cardBackIsValid, cardNameIsEmpty, cardIsValid }
+export { frontOfCardAlreadyExists, cardFrontIsValid, cardBackIsValid, cardNameIsEmpty, cardIsValid }

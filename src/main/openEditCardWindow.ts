@@ -4,7 +4,7 @@ import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
 
 function setupOpenEditCardWindow(parent: BrowserWindow): void {
-  ipcMain.on('open-edit-card-window', (event, nameOfCardToEdit: string) => {
+  ipcMain.on('open-edit-card-window', (event, IDOfCardToEdit: number) => {
     const openEditCardWindow = new BrowserWindow({
       width: 900,
       height: 670,
@@ -25,7 +25,7 @@ function setupOpenEditCardWindow(parent: BrowserWindow): void {
       openEditCardWindow.show()
 
       // Change default page of new window
-      openEditCardWindow.webContents.send('changeRoute', '/editCard', nameOfCardToEdit)
+      openEditCardWindow.webContents.send('changeRoute', '/editCard', IDOfCardToEdit)
     })
 
     openEditCardWindow.webContents.setWindowOpenHandler((details) => {

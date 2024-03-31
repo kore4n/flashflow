@@ -1,6 +1,6 @@
-function EditCardButton({ cardName }: { cardName: string }): JSX.Element {
+function EditCardButton({ cardID }: { cardID: number }): JSX.Element {
   const editCard = (): void => {
-    window.api.openEditCardWindow(cardName)
+    window.api.openEditCardWindow(cardID)
   }
 
   return (

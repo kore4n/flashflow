@@ -1,9 +1,9 @@
-function DeleteCardButton({ cardName }: { cardName: string }): JSX.Element {
-  const handleDeleteCardByName = (): void => {
-    window.api.store.deleteCardByName(cardName)
+function DeleteCardButton({ cardID }: { cardID: number }): JSX.Element {
+  const handleDeleteCardByID = (): void => {
+    window.api.store.deleteCardByID(cardID)
   }
 
-  return <td onClick={handleDeleteCardByName}>Delete</td>
+  return <td onClick={handleDeleteCardByID}>Delete</td>
 }
 
 export default DeleteCardButton

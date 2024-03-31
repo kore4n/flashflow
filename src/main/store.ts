@@ -5,13 +5,27 @@ import { BrowserWindow } from 'electron/main'
 
 const store = new Store<DatabaseSchema>()
 
-function storeContainsCardWithName(nameOfCardToGet: string): Card | null {
+function storeContainsCardWithFront(frontOfCardToGet: string): Card | null {
   if (!store.has('cards')) return null
 
   const cards = store.get('cards')
   let card: Card
   for (card of cards) {
-    if (card.name == nameOfCardToGet) {
+    if (card.front == frontOfCardToGet) {
+      return card
+    }
+  }
+
+  return null
+}
+
+function storeContainsCardWithID(IDOfCardToGet: number): Card | null {
+  if (!store.has('cards')) return null
+
+  const cards = store.get('cards')
+  let card: Card
+  for (card of cards) {
+    if (card.cardID == IDOfCardToGet) {
       return card
     }
   }
@@ -36,10 +50,12 @@ function setupElectronStore(window: BrowserWindow): void {
     }
 
     // Store already has cards
-    if (storeContainsCardWithName(cardToAdd.name)) {
-      // Remove old card
+
+    // Update existing card
+    if (storeContainsCardWithID(cardToAdd.cardID!)) {
+      // Remove old card with same i, to add back in new card later
       const cardsWithoutOldCard = [...store.get('cards')].filter(
-        (card) => card.name != cardToAdd.name
+        (card) => card.cardID != cardToAdd.cardID
       )
 
       const cardsWithNewCard = [...cardsWithoutOldCard, cardToAdd]
@@ -50,6 +66,20 @@ function setupElectronStore(window: BrowserWindow): void {
       return
     }
 
+    // if (storeContainsCardWithFront(cardToAdd.front)) {
+    //   return
+    // }
+
+    let highestCardID = -1
+
+    store.get('cards').forEach((card) => {
+      if (card.cardID! > highestCardID) {
+        highestCardID = card.cardID!
+      }
+    })
+
+    cardToAdd.cardID = highestCardID + 1
+
     // Only add to store if no card in the store has the card to add's name
     const cards = [...store.get('cards'), cardToAdd]
     store.set('cards', cards)
@@ -57,24 +87,27 @@ function setupElectronStore(window: BrowserWindow): void {
     window.webContents.send('on-electron-store-cards-updated')
     return
   })
-  ipcMain.handle('electron-store-get-card-by-name', async (event, nameOfCardToGet) => {
-    return storeContainsCardWithName(nameOfCardToGet)
-  })
-  ipcMain.handle('electron-store-get-all-cards', async (event) => {
-    // If it already has cards
-    if (store.has('cards')) {
-      return store.get('cards')
-    }
-    // It has no cards, so can't get any. Just return empty array
-    else {
-      return []
-    }
-  })
-  ipcMain.handle('electron-store-delete-card-by-name', async (event, nameOfCardToDelete) => {
+  ipcMain.handle('electron-store-get-card-by-front', async (event, frontOfCardToGet) => {
+    return storeContainsCardWithFront(frontOfCardToGet)
+  }),
+    ipcMain.handle('electron-store-get-card-by-ID', async (event, IDOfCardToGet) => {
+      return storeContainsCardWithID(IDOfCardToGet)
+    }),
+    ipcMain.handle('electron-store-get-all-cards', async (event) => {
+      // If it already has cards
+      if (store.has('cards')) {
+        return store.get('cards')
+      }
+      // It has no cards, so can't get any. Just return empty array
+      else {
+        return []
+      }
+    })
+  ipcMain.handle('electron-store-delete-card-by-id', async (event, IDOfCardToDelete) => {
     const cards = [...store.get('cards')]
 
     const newCards = cards.filter((card) => {
-      return card.name != nameOfCardToDelete
+      return card.cardID != IDOfCardToDelete
     })
 
     store.set('cards', newCards)

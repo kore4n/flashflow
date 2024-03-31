@@ -16,7 +16,7 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
   }, [card])
 
   const saveAndExit = (): void => {
-    const cardToUpdate: Card = { name: card.name, front: cardFrontToEdit, back: cardBackToEdit }
+    const cardToUpdate: Card = { cardID: card.cardID, front: cardFrontToEdit, back: cardBackToEdit }
     window.api.store.addCard(cardToUpdate)
 
     // console.log('adding: ' + JSON.stringify(cardToUpdate))
@@ -57,12 +57,12 @@ function EditCardForm(): JSX.Element {
   const [cardToEdit, setCardData] = useState<Card>()
 
   useEffect(() => {
-    const cardNameToEdit = location.state.key
+    const cardIDToEdit = location.state.key
     // console.log('Location is: ' + JSON.stringify(location))
     // console.log('Card name is: ' + cardNameToEdit)
 
     const setupCardToEditData = async (): Promise<void> => {
-      const card = await window.api.store.getCardByName(cardNameToEdit)
+      const card = await window.api.store.getCardByID(cardIDToEdit)
 
       setCardData(card)
     }

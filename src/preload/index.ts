@@ -10,8 +10,8 @@ const api = {
     ipcRenderer.send('close-current-window')
   },
   openAddCardWindow: (): void => ipcRenderer.send('open-add-card-window'),
-  openEditCardWindow: (cardNameToEdit: string): void =>
-    ipcRenderer.send('open-edit-card-window', cardNameToEdit),
+  openEditCardWindow: (cardIDToEdit: number): void =>
+    ipcRenderer.send('open-edit-card-window', cardIDToEdit),
   onChangeRoute: (callback): IpcRenderer =>
     ipcRenderer.on('changeRoute', (event, routeToChangeTo, cardName) => {
       callback(routeToChangeTo, cardName)
@@ -27,14 +27,17 @@ const api = {
     addCard(cardObject): void {
       ipcRenderer.send('electron-store-add-card', cardObject)
     },
-    getCardByName(cardName): Promise<Card> {
-      return ipcRenderer.invoke('electron-store-get-card-by-name', cardName)
+    getCardByFront(cardFront): Promise<Card> {
+      return ipcRenderer.invoke('electron-store-get-card-by-front', cardFront)
+    },
+    getCardByID(cardID): Promise<Card> {
+      return ipcRenderer.invoke('electron-store-get-card-by-ID', cardID)
     },
     getAllCards(): Promise<Card[]> {
       return ipcRenderer.invoke('electron-store-get-all-cards')
     },
-    deleteCardByName(cardName): Promise<Card> {
-      return ipcRenderer.invoke('electron-store-delete-card-by-name', cardName)
+    deleteCardByID(cardID): Promise<Card> {
+      return ipcRenderer.invoke('electron-store-delete-card-by-id', cardID)
     },
     onCardsUpdated(callback): void {
       ipcRenderer.on('on-electron-store-cards-updated', (event, args) => callback())

@@ -9,7 +9,7 @@ import InputLabel from '../InputLabel'
 function AddCardForm(): JSX.Element {
   function addCard(): void {
     const cardToAdd: Card = {
-      name: cardToAddName,
+      // name: cardToAddName,
       front: cardFrontInput,
       back: cardBackInput
     }
@@ -19,14 +19,14 @@ function AddCardForm(): JSX.Element {
     window.api.closeCurrentWindow()
   }
 
-  const [cardToAddName, setCardNameToAdd] = useState<string>('')
+  // const [cardToAddName, setCardNameToAdd] = useState<string>('')
   const [cardFrontInput, setCardFront] = useState<string>('')
   const [cardBackInput, setCardBack] = useState<string>('')
 
-  function changeCardToAddName(event: React.ChangeEvent<HTMLInputElement>): void {
-    const newCardToAddName = event.target.value
-    setCardNameToAdd(newCardToAddName)
-  }
+  // function changeCardToAddName(event: React.ChangeEvent<HTMLInputElement>): void {
+  //   const newCardToAddName = event.target.value
+  //   setCardNameToAdd(newCardToAddName)
+  // }
 
   function changeCardToAddFront(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardFront(event.target.value)
@@ -40,10 +40,10 @@ function AddCardForm(): JSX.Element {
     <div className="grid place-items-center">
       <h1 className="text-2xl font-bold">Add cards to the database here!</h1>
       <div className="flex flex-col gap-4">
-        <InputColumn>
+        {/* <InputColumn>
           <InputLabel>Name</InputLabel>
           <input onChange={changeCardToAddName} type="text" placeholder={'Name'}></input>
-        </InputColumn>
+        </InputColumn> */}
         <InputColumn>
           <InputLabel>Front</InputLabel>
           <input onChange={changeCardToAddFront} type="text" placeholder={'Front'}></input>
@@ -54,12 +54,12 @@ function AddCardForm(): JSX.Element {
         </InputColumn>
         <AddCardSubmitButton
           onClick={addCard}
-          cardName={cardToAddName}
+          // cardName={cardToAddName}
           cardFront={cardFrontInput}
           cardBack={cardBackInput}
         />
         <AddCardWarnings
-          cardToAddName={cardToAddName}
+          // cardToAddName={cardToAddName}
           cardFrontInput={cardFrontInput}
           cardBackInput={cardBackInput}
         />
