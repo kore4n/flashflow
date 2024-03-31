@@ -1,20 +1,21 @@
 type ActiveTab = 'Decks' | 'Cards' | 'Stats' | 'Study'
 
 type Card = {
-  name: string
-  front: string
-  back: string
-  tags?: string[]
-  deckName: string
-  value: number
-  // if you generated cards without deckName property,
-  // delete them or else it will throw errors
-
+  cardID: number
+  cardFront: string
+  cardBack: string
+  sideNote: string
+  expertNotes: ExpertNote[]
+  tags: Tag[]
+  belongsToDeck: DeckName[]
+  cardStatus: number // can be some other type
   // Any other properties cards should hold
 }
 
+type DeckName = string
+
 type Deck = {
-  name: string
+  name: DeckName
   cards: Card[]
   // Any other properties decks should hold
 }
@@ -24,7 +25,28 @@ type DatabaseSchema = {
   decks: Deck[]
 }
 
+type Tag = {
+  tagText: string
+  tagColor: string
+}
 
+type TagsInputProps = {
+  tempTagPool: Tag[]
+  setTags: (tags: Tag[]) => void
+}
 
+type ExpertNote = {
+  subtitle: string
+  body: string
+}
 
-export { type ActiveTab, type DatabaseSchema, type Card, type Deck }
+export {
+  type ActiveTab,
+  type DatabaseSchema,
+  type Card,
+  type DeckName,
+  type Deck,
+  type Tag,
+  type TagsInputProps,
+  type ExpertNote
+}

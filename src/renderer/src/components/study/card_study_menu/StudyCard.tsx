@@ -26,8 +26,8 @@ function ShowProgress({ viewedCards, setShowProgress }: { viewedCards: Card[]; s
                         <tbody>
                             {viewedCards.map((card, index) => (
                                 <tr key={index}>
-                                    <td className="border text-gray-200 border-black px-4 py-2">{card.front}</td>
-                                    <td className="border text-gray-200 border-black px-4 py-2">{getRating(card.value)}</td>
+                                    <td className="border text-gray-200 border-black px-4 py-2">{card.cardFront}</td>
+                                    <td className="border text-gray-200 border-black px-4 py-2">{getRating(card.cardStatus)}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -39,8 +39,8 @@ function ShowProgress({ viewedCards, setShowProgress }: { viewedCards: Card[]; s
     );
 }
 
-function getRating(value: number): string {
-    switch (value) {
+function getRating(cardStatus: number): string {
+    switch (cardStatus) {
         case 1:
             return 'Again';
         case 2:
@@ -75,11 +75,11 @@ function ShowCard({ cards, setShowProgress, viewedCards, setViewedCards }: { car
 		setViewedCards([...viewedCards, currentCard]);
     };
 
-    const handleNextCard = (value: number) => {
+    const handleNextCard = (cardStatus: number) => {
 		setShowAnswer(false);
         setShowButtons(false);
         const updatedCards = [...viewedCards];
-        updatedCards[currentIndex].value = value;
+        updatedCards[currentIndex].cardStatus = cardStatus;
         setViewedCards(updatedCards);
         setCurrentIndex(prevIndex => (prevIndex === cards.length - 1 ? 0 : prevIndex + 1));
     };
@@ -90,9 +90,9 @@ function ShowCard({ cards, setShowProgress, viewedCards, setViewedCards }: { car
 			<div className="flex flex-col items-center justify-center flex-grow">
 				<h2 className="font-bold text-lg text-white my-20">{showAnswer ? 'Back Field' : 'Front Field'}</h2>
 				<div className="p-8 bg-gray-200 rounded-lg shadow-lg">
-					<p>{currentCard.front}</p>
+					<p>{currentCard.cardFront}</p>
 					<div className="border-b border-gray-400"></div>
-					{showAnswer && <p>{currentCard.back}</p>}
+					{showAnswer && <p>{currentCard.cardBack}</p>}
 				</div>
 				{!showAnswer && (
 					<button

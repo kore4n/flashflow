@@ -1,6 +1,7 @@
 import { ActiveTab, Deck } from 'src/types/types';
 import { useEffect, useState } from 'react';
 
+
 /*
 	After clicking the study tab this will populate the window with all current decks to choose from 
 */
@@ -20,16 +21,11 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
 
 	useEffect(() => {
 		async function GetAllDecks(): Promise<void> {
-			try {
-				const fetchedDecks = await window.api.store.getAllDecks();
-				setDecks(fetchedDecks);
-			} catch (error) {
-				console.error('Error fetching decks:', error);
-			}
+		  setDecks(await window.api.store.getAllDecks())
 		}
-
-		GetAllDecks();
-	}, []);
+	
+		GetAllDecks()
+	  }, [decks])
 
 	const handleSelectDeck = (deck: Deck) => {
 		const isSelected = selectedDecks.some((selectedDeck) => selectedDeck.name === deck.name);

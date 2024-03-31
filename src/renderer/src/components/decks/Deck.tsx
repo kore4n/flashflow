@@ -1,7 +1,13 @@
 import { ActiveTab } from 'src/types/types'
 import DeckPage from './DeckPage'
 
-function Deck({ activeTab, toCardsByDeckBtn }: { activeTab: ActiveTab, toCardsByDeckBtn: Function}): JSX.Element {
+function Deck({
+  activeTab,
+  toCardsByDeckBtn
+}: {
+  activeTab: ActiveTab
+  toCardsByDeckBtn: Function
+}): JSX.Element {
   if (activeTab != 'Decks') return <></>
 
   return (
