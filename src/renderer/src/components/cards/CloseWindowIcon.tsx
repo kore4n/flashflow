@@ -1,18 +1,27 @@
-function CloseWindowIcon(): JSX.Element {
+function CloseWindowIcon({
+  // eslint-disable-next-line react/prop-types
+  width = '50px',
+  // eslint-disable-next-line react/prop-types
+  height = '50px',
+  // eslint-disable-next-line react/prop-types
+  circleColour = '#D52B1E',
+  // eslint-disable-next-line react/prop-types
+  pathColour = '#D52B1E'
+}): JSX.Element {
   return (
     <div className="flex flex-row min-w-48">
       <div className="grid place-items-center">
         <svg
-          width="50px"
-          height="50px"
+          width={width}
+          height={height}
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <circle cx="12" cy="12" r="10" stroke="#D52B1E" strokeWidth="2" />
+          <circle cx="12" cy="12" r="10" stroke={circleColour} strokeWidth="2" />
           <path
             d="M8 8L16 16M8 16L16 8"
-            stroke="#D52B1E"
+            stroke={pathColour}
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"

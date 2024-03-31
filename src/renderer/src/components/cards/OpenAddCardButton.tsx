@@ -1,4 +1,4 @@
-import OpenAddCardIcon from './OpenAddCardIcon'
+import AddSignIcon from './AddSignIcon'
 // import { Card } from 'src/types/types'
 
 function addCard(): void {
@@ -9,7 +9,7 @@ function addCard(): void {
 function OpenAddCard(): JSX.Element {
   return (
     <button onClick={addCard} className=" max-h-20 max-w-20">
-      <OpenAddCardIcon />
+      <AddSignIcon />
     </button>
   )
 }

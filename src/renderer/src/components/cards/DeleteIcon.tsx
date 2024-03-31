@@ -1,5 +1,5 @@
 // eslint-disable-next-line react/prop-types
-function DeleteIcon({ width = '50px', height = '50px' }): JSX.Element {
+function DeleteIcon({ width = '50px', height = '50px', colour = '#D52B1E' }): JSX.Element {
   return (
     <div className="flex flex-row min-w-48">
       <div className="grid place-items-center">
@@ -10,7 +10,7 @@ function DeleteIcon({ width = '50px', height = '50px' }): JSX.Element {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <circle cx="12" cy="12" r="10" stroke="#D51B1E" strokeWidth="2" />
+          <circle cx="12" cy="12" r="10" stroke={colour} strokeWidth="2" />
           <rect x="7" y="11" width="10" height="2" fill="#D52B1E" />
         </svg>
       </div>

@@ -3,8 +3,10 @@ import { Card, DeckName, Tag, ExpertNote } from 'src/types/types'
 import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
-import deck from '../../decks/Deck'
 import CheckMarkIcon from '../CheckMarkIcon'
+import AddSignIcon from '../AddSignIcon'
+import DeleteIcon from '../DeleteIcon'
+import { subtle } from 'node:crypto'
 
 const DEFAULT_DECK_NAME: string = 'DEFAULT'
 
@@ -17,9 +19,13 @@ function InputLabel({ children }: { children: ReactNode }): JSX.Element {
 }
 function AddCardForm(): JSX.Element {
   async function addCard(): Promise<void> {
-    if (!cardFrontInput.trim() || !cardBackInput.trim()) {
-      alert('Card front and back must be filled out.')
+    if (!cardFrontInput.trim()) {
+      alert('Card front must be filled out.')
       return
+    }
+    const lastNote = expertNotesInput[expertNotesInput.length - 1]
+    if (lastNote.subtitle.trim().length == 0 && lastNote.body.trim().length == 0) {
+      expertNotesInput.pop()
     }
     const cardToAdd: Card = {
       cardID: (await getLargestCardID()) + 1,
@@ -39,9 +45,9 @@ function AddCardForm(): JSX.Element {
   const [cardFrontInput, setCardFront] = useState<string>('')
   const [cardBackInput, setCardBack] = useState<string>('')
   const [sideNoteInput, setSideNote] = useState<string>('')
-  const [expertNotesInput, setExpertNotes] = useState<ExpertNote[]>([])
   const [tagsInput, setCardTags] = useState<Tag[]>([])
   const [belongsToDeckInput, setBelongsToDeck] = useState<DeckName[]>([])
+  const [expertNotesInput, setExpertNotes] = useState<ExpertNote[]>([])
 
   function changeCardToAddFront(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardFront(event.target.value)
@@ -54,8 +60,6 @@ function AddCardForm(): JSX.Element {
   function changeCardToAddSideNote(event: React.ChangeEvent<HTMLInputElement>): void {
     setSideNote(event.target.value)
   }
-
-  function changeCardToAddExpertNotes(event: ExpertNote): void {} // needs a boolean as a toggle switch to Expert Mode
 
   function changeCardToAddBelongsToDeck(event: React.ChangeEvent<HTMLInputElement>): void {
     const newArray = event.target.value
@@ -70,6 +74,36 @@ function AddCardForm(): JSX.Element {
       .filter(Boolean) // empty deck names are not allowed
     if (newArray.length === 0) newArray.push(DEFAULT_DECK_NAME) // Assigns <DEFAULT_DECK_NAME> if the array is eventually empty
     setBelongsToDeck(newArray)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const addExpertNote = () => {
+    const lastNote = expertNotesInput[expertNotesInput.length - 1]
+    if (!lastNote || lastNote.subtitle.trim() !== '' || lastNote.body.trim() !== '') {
+      setExpertNotes([...expertNotesInput, { subtitle: '', body: '' }])
+    } else {
+      alert('An empty Expert Note detected. Complete it before adding a new one.')
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const handleExpertNotesChange = (index: number, type: 'subtitle' | 'body', value: string) => {
+    const updatedExpertNote = [...expertNotesInput]
+    if (value.trim().length > 0) {
+      if (type === 'subtitle') {
+        updatedExpertNote[index].subtitle = value
+      } else {
+        updatedExpertNote[index].body = value
+      }
+      setExpertNotes(updatedExpertNote)
+    }
+
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const deleteExpertNote = (index: number) => {
+    const updatedPairs = expertNotesInput.filter((_, i) => i !== index)
+    setExpertNotes(updatedPairs)
   }
 
   return (
@@ -101,6 +135,31 @@ function AddCardForm(): JSX.Element {
           ></input>
         </InputColumn>
         <InputColumn>
+          {expertNotesInput.map((expertNote, index) => (
+            <div key={index} className="flex flex-col gap-4">
+              <InputLabel>Expert Note {index + 1}</InputLabel>
+              <input
+                type="text"
+                placeholder="Subtitle"
+                value={expertNote.subtitle}
+                onChange={(e) => handleExpertNotesChange(index, 'subtitle', e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Body"
+                value={expertNote.body}
+                onChange={(e) => handleExpertNotesChange(index, 'body', e.target.value)}
+              />
+              <button onClick={() => deleteExpertNote(index)} className="ml-auto">
+                <DeleteIcon width="30px" height="30px" colour="#D52B1E" />
+              </button>
+            </div>
+          ))}
+          <button onClick={addExpertNote} className="ml-2">
+            <AddSignIcon width="30px" height="30px" />
+          </button>
+        </InputColumn>
+        <InputColumn>
           <InputLabel>Deck</InputLabel>
           <input
             onChange={changeCardToAddBelongsToDeck}
@@ -115,7 +174,7 @@ function AddCardForm(): JSX.Element {
 
         <br></br>
         <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
-          Add Card
+          Add Card (can be replaced by icon)
         </button>
       </div>
       <button onClick={addCard} className=" max-h-20 max-w-20">

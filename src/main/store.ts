@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron'
+import { BrowserWindow, ipcMain } from 'electron'
 import Store from 'electron-store'
 import { Card, DatabaseSchema, Deck } from '../types/types'
 
@@ -17,7 +17,7 @@ function storeContainsCardWithID(CardIDToGet: number): Card | null {
   return null
 }
 
-function setupElectronStore(): void {
+function setupElectronStore(BrowserWindow): void {
   // // Just for testing. Don't use, make your own
   // ipcMain.on('electron-store-get', async (event, val) => {
   //   event.returnValue = store.get(val)
@@ -27,13 +27,13 @@ function setupElectronStore(): void {
   //   store.set(key, val)
   // })
 
-  ipcMain.on('electron-store-push-deck-to-show', async (event, name: string) => {
+  ipcMain.on('electron-store-push-deck-to-show', async (_event, name: string) => {
     store.set('deckToShow', name)
   })
   ipcMain.handle('electron-store-get-deck-to-show', async (event) => {
     return store.get('deckToShow')
   })
-  ipcMain.on('electron-store-add-deck', async (event, newDeck: Deck) => {
+  ipcMain.on('electron-store-add-deck', async (_event, newDeck: Deck) => {
     if (!store.has('decks')) {
       store.set('decks', [newDeck])
     } else {
@@ -41,19 +41,23 @@ function setupElectronStore(): void {
       store.set('decks', decks)
     }
   })
-  ipcMain.on('electron-store-delete-deck', async (event, name: string) => {
+  ipcMain.on('electron-store-delete-deck', async (_event, name: string) => {
     const currentDeckList = store.get('decks')
     const newDeckList = currentDeckList.filter((x) => x.name.localeCompare(name) != 0)
     store.set('decks', newDeckList)
+
+    const currentCardList = store.get('cards')
+    const newCardList = currentCardList.filter((x) => !x.belongsToDeck.includes(name))
+    store.set('cards', newCardList)
   })
-  ipcMain.handle('electron-store-get-deck', async (event, name: string) => {
-    return store.get('cards').filter((x) => !x.belongsToDeck.find(x => x.localeCompare(name)))
+  ipcMain.handle('electron-store-get-deck', async (_event, name: string) => {
+    return store.get('cards').filter((x) => x.belongsToDeck.includes(name))
   })
   ipcMain.handle('electron-store-get-all-decks', async (event) => {
     return store.has('decks') ? store.get('decks') : []
   })
 
-  ipcMain.on('electron-store-add-card', async (event, cardToAdd: Card) => {
+  ipcMain.on('electron-store-add-card', async (_event, cardToAdd: Card) => {
     // Store has no cards
     if (!store.has('cards')) {
       store.set('cards', [cardToAdd])
