@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Card } from 'src/types/types'
 
 function DisplayCards({
@@ -6,13 +6,28 @@ function DisplayCards({
   selectedDeckName
 }: {
   cards: Card[]
-  selectedDeckName
+  selectedDeckName: any
 }): JSX.Element | string {
   if (cards.length == 0 && selectedDeckName.localeCompare('') != 0) {
     return selectedDeckName + ' has no cards!'
   } else if (cards.length == 0) return 'You have no cards!'
 
-  const cardsElement = cards.map((card, index) => (
+  const [filteredCards, setFilteredCards] = useState(cards)
+  const [selectedTag, setSelectedTag] = useState('')
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const handleTagClick = (tagText: SetStateAction<string>) => {
+    setSelectedTag(tagText)
+    const filtered = cards.filter((card) => card.tags.some((tag) => tag.tagText === tagText))
+    setFilteredCards(filtered)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const resetFilter = () => {
+    setSelectedTag('')
+    setFilteredCards(cards)
+  }
+
+  const cardsElement = filteredCards.map((card, index) => (
     <tr className="even: bg-slate-600 odd:bg-slate-800 shadow" key={card.cardID}>
       <td>{index + 1}</td>
       <td>{card.cardFront}</td>
@@ -21,7 +36,11 @@ function DisplayCards({
       <td>
         {(card.tags || []).length > 0 ? (
           card.tags.map((tag, tagIndex) => (
-            <span key={tagIndex}>
+            <span
+              key={tagIndex}
+              onClick={() => handleTagClick(tag.tagText)}
+              style={{ cursor: 'pointer' }}
+            >
               {tag.tagText}
               {tagIndex < card.tags.length - 1 ? ', ' : ''}
             </span>
@@ -35,9 +54,19 @@ function DisplayCards({
 
   return (
     <>
-      <h1 className="text-blue-500 text-2xl font-bold">
-        List of {selectedDeckName.localeCompare('') == 0 ? 'every' : selectedDeckName + "'s"} card
-      </h1>
+      {/*<h1 className="text-blue-500 text-2xl font-bold">*/}
+      {/*  List of {selectedDeckName.localeCompare('') == 0 ? 'every' : selectedDeckName + "'s"} card*/}
+      {/*</h1>*/}
+      <button
+        className="text-blue-500 text-2xl font-bold"
+        onClick={resetFilter}
+        style={{ margin: '10px', padding: '5px' }}
+      >
+        {selectedTag
+          ? 'Cards tagged as #' + selectedTag + ' (click to clear filter)'
+          : 'All cards ' +
+            (selectedDeckName.localeCompare('') == 0 ? '' : 'under ' + selectedDeckName)}
+      </button>
       <table className="list-decimal">
         <thead>
           <tr>
@@ -115,6 +144,40 @@ async function getLargestCardID(): Promise<number> {
   } catch (error) {
     console.error('Failed to get cards:', error)
     return 0
+  }
+}
+
+async function getAllTags(): Promise<any[]> {
+  const tagsSet = new Set()
+  try {
+    const cards = await window.api.store.getAllCards()
+    cards.forEach((card) => {
+      card.tags.forEach((tag) => {
+        tagsSet.add(tag)
+      })
+    })
+    return Array.from(tagsSet)
+  } catch (error) {
+    console.error('Failed to get cards:', error)
+    return []
+  }
+}
+
+async function getCardswithTag(tagText): Promise<any[]> {
+  const cardsSet = new Set()
+  try {
+    const cards = await window.api.store.getAllCards()
+    cards.forEach((card) => {
+      card.tags.forEach((tag) => {
+        if (tagText == tag.tagText) {
+          cardsSet.add(card)
+        }
+      })
+    })
+    return Array.from(cardsSet)
+  } catch (error) {
+    console.error('Failed to get cards:', error)
+    return []
   }
 }
 

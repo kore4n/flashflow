@@ -4,6 +4,7 @@ import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
 import deck from '../../decks/Deck'
+import CheckMarkIcon from '../CheckMarkIcon'
 
 const DEFAULT_DECK_NAME: string = 'DEFAULT'
 
@@ -30,7 +31,6 @@ function AddCardForm(): JSX.Element {
       belongsToDeck: belongsToDeckInput.length ? belongsToDeckInput : [DEFAULT_DECK_NAME],
       cardStatus: 0 // can be some other type
     }
-
     window.api.store.addCard(cardToAdd)
     window.close()
     // console.log('adding card to database')
@@ -112,12 +112,15 @@ function AddCardForm(): JSX.Element {
           <InputLabel>Tags</InputLabel>
           <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
         </InputColumn>
+
         <br></br>
         <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
           Add Card
         </button>
       </div>
-      <br />
+      <button onClick={addCard} className=" max-h-20 max-w-20">
+        <CheckMarkIcon />
+      </button>
       <CloseWindow />
     </div>
   )
