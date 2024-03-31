@@ -1,21 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Tag, TagsInputProps } from 'src/types/types'
+import { getAllTags } from '../CardsTable'
 
+const allTags = getAllTags()
 const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
   const [inputValue, setInputValue] = useState<string>('')
-  const [currentColor, setCurrentColor] = useState<string>('#000000')
+  const [currentColor, setCurrentColor] = useState<string>('#00000033')
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const colorPickerRef = useRef<HTMLDivElement>(null)
   const colours = [
-    '#000000',
-    '#FF5733',
-    '#33FF57',
-    '#3357FF',
-    '#F333FF',
-    '#33FFF3',
+    '#00000033',
+    '#FF6600',
+    '#10B000',
+    '#0050FF',
+    '#11BCFF',
+    '#C12B1E',
     '#F3FF33',
-    '#FF33F3'
+    '#FFAAF3'
   ]
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
     setInputValue(e.target.value)
   }
 
-  const addTag = (tagText: string): void => {
+  const addTag = async (tagText: string): Promise<void> => {
     const sanitizedText = tagText.trim().replace(/,/, '')
     if (sanitizedText.length == 0) {
       return
@@ -63,9 +65,15 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
       alert('Tag already exists')
       return
     }
+    let newTagText: string = sanitizedText.toLowerCase()
+    let newTagColour: string = currentColor.toUpperCase()
+    if (sanitizedText.toLowerCase() in Object.keys(allTags)) {
+      newTagText = sanitizedText.toLowerCase()
+      newTagColour = allTags[newTagText]
+    }
     const newTag: Tag = {
-      tagText: sanitizedText.toLowerCase(),
-      tagColor: currentColor.toUpperCase()
+      tagText: newTagText,
+      tagColor: newTagColour
     }
     setTags([...tempTagPool, newTag])
     setInputValue('')
@@ -96,7 +104,7 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
         <div
           key={index}
           style={{
-            background: '#666',
+            background: '#666666',
             color: '#ccc',
             display: 'inline-flex',
             alignItems: 'center',
@@ -165,7 +173,7 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
             flexWrap: 'wrap',
             position: 'absolute',
             zIndex: 1000,
-            backgroundColor: '#dddddd99',
+            backgroundColor: '#dddddd66',
             border: '0px solid #ddd'
           }}
         >

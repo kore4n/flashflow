@@ -63,9 +63,11 @@ function DisplayCards({
         style={{ margin: '10px', padding: '5px' }}
       >
         {selectedTag
-          ? 'Cards tagged as #' + selectedTag + ' (click to clear filter)'
+          ? 'Cards with the tag: #' + selectedTag + ' (click to clear filter)'
           : 'All cards ' +
-            (selectedDeckName.localeCompare('') == 0 ? '' : 'under ' + selectedDeckName)}
+            (selectedDeckName.localeCompare('') == 0
+              ? 'in your database'
+              : 'in deck: ' + selectedDeckName)}
       </button>
       <table className="list-decimal">
         <thead>
@@ -147,23 +149,23 @@ async function getLargestCardID(): Promise<number> {
   }
 }
 
-async function getAllTags(): Promise<any[]> {
-  const tagsSet = new Set()
+async function getAllTags(): Promise<Record<string, string>> {
+  const tagsSet: Record<string, string> = {}
   try {
     const cards = await window.api.store.getAllCards()
     cards.forEach((card) => {
       card.tags.forEach((tag) => {
-        tagsSet.add(tag)
+        tagsSet[tag.tagText] = tag.tagColor
       })
     })
-    return Array.from(tagsSet)
+    return tagsSet
   } catch (error) {
     console.error('Failed to get cards:', error)
-    return []
+    return tagsSet
   }
 }
 
-async function getCardswithTag(tagText): Promise<any[]> {
+async function getCardsWithTag(tagText): Promise<any[]> {
   const cardsSet = new Set()
   try {
     const cards = await window.api.store.getAllCards()
@@ -182,4 +184,4 @@ async function getCardswithTag(tagText): Promise<any[]> {
 }
 
 export default CardsTable
-export { getLargestCardID }
+export { getLargestCardID, getAllTags }
