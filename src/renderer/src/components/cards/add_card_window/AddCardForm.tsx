@@ -1,10 +1,10 @@
 import React, { ReactNode, useState } from 'react'
-import { Card, DeckName, Tag, ExpertNote } from 'src/types/types'
+import { Card, DeckName, Tag, ExpertNote, Deck } from 'src/types/types'
 import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
 import CheckMarkIcon from '../CheckMarkIcon'
-import AddSignIcon from '../AddSignIcon'
+// import AddSignIcon from '../AddSignIcon'
 import DeleteIcon from '../DeleteIcon'
 import { subtle } from 'node:crypto'
 
@@ -48,6 +48,35 @@ function AddCardForm(): JSX.Element {
   const [tagsInput, setCardTags] = useState<Tag[]>([])
   const [belongsToDeckInput, setBelongsToDeck] = useState<DeckName[]>([])
   const [expertNotesInput, setExpertNotes] = useState<ExpertNote[]>([])
+  const [decks, setDecks] = useState<Deck[]>([])
+
+  async function GetDecks(): Promise<void> {
+    setDecks(await window.api.store.getAllDecks())
+  }
+  GetDecks()
+
+  function toggleDeck(name: DeckName): void {
+    var tempdeckLst = belongsToDeckInput;
+    if(tempdeckLst.find(x => x.localeCompare(name) == 0)){
+
+      var deckToDeleteIndex = tempdeckLst.findIndex(x => x.localeCompare(name) == 0)
+      tempdeckLst.splice(deckToDeleteIndex, 1)
+      setBelongsToDeck(tempdeckLst)
+    }
+    else {
+      tempdeckLst.push(name)
+      setBelongsToDeck(tempdeckLst)
+    }
+  }
+
+  const deckTblList = decks.map((deck) => (
+    <tr className="bg-slate-800" key={deck.name}>
+      <td className="pl-2" >
+      <input type="checkbox" onClick={() => toggleDeck(deck.name)}></input>
+        {deck.name}
+      </td>
+    </tr>
+  ))
 
   function changeCardToAddFront(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardFront(event.target.value)
@@ -59,21 +88,6 @@ function AddCardForm(): JSX.Element {
 
   function changeCardToAddSideNote(event: React.ChangeEvent<HTMLInputElement>): void {
     setSideNote(event.target.value)
-  }
-
-  function changeCardToAddBelongsToDeck(event: React.ChangeEvent<HTMLInputElement>): void {
-    const newArray = event.target.value
-      .split(',') // Here the input is assumed to be comma-separated, but we need a dropdown list of checkboxes
-      .map((value) => {
-        // only allows alphanumeric characters and spaces and converts it to uppercase
-        return value
-          .trim()
-          .toUpperCase()
-          .replace(/[^a-zA-Z0-9\s]/g, '')
-      })
-      .filter(Boolean) // empty deck names are not allowed
-    if (newArray.length === 0) newArray.push(DEFAULT_DECK_NAME) // Assigns <DEFAULT_DECK_NAME> if the array is eventually empty
-    setBelongsToDeck(newArray)
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -156,16 +170,15 @@ function AddCardForm(): JSX.Element {
             </div>
           ))}
           <button onClick={addExpertNote} className="ml-2">
-            <AddSignIcon width="30px" height="30px" />
           </button>
         </InputColumn>
         <InputColumn>
-          <InputLabel>Deck</InputLabel>
-          <input
-            onChange={changeCardToAddBelongsToDeck}
-            type="text"
-            placeholder={'Deck names'}
-          ></input>
+          <InputLabel>Decks</InputLabel>
+            <table>
+              <tbody>
+                {deckTblList}
+              </tbody>
+            </table>
         </InputColumn>
         <InputColumn>
           <InputLabel>Tags</InputLabel>
