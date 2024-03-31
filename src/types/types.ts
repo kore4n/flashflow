@@ -1,4 +1,4 @@
-type ActiveTab = 'Decks' | 'Cards' | 'Stats' | 'Study' 
+type ActiveTab = 'Decks' | 'Cards' | 'Stats' | 'Study'
 
 type Card = {
   name: string
@@ -6,6 +6,7 @@ type Card = {
   back: string
   tags?: string[]
   deckName: string
+  value: number
   // if you generated cards without deckName property,
   // delete them or else it will throw errors
 
@@ -23,8 +24,7 @@ type DatabaseSchema = {
   decks: Deck[]
 }
 
-type Study = {
-	decks: Deck[]
-}
 
-export { type ActiveTab, type DatabaseSchema, type Card, type Deck, type Study}
+
+
+export { type ActiveTab, type DatabaseSchema, type Card, type Deck }
