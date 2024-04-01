@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom'
 import { Card } from 'src/types/types'
 import InputColumn from '../InputColumn'
 import InputLabel from '../InputLabel'
+import CheckMarkIcon from '../CheckMarkIcon'
+import CloseWindowButton from '../CloseWindowButton'
 
 function EditCardInputs({ card }: { card: Card }): JSX.Element {
   const [cardFrontToEdit, setCardFrontToEdit] = useState<string>('')
@@ -30,7 +32,7 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
 
     // console.log('adding: ' + JSON.stringify(cardToUpdate))
 
-    window.api.closeCurrentWindow()
+    window.close()
   }
 
   const onCardFrontChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -54,8 +56,11 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
         <input type={'text'} onChange={onCardBackChange} defaultValue={cardBackToEdit}></input>
       </InputColumn>
 
-      <button className="bg-slate-800 hover:bg-slate-900 p-1" onClick={saveAndExit}>
-        Save and Exit
+      <button className="bg-slate-000 hover:bg-slate-900 p-1 table-cell" onClick={saveAndExit}>
+        Save <CheckMarkIcon width="40px" height="40px" />
+      </button>
+      <button className="bg-slate-000 hover:bg-slate-900 p-1 m-5 table-cell">
+        Cancel <CloseWindowButton width="40px" height="40px" />
       </button>
     </div>
   )

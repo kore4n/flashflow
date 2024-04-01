@@ -9,16 +9,7 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const colorPickerRef = useRef<HTMLDivElement>(null)
-  const colours = [
-    '#00000033',
-    '#FF6600',
-    '#10B000',
-    '#0050FF',
-    '#11BCFF',
-    '#C12B1E',
-    '#F3FF33',
-    '#FFAAF3'
-  ]
+  const colours = ['#111111', '#003794', '#16a4d8', '#60dbe8', '#8bd346', '#f9a52c', '#d64e12']
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

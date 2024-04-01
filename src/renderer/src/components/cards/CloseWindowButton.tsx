@@ -1,7 +1,16 @@
 import CloseWindowIcon from './CloseWindowIcon'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-function CloseWindow() {
+function CloseWindow({
+  // eslint-disable-next-line react/prop-types
+  width = '50px',
+  // eslint-disable-next-line react/prop-types
+  height = '50px',
+  // eslint-disable-next-line react/prop-types
+  pathColour = '#D52B1E',
+  // eslint-disable-next-line react/prop-types
+  circleColour = '#D52B1E'
+}) {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleClose = () => {
     window.close()
@@ -9,7 +18,12 @@ function CloseWindow() {
 
   return (
     <button onClick={handleClose} aria-label="Close window" className="grid place-items-center">
-      <CloseWindowIcon />
+      <CloseWindowIcon
+        width={width}
+        height={height}
+        pathColour={pathColour}
+        circleColour={circleColour}
+      />
     </button>
   )
 }

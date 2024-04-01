@@ -3,16 +3,14 @@ import { Card, DeckName, Tag, ExpertNote, Deck } from 'src/types/types'
 import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
-import CheckMarkIcon from '../CheckMarkIcon'
 import AddSignIcon from '../AddSignIcon'
 import DeleteIcon from '../DeleteIcon'
-
-const DEFAULT_DECK_NAME: string = 'DEFAULT'
 import AddCardWarnings from './AddCardWarnings'
 import AddCardSubmitButton from './AddCardSubmitButton'
-
 import InputColumn from '../InputColumn'
 import InputLabel from '../InputLabel'
+import { DEFAULT_DECK_NAME } from '../../decks/DeckPage'
+
 function AddCardForm(): JSX.Element {
   async function addCard(): Promise<void> {
     if (!cardFrontInput.trim()) {
@@ -62,16 +60,17 @@ function AddCardForm(): JSX.Element {
     if (tempdeckLst.find((x) => x.localeCompare(name) == 0)) {
       const deckToDeleteIndex = tempdeckLst.findIndex((x) => x.localeCompare(name) == 0)
       tempdeckLst.splice(deckToDeleteIndex, 1)
-      setBelongsToDeck(tempdeckLst)
     } else {
       tempdeckLst.push(name)
-      setBelongsToDeck(tempdeckLst)
     }
+    setBelongsToDeck(tempdeckLst)
   }
 
-  const deckTblList = decks.map((deck) => (
-    <tr className="bg-slate-800" key={deck.name}>
-      <td className="pl-2">
+  const sortedDecks = decks.sort((a, b) => a.name.localeCompare(b.name))
+
+  const deckTblList = sortedDecks.map((deck) => (
+    <tr className="bg-slate-100 w-full block" key={deck.name}>
+      <td className="pl-2 w-full">
         <input type="checkbox" onClick={() => toggleDeck(deck.name)}></input>
         {' ' + deck.name}
       </td>
@@ -174,14 +173,19 @@ function AddCardForm(): JSX.Element {
         </InputColumn>
         <InputColumn>
           <InputLabel>Decks</InputLabel>
-          <table>
-            <tbody>{deckTblList}</tbody>
-          </table>
+          <div style={{ width: '100%', overflowX: 'auto' }}>
+            <table
+              style={{ width: '100%', display: 'block', maxHeight: '70px', overflowY: 'scroll' }}
+            >
+              {deckTblList}
+            </table>
+          </div>
         </InputColumn>
         <InputColumn>
           <InputLabel>Tags</InputLabel>
           <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
         </InputColumn>
+        <br />
         <AddCardSubmitButton
           onClick={addCard}
           // cardName={cardToAddName}
@@ -194,9 +198,6 @@ function AddCardForm(): JSX.Element {
           cardBackInput={cardBackInput}
         />
       </div>
-      {/* <button onClick={addCard} className=" max-h-20 max-w-20">
-        <CheckMarkIcon />
-      </button> */}
       <CloseWindow />
     </div>
   )

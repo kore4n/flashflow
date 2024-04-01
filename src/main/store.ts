@@ -1,6 +1,8 @@
 import { BrowserWindow, ipcMain } from 'electron'
 import Store from 'electron-store'
 import { Card, DatabaseSchema, Deck } from '../types/types'
+import { name } from 'autoprefixer'
+import cards from '../renderer/src/components/cards/Cards'
 
 const store = new Store<DatabaseSchema>()
 
@@ -32,6 +34,7 @@ function storeContainsCardWithID(IDOfCardToGet: number): Card | null {
 }
 
 function setupElectronStore(window: BrowserWindow): void {
+  ensureDefaultDeckExists()
   // // Just for testing. Don't use, make your own
   // ipcMain.on('electron-store-get', async (event, val) => {
   //   event.returnValue = store.get(val)
@@ -65,7 +68,8 @@ function setupElectronStore(window: BrowserWindow): void {
     store.set('cards', newCardList)
   })
   ipcMain.handle('electron-store-get-deck', async (_event, name: string) => {
-    return store.get('cards').filter((x) => x.belongsToDeck.includes(name))
+    const allCards = store.get('cards')
+    if (allCards.length > 0) return store.get('cards').filter((x) => x.belongsToDeck.includes(name))
   })
   ipcMain.handle('electron-store-get-all-decks', async (event) => {
     return store.has('decks') ? store.get('decks') : []
@@ -136,9 +140,20 @@ function setupElectronStore(window: BrowserWindow): void {
     })
 
     store.set('cards', newCards)
-
     window.webContents.send('on-electron-store-cards-updated')
   })
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+function ensureDefaultDeckExists() {
+  const decks = store.has('decks') ? store.get('decks') : []
+  const hasDefaultDeck = decks.some((deck) => deck.name === 'DEFAULT')
+
+  if (!hasDefaultDeck) {
+    const defaultDeck = { name: 'DEFAULT', cards: [] } // Assuming the structure of a Deck object
+    store.set('decks', [...decks, defaultDeck])
+    console.log('Added "DEFAULT" deck to the database.')
+  }
 }
 
 export default setupElectronStore
