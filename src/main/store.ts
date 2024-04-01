@@ -70,6 +70,7 @@ function setupElectronStore(window: BrowserWindow): void {
   ipcMain.handle('electron-store-get-deck', async (_event, name: string) => {
     const allCards = store.get('cards')
     if (allCards.length > 0) return store.get('cards').filter((x) => x.belongsToDeck.includes(name))
+    return []
   })
   ipcMain.handle('electron-store-get-all-decks', async (event) => {
     return store.has('decks') ? store.get('decks') : []

@@ -2,6 +2,7 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { Card } from 'src/types/types'
 import DeleteCardButton from './DeleteCardButton'
 import EditCardButton from './EditCardButton'
+import { DEFAULT_DECK_NAME } from '../decks/DeckPage'
 
 function DisplayCards({
   cards,
@@ -125,9 +126,11 @@ function CardsTable(): JSX.Element {
       // console.log(cards.length)
 
       // console.log('Getting requested cards.')
-      setCards(cards)
-      setSelectedDeckName(selectedDeckName)
-      setLoading(false)
+      if (cards) {
+        setCards(cards)
+        setSelectedDeckName(selectedDeckName)
+        setLoading(false)
+      }
     }
 
     window.api.store.onCardsUpdated(() => {
