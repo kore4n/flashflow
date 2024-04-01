@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { Card, DeckName, Tag, ExpertNote } from 'src/types/types'
 import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
@@ -6,14 +6,16 @@ import { getLargestCardID } from '../CardsTable'
 import CheckMarkIcon from '../CheckMarkIcon'
 import AddSignIcon from '../AddSignIcon'
 import DeleteIcon from '../DeleteIcon'
-import { subtle } from 'node:crypto'
 
 const DEFAULT_DECK_NAME: string = 'DEFAULT'
-import AddCardWarnings from './AddCardWarnings'
-import AddCardSubmitButton from './AddCardSubmitButton'
 
-import InputColumn from '../InputColumn'
-import InputLabel from '../InputLabel'
+function InputColumn({ children }: { children: ReactNode }): JSX.Element {
+  return <div className="flex flex-col">{children}</div>
+}
+
+function InputLabel({ children }: { children: ReactNode }): JSX.Element {
+  return <label className="font-bold text-xl">{children}</label>
+}
 function AddCardForm(): JSX.Element {
   async function addCard(): Promise<void> {
     if (!cardFrontInput.trim()) {
@@ -173,17 +175,11 @@ function AddCardForm(): JSX.Element {
           <InputLabel>Tags</InputLabel>
           <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
         </InputColumn>
-        <AddCardSubmitButton
-          onClick={addCard}
-          // cardName={cardToAddName}
-          cardFront={cardFrontInput}
-          cardBack={cardBackInput}
-        />
-        <AddCardWarnings
-          // cardToAddName={cardToAddName}
-          cardFrontInput={cardFrontInput}
-          cardBackInput={cardBackInput}
-        />
+
+        <br></br>
+        <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
+          Add Card (can be replaced by icon)
+        </button>
       </div>
       <button onClick={addCard} className=" max-h-20 max-w-20">
         <CheckMarkIcon />
