@@ -16,6 +16,12 @@ function DisplayCards({
 
   const [filteredCards, setFilteredCards] = useState(cards)
   const [selectedTag, setSelectedTag] = useState('')
+
+  useEffect(() => {
+    // console.log('filteredCards.length')
+    // console.log(filteredCards.length)
+  })
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleTagClick = (tagText: SetStateAction<string>) => {
     setSelectedTag(tagText)
@@ -30,7 +36,10 @@ function DisplayCards({
   }
 
   const cardsElement = filteredCards.map((card, index) => (
-    <tr className="even: bg-slate-600 odd:bg-slate-800 shadow" key={card.cardID}>
+    <tr
+      className="even: bg-slate-700 odd:bg-slate-800 shadow [&>*]:px-4 [&>*]:py-2"
+      key={card.cardID}
+    >
       <td>{index + 1}</td>
       <td>{card.cardFront}</td>
       <td>{card.cardBack}</td>
@@ -51,6 +60,8 @@ function DisplayCards({
           <span></span> // no tags
         )}
       </td>
+      <DeleteCardButton cardID={card.cardID!} />
+      <EditCardButton cardID={card.cardID!} />
     </tr>
   ))
 
@@ -59,28 +70,32 @@ function DisplayCards({
       {/*<h1 className="text-blue-500 text-2xl font-bold">*/}
       {/*  List of {selectedDeckName.localeCompare('') == 0 ? 'every' : selectedDeckName + "'s"} card*/}
       {/*</h1>*/}
-      <button
-        className="text-blue-500 text-2xl font-bold"
-        onClick={resetFilter}
-        style={{ margin: '10px', padding: '5px' }}
-      >
-        {selectedTag
-          ? 'Cards with the tag: #' + selectedTag + ' (click to clear filter)'
-          : 'All cards ' +
-            (selectedDeckName.localeCompare('') == 0
-              ? 'in your database'
-              : 'in deck: ' + selectedDeckName)}
-      </button>
-      <table className="list-decimal">
+      <div className=" grid place-items-center py-2">
+        <button
+          className=" text-gray-300 text-2xl font-bold"
+          onClick={resetFilter}
+          style={{ margin: '10px', padding: '5px' }}
+        >
+          {selectedTag
+            ? 'Cards with the tag: #' + selectedTag + ' (click to clear filter)'
+            : 'All cards ' +
+              (selectedDeckName.localeCompare('') == 0
+                ? 'in your database'
+                : 'in deck: ' + selectedDeckName)}
+        </button>
+      </div>
+
+      <table className="list-decimal shadow-xl">
         <thead>
           <tr>
             {/* <th>Number</th> */}
-            <th>ID</th>
+            <th>Order</th>
             <th>Front</th>
             <th>Back</th>
             <th>Deck</th>
             <th>Tags</th>
-            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th>Delete</th>
+            <th>View/Edit</th>
           </tr>
         </thead>
         <tbody>{cardsElement}</tbody>
@@ -95,13 +110,6 @@ function CardsTable(): JSX.Element {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    // async function myFunc(): Promise<void> {
-    //   const a: Card = await window.api.store.getCardByName('some card')
-
-    //   // console.log('card is: ')
-    //   // console.log(a)
-    // }
-
     async function GetRequestedCards(): Promise<void> {
       const selectedDeckName = await window.api.store.getDeckToShow()
 
@@ -114,16 +122,20 @@ function CardsTable(): JSX.Element {
 
       // console.log('Getting all cards.')
       // console.log(JSON.stringify(cards))
+      // console.log(cards.length)
 
-      setSelectedDeckName(selectedDeckName)
+      // console.log('Getting requested cards.')
       setCards(cards)
+      setSelectedDeckName(selectedDeckName)
       setLoading(false)
     }
 
-    // myFunc()
-
+    window.api.store.onCardsUpdated(() => {
+      // console.log('Receiving request to update.')
+      GetRequestedCards()
+    })
     GetRequestedCards()
-  }, [cards])
+  }, [])
 
   if (isLoading) return <p>Loading...</p>
 

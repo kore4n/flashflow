@@ -28,7 +28,7 @@ async function cardIsValid(
   if (frontOfCardExists) return false
   // if (cardNameIsEmpty(cardName.trim())) return false
   if (!cardFrontIsValid(cardFront.trim())) return false
-  if (!cardBackIsValid(cardBack.trim())) return false
+  // if (!cardBackIsValid(cardBack.trim())) return false
 
   return true
 }

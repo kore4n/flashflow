@@ -1,11 +1,11 @@
 // eslint-disable-next-line react/prop-types
 function AddSignIcon({ width = '50px', height = '50px', colour = '#568203' }): JSX.Element {
   return (
-    <div className=" flex flex-row min-w-48">
+    <div className=" flex flex-row hover:cursor-pointer hover:opacity-40">
       <div className="grid place-items-center">
         <svg
-          width={ width }
-          height={ height }
+          width={width}
+          height={height}
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

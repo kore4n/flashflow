@@ -8,7 +8,7 @@ function CloseWindow() {
   }
 
   return (
-    <button onClick={handleClose} aria-label="Close window" className=" max-h-20 max-w-20">
+    <button onClick={handleClose} aria-label="Close window" className="grid place-items-center">
       <CloseWindowIcon />
     </button>
   )
