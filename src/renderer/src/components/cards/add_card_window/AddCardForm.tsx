@@ -74,7 +74,7 @@ function AddCardForm(): JSX.Element {
     <tr className="bg-slate-800" key={deck.name}>
       <td className="pl-2">
         <input type="checkbox" onClick={() => toggleDeck(deck.name)}></input>
-        {deck.name}
+        {' ' + deck.name}
       </td>
     </tr>
   ))
