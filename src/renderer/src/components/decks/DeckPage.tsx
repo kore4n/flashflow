@@ -42,7 +42,7 @@ function DeckTable({
   toCardsByDeckBtn: Function
 }): JSX.Element | string {
   function deleteDeck(name: string): void {
-    triggerToast(true, "Deleted Card!")
+    triggerToast(true, "Deleted Deck!")
     window.api.store.deleteDeck(name);
   }
   const deckEntries = decks.map((deck) => (

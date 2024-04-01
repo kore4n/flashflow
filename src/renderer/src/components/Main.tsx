@@ -7,11 +7,12 @@ import Navbar from './navigation/Navbar'
 import { useState } from 'react'
 import ToCardsByDeckBtn from './navigation/ToCardsByDeckBtn'
 import { ActiveTab } from 'src/types/types'
+import More from './more/More'
 
 function Main(): JSX.Element {
   const [activeTab, setActiveTab] = useState<ActiveTab>('Decks')
 
-  var toCardsByDeckBtn = (selectedDeckName) => {
+  const toCardsByDeckBtn = (selectedDeckName): JSX.Element => {
     return (
       <div>
         <ToCardsByDeckBtn
@@ -34,17 +35,21 @@ function Main(): JSX.Element {
         <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Cards">
           Cards
         </NavButton>
+        <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Study">
+          Study
+        </NavButton>
         <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Stats">
           Stats
         </NavButton>
-        <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Study">
-          Study
+        <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="More">
+          More
         </NavButton>
       </Navbar>
       <Deck activeTab={activeTab} toCardsByDeckBtn={toCardsByDeckBtn} />
       <Cards activeTab={activeTab} />
       <Stats activeTab={activeTab} />
       <Study activeTab={activeTab} />
+      <More activeTab={activeTab} />
     </div>
   )
 }

@@ -40,10 +40,10 @@ function AddCardWarnings({
         localWarnings.push(<AddCardWarning key={unique_key}>Card front is empty</AddCardWarning>)
       }
 
-      if (!cardBackIsValid(cardBackInput)) {
-        const unique_key = 'CardBackEmptyWarning'
-        localWarnings.push(<AddCardWarning key={unique_key}>Card back is empty</AddCardWarning>)
-      }
+      // if (!cardBackIsValid(cardBackInput)) {
+      //   const unique_key = 'CardBackEmptyWarning'
+      //   localWarnings.push(<AddCardWarning key={unique_key}>Card back is empty</AddCardWarning>)
+      // }
 
       setWarnings(localWarnings)
     }

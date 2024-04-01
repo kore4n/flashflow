@@ -1,5 +1,6 @@
 import { cardIsValid } from '@renderer/utils/cardValidity'
 import { useEffect, useState } from 'react'
+import CheckMarkIcon from '../CheckMarkIcon'
 
 function AddCardSubmitButton({
   onClick,
@@ -24,11 +25,15 @@ function AddCardSubmitButton({
   }, [cardFront, cardBack])
 
   if (!cardValid) {
-    return <span>Cannot submit!</span>
+    return <span className="  font-bold pt-10">Cannot submit!</span>
   }
   return (
-    <button className="bg-slate-800 hover:bg-slate-900" onClick={onClick}>
-      Submit
+    // <button className="bg-slate-800 hover:bg-slate-900" onClick={onClick}>
+    //   Submit
+    // </button>
+    // <CheckMarkIcon />
+    <button onClick={onClick} className=" max-h-20 grid place-items-center">
+      <CheckMarkIcon />
     </button>
   )
 }

@@ -1,5 +1,5 @@
-import React, { ReactNode, useState } from 'react'
-import { Card, DeckName, Tag, ExpertNote } from 'src/types/types'
+import React, { useState } from 'react'
+import { Card, DeckName, Tag, ExpertNote, Deck } from 'src/types/types'
 import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
@@ -8,14 +8,11 @@ import AddSignIcon from '../AddSignIcon'
 import DeleteIcon from '../DeleteIcon'
 
 const DEFAULT_DECK_NAME: string = 'DEFAULT'
+import AddCardWarnings from './AddCardWarnings'
+import AddCardSubmitButton from './AddCardSubmitButton'
 
-function InputColumn({ children }: { children: ReactNode }): JSX.Element {
-  return <div className="flex flex-col">{children}</div>
-}
-
-function InputLabel({ children }: { children: ReactNode }): JSX.Element {
-  return <label className="font-bold text-xl">{children}</label>
-}
+import InputColumn from '../InputColumn'
+import InputLabel from '../InputLabel'
 function AddCardForm(): JSX.Element {
   async function addCard(): Promise<void> {
     if (!cardFrontInput.trim()) {
@@ -42,9 +39,9 @@ function AddCardForm(): JSX.Element {
       belongsToDeck: belongsToDeckInput.length ? belongsToDeckInput : [DEFAULT_DECK_NAME],
       cardStatus: 0 // can be some other type
     }
+    // console.log('adding card to database')
     window.api.store.addCard(cardToAdd)
     window.close()
-    // console.log('adding card to database')
   }
 
   const [cardFrontInput, setCardFront] = useState<string>('')
@@ -53,6 +50,33 @@ function AddCardForm(): JSX.Element {
   const [tagsInput, setCardTags] = useState<Tag[]>([])
   const [belongsToDeckInput, setBelongsToDeck] = useState<DeckName[]>([])
   const [expertNotesInput, setExpertNotes] = useState<ExpertNote[]>([])
+  const [decks, setDecks] = useState<Deck[]>([])
+
+  async function GetDecks(): Promise<void> {
+    setDecks(await window.api.store.getAllDecks())
+  }
+  GetDecks()
+
+  function toggleDeck(name: DeckName): void {
+    const tempdeckLst = belongsToDeckInput
+    if (tempdeckLst.find((x) => x.localeCompare(name) == 0)) {
+      const deckToDeleteIndex = tempdeckLst.findIndex((x) => x.localeCompare(name) == 0)
+      tempdeckLst.splice(deckToDeleteIndex, 1)
+      setBelongsToDeck(tempdeckLst)
+    } else {
+      tempdeckLst.push(name)
+      setBelongsToDeck(tempdeckLst)
+    }
+  }
+
+  const deckTblList = decks.map((deck) => (
+    <tr className="bg-slate-800" key={deck.name}>
+      <td className="pl-2">
+        <input type="checkbox" onClick={() => toggleDeck(deck.name)}></input>
+        {' ' + deck.name}
+      </td>
+    </tr>
+  ))
 
   function changeCardToAddFront(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardFront(event.target.value)
@@ -64,21 +88,6 @@ function AddCardForm(): JSX.Element {
 
   function changeCardToAddSideNote(event: React.ChangeEvent<HTMLInputElement>): void {
     setSideNote(event.target.value)
-  }
-
-  function changeCardToAddBelongsToDeck(event: React.ChangeEvent<HTMLInputElement>): void {
-    const newArray = event.target.value
-      .split(',') // Here the input is assumed to be comma-separated, but we need a dropdown list of checkboxes
-      .map((value) => {
-        // only allows alphanumeric characters and spaces and converts it to uppercase
-        return value
-          .trim()
-          .toUpperCase()
-          .replace(/[^a-zA-Z0-9\s]/g, '')
-      })
-      .filter(Boolean) // empty deck names are not allowed
-    if (newArray.length === 0) newArray.push(DEFAULT_DECK_NAME) // Assigns <DEFAULT_DECK_NAME> if the array is eventually empty
-    setBelongsToDeck(newArray)
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -112,7 +121,7 @@ function AddCardForm(): JSX.Element {
 
   return (
     <div className="grid place-items-center">
-      <h1 className="text-2xl font-bold">New Card</h1>
+      <h1 className="text-2xl font-bold">Insert Card</h1>
       <div className="flex flex-col gap-4">
         <InputColumn>
           <InputLabel>Front</InputLabel>
@@ -164,26 +173,30 @@ function AddCardForm(): JSX.Element {
           </button>
         </InputColumn>
         <InputColumn>
-          <InputLabel>Deck</InputLabel>
-          <input
-            onChange={changeCardToAddBelongsToDeck}
-            type="text"
-            placeholder={'Deck names'}
-          ></input>
+          <InputLabel>Decks</InputLabel>
+          <table>
+            <tbody>{deckTblList}</tbody>
+          </table>
         </InputColumn>
         <InputColumn>
           <InputLabel>Tags</InputLabel>
           <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
         </InputColumn>
-
-        <br></br>
-        <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
-          Add Card (can be replaced by icon)
-        </button>
+        <AddCardSubmitButton
+          onClick={addCard}
+          // cardName={cardToAddName}
+          cardFront={cardFrontInput}
+          cardBack={cardBackInput}
+        />
+        <AddCardWarnings
+          // cardToAddName={cardToAddName}
+          cardFrontInput={cardFrontInput}
+          cardBackInput={cardBackInput}
+        />
       </div>
-      <button onClick={addCard} className=" max-h-20 max-w-20">
+      {/* <button onClick={addCard} className=" max-h-20 max-w-20">
         <CheckMarkIcon />
-      </button>
+      </button> */}
       <CloseWindow />
     </div>
   )
