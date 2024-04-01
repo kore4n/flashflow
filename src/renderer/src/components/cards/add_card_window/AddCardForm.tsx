@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-import React, { ReactNode, useState } from 'react'
-import { Card, DeckName, Tag, ExpertNote, Deck } from 'src/types/types'
-=======
 import React, { useState } from 'react'
-import { Card, DeckName, Tag, ExpertNote } from 'src/types/types'
->>>>>>> main
+import { Card, DeckName, Tag, ExpertNote, Deck } from 'src/types/types'
 import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
 import CheckMarkIcon from '../CheckMarkIcon'
-// import AddSignIcon from '../AddSignIcon'
+import AddSignIcon from '../AddSignIcon'
 import DeleteIcon from '../DeleteIcon'
 import { subtle } from 'node:crypto'
 
@@ -64,14 +59,12 @@ function AddCardForm(): JSX.Element {
   GetDecks()
 
   function toggleDeck(name: DeckName): void {
-    var tempdeckLst = belongsToDeckInput;
-    if(tempdeckLst.find(x => x.localeCompare(name) == 0)){
-
-      var deckToDeleteIndex = tempdeckLst.findIndex(x => x.localeCompare(name) == 0)
+    const tempdeckLst = belongsToDeckInput
+    if (tempdeckLst.find((x) => x.localeCompare(name) == 0)) {
+      const deckToDeleteIndex = tempdeckLst.findIndex((x) => x.localeCompare(name) == 0)
       tempdeckLst.splice(deckToDeleteIndex, 1)
       setBelongsToDeck(tempdeckLst)
-    }
-    else {
+    } else {
       tempdeckLst.push(name)
       setBelongsToDeck(tempdeckLst)
     }
@@ -79,8 +72,8 @@ function AddCardForm(): JSX.Element {
 
   const deckTblList = decks.map((deck) => (
     <tr className="bg-slate-800" key={deck.name}>
-      <td className="pl-2" >
-      <input type="checkbox" onClick={() => toggleDeck(deck.name)}></input>
+      <td className="pl-2">
+        <input type="checkbox" onClick={() => toggleDeck(deck.name)}></input>
         {deck.name}
       </td>
     </tr>
@@ -177,15 +170,14 @@ function AddCardForm(): JSX.Element {
             </div>
           ))}
           <button onClick={addExpertNote} className="ml-2">
+            <AddSignIcon width="30px" height="30px" />
           </button>
         </InputColumn>
         <InputColumn>
           <InputLabel>Decks</InputLabel>
-            <table>
-              <tbody>
-                {deckTblList}
-              </tbody>
-            </table>
+          <table>
+            <tbody>{deckTblList}</tbody>
+          </table>
         </InputColumn>
         <InputColumn>
           <InputLabel>Tags</InputLabel>
