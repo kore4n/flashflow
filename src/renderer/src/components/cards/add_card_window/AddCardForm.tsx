@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import React, { ReactNode, useState } from 'react'
 import { Card, DeckName, Tag, ExpertNote, Deck } from 'src/types/types'
+=======
+import React, { useState } from 'react'
+import { Card, DeckName, Tag, ExpertNote } from 'src/types/types'
+>>>>>>> main
 import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
@@ -9,23 +14,26 @@ import DeleteIcon from '../DeleteIcon'
 import { subtle } from 'node:crypto'
 
 const DEFAULT_DECK_NAME: string = 'DEFAULT'
+import AddCardWarnings from './AddCardWarnings'
+import AddCardSubmitButton from './AddCardSubmitButton'
 
-function InputColumn({ children }: { children: ReactNode }): JSX.Element {
-  return <div className="flex flex-col">{children}</div>
-}
-
-function InputLabel({ children }: { children: ReactNode }): JSX.Element {
-  return <label className="font-bold text-xl">{children}</label>
-}
+import InputColumn from '../InputColumn'
+import InputLabel from '../InputLabel'
 function AddCardForm(): JSX.Element {
   async function addCard(): Promise<void> {
     if (!cardFrontInput.trim()) {
       alert('Card front must be filled out.')
       return
     }
-    const lastNote = expertNotesInput[expertNotesInput.length - 1]
-    if (lastNote.subtitle.trim().length == 0 && lastNote.body.trim().length == 0) {
-      expertNotesInput.pop()
+    if (expertNotesInput.length > 0) {
+      const lastNote = expertNotesInput[expertNotesInput.length - 1]
+      if (
+        lastNote !== null &&
+        lastNote.subtitle.trim().length == 0 &&
+        lastNote.body.trim().length == 0
+      ) {
+        expertNotesInput.pop()
+      }
     }
     const cardToAdd: Card = {
       cardID: (await getLargestCardID()) + 1,
@@ -111,7 +119,6 @@ function AddCardForm(): JSX.Element {
       }
       setExpertNotes(updatedExpertNote)
     }
-
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -184,11 +191,17 @@ function AddCardForm(): JSX.Element {
           <InputLabel>Tags</InputLabel>
           <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
         </InputColumn>
-
-        <br></br>
-        <button className=" bg-slate-800 hover:bg-slate-900" onClick={addCard}>
-          Add Card (can be replaced by icon)
-        </button>
+        <AddCardSubmitButton
+          onClick={addCard}
+          // cardName={cardToAddName}
+          cardFront={cardFrontInput}
+          cardBack={cardBackInput}
+        />
+        <AddCardWarnings
+          // cardToAddName={cardToAddName}
+          cardFrontInput={cardFrontInput}
+          cardBackInput={cardBackInput}
+        />
       </div>
       <button onClick={addCard} className=" max-h-20 max-w-20">
         <CheckMarkIcon />

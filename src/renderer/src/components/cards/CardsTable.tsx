@@ -1,5 +1,7 @@
 import { SetStateAction, useEffect, useState } from 'react'
 import { Card } from 'src/types/types'
+import DeleteCardButton from './DeleteCardButton'
+import EditCardButton from './EditCardButton'
 
 function DisplayCards({
   cards,
@@ -72,11 +74,13 @@ function DisplayCards({
       <table className="list-decimal">
         <thead>
           <tr>
-            <th>#</th>
+            {/* <th>Number</th> */}
+            <th>ID</th>
             <th>Front</th>
             <th>Back</th>
             <th>Deck</th>
             <th>Tags</th>
+            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
           </tr>
         </thead>
         <tbody>{cardsElement}</tbody>
@@ -108,7 +112,7 @@ function CardsTable(): JSX.Element {
         cards = await window.api.store.getDeckByName(selectedDeckName)
       }
 
-      // console.log('all cards')
+      // console.log('Getting all cards.')
       // console.log(JSON.stringify(cards))
 
       setSelectedDeckName(selectedDeckName)
@@ -138,8 +142,8 @@ async function getLargestCardID(): Promise<number> {
     }
     let largestCardID = 0
     cards.forEach((card) => {
-      if (card.cardID > largestCardID) {
-        largestCardID = card.cardID
+      if (card.cardID! > largestCardID) {
+        largestCardID = card.cardID!
       }
     })
     return largestCardID
