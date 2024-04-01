@@ -95,10 +95,6 @@ function setupElectronStore(window: BrowserWindow): void {
       return
     }
 
-    // if (storeContainsCardWithFront(cardToAdd.front)) {
-    //   return
-    // }
-
     let highestCardID = -1
 
     store.get('cards').forEach((card) => {
@@ -112,7 +108,7 @@ function setupElectronStore(window: BrowserWindow): void {
     // Only add to store if no card in the store has the card to add's name
     const cards = [...store.get('cards'), cardToAdd]
     store.set('cards', cards)
-    // console.log('adding card')
+    // console.log('adding/updating card')
     window.webContents.send('on-electron-store-cards-updated')
     return
   })

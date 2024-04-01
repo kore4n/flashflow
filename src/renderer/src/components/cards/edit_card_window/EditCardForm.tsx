@@ -9,14 +9,23 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
   const [cardBackToEdit, setCardBackToEdit] = useState<string>('')
 
   useEffect(() => {
-    setCardFrontToEdit(card.front)
-    setCardBackToEdit(card.back)
+    setCardFrontToEdit(card.cardFront)
+    setCardBackToEdit(card.cardBack)
 
     // console.log('setting default card attributes!')
   }, [card])
 
   const saveAndExit = (): void => {
-    const cardToUpdate: Card = { cardID: card.cardID, front: cardFrontToEdit, back: cardBackToEdit }
+    const cardToUpdate: Card = {
+      cardID: card.cardID,
+      cardFront: cardFrontToEdit,
+      cardBack: cardBackToEdit,
+      cardStatus: card.cardStatus,
+      sideNote: card.sideNote,
+      expertNotes: card.expertNotes,
+      tags: card.tags,
+      belongsToDeck: card.belongsToDeck
+    }
     window.api.store.addCard(cardToUpdate)
 
     // console.log('adding: ' + JSON.stringify(cardToUpdate))
@@ -64,6 +73,8 @@ function EditCardForm(): JSX.Element {
     const setupCardToEditData = async (): Promise<void> => {
       const card = await window.api.store.getCardByID(cardIDToEdit)
 
+      // console.log('card to edit: ')
+      // console.log(JSON.stringify(card))
       setCardData(card)
     }
 

@@ -1,3 +1,5 @@
+import EyeIcon from './EyeIcon'
+
 function EditCardButton({ cardID }: { cardID: number }): JSX.Element {
   const editCard = (): void => {
     window.api.openEditCardWindow(cardID)
@@ -5,9 +7,7 @@ function EditCardButton({ cardID }: { cardID: number }): JSX.Element {
 
   return (
     <td onClick={editCard}>
-      {/* <img src={'file:///resources/EditIcon.png'}></img> */}
-      {/* <img src={'file:///src/renderer/src/assets/cards/EditIcon.png'}></img> */}
-      Edit
+      <EyeIcon width="30px" height="30px" />
     </td>
   )
 }

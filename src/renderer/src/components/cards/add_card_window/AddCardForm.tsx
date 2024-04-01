@@ -6,7 +6,6 @@ import { getLargestCardID } from '../CardsTable'
 import CheckMarkIcon from '../CheckMarkIcon'
 import AddSignIcon from '../AddSignIcon'
 import DeleteIcon from '../DeleteIcon'
-import { subtle } from 'node:crypto'
 
 const DEFAULT_DECK_NAME: string = 'DEFAULT'
 import AddCardWarnings from './AddCardWarnings'
@@ -40,9 +39,9 @@ function AddCardForm(): JSX.Element {
       belongsToDeck: belongsToDeckInput.length ? belongsToDeckInput : [DEFAULT_DECK_NAME],
       cardStatus: 0 // can be some other type
     }
+    // console.log('adding card to database')
     window.api.store.addCard(cardToAdd)
     window.close()
-    // console.log('adding card to database')
   }
 
   const [cardFrontInput, setCardFront] = useState<string>('')
@@ -110,7 +109,7 @@ function AddCardForm(): JSX.Element {
 
   return (
     <div className="grid place-items-center">
-      <h1 className="text-2xl font-bold">New Card</h1>
+      <h1 className="text-2xl font-bold">Insert Card</h1>
       <div className="flex flex-col gap-4">
         <InputColumn>
           <InputLabel>Front</InputLabel>
@@ -185,9 +184,9 @@ function AddCardForm(): JSX.Element {
           cardBackInput={cardBackInput}
         />
       </div>
-      <button onClick={addCard} className=" max-h-20 max-w-20">
+      {/* <button onClick={addCard} className=" max-h-20 max-w-20">
         <CheckMarkIcon />
-      </button>
+      </button> */}
       <CloseWindow />
     </div>
   )

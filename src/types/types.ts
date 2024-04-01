@@ -1,4 +1,4 @@
-type ActiveTab = 'Decks' | 'Cards' | 'Stats' | 'Study'
+type ActiveTab = 'Decks' | 'Cards' | 'Stats' | 'Study' | 'More'
 
 type Card = {
   cardID?: number
