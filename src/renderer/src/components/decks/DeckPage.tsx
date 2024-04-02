@@ -55,7 +55,10 @@ function DeckTable({
       </td>
 
       <td>
-        <button className="pl-10 align-middle" onClick={() => deleteDeck(deck.name)}>
+        <button
+          className={deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'pl-10 align-middle'}
+          onClick={() => deleteDeck(deck.name)}
+        >
           <DeleteIcon width="30px" height="30px" />
         </button>
       </td>
@@ -65,7 +68,7 @@ function DeckTable({
     <table width="400px">
       <thead>
         <tr>
-          <th>Deck</th>
+          <th>Decks</th>
         </tr>
       </thead>
       <tbody>{deckEntries}</tbody>
@@ -74,7 +77,7 @@ function DeckTable({
 }
 
 function triggerToast(positive: boolean, text: string): void {
-  let timeVisible = 2
+  let timeVisible = 1
 
   const uptime = setInterval(function () {
     if (document.getElementById('deckToast') && timeVisible <= 0) {

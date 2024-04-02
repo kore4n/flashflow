@@ -59,13 +59,30 @@ function setupElectronStore(window: BrowserWindow): void {
     }
   })
   ipcMain.on('electron-store-delete-deck', async (_event, name: string) => {
+    const currentCardList = store.get('cards')
+
+    const cardsOfDeletedDeck = currentCardList.filter((x) => x.belongsToDeck.includes(name))
+    const updatedCards: Card[] = []
+
+    for (let i = 0; i < cardsOfDeletedDeck.length; i++) {
+      const card = cardsOfDeletedDeck[i]
+      const nameIndex = card.belongsToDeck.findIndex((x) => x.localeCompare(name) == 0)
+
+      if (nameIndex != -1) {
+        card.belongsToDeck.splice(nameIndex)
+      }
+      if (card.belongsToDeck.length == 0) {
+        card.belongsToDeck.push('DEFAULT')
+      }
+      updatedCards.push(card)
+    }
+
+    const untouchedCards = store.get('cards').filter((x) => !x.belongsToDeck.includes(name))
+    store.set('cards', untouchedCards.concat(updatedCards))
+
     const currentDeckList = store.get('decks')
     const newDeckList = currentDeckList.filter((x) => x.name.localeCompare(name) != 0)
     store.set('decks', newDeckList)
-
-    const currentCardList = store.get('cards')
-    const newCardList = currentCardList.filter((x) => !x.belongsToDeck.includes(name))
-    store.set('cards', newCardList)
   })
   ipcMain.handle('electron-store-get-deck', async (_event, name: string) => {
     const allCards = store.get('cards')
