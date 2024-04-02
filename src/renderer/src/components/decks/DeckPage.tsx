@@ -81,10 +81,8 @@ function triggerToast(positive: boolean, text: string): void {
 
   const uptime = setInterval(function () {
     if (document.getElementById('deckToast') && timeVisible <= 0) {
-      if (document.getElementById('deckToast')) {
-        ;(document.getElementById('deckToast') as HTMLElement).className = 'invisible'
-        clearInterval(uptime)
-      }
+      ;(document.getElementById('deckToast') as HTMLElement).className = 'invisible'
+      clearInterval(uptime)
     } else if (document.getElementById('deckToast') && timeVisible > 0) {
       ;(document.getElementById('deckToast') as HTMLElement).className = positive
         ? 'rounded p-2 outline outline-green-500 bg-white absolute top-10 right-12'
