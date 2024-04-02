@@ -27,7 +27,7 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
 
   return (
     <div className="pt-2">
-      <input id="deckNameInput" placeholder="Enter new deck..."></input>
+      <input id="deckNameInput"></input>
       <button onClick={addDeck} className="align-middle p-5">
         <AddSignIcon width="30px" height="30px" />
       </button>
@@ -40,7 +40,7 @@ function DeckTable({
   toCardsByDeckBtn
 }: {
   decks: Deck[]
-  toCardsByDeckBtn: Function
+  toCardsByDeckBtn: (selectedDeckName: string) => JSX.Element
 }): JSX.Element | string {
   function deleteDeck(name: string): void {
     if (name !== DEFAULT_DECK_NAME) {
@@ -49,7 +49,7 @@ function DeckTable({
     } else alert(DEFAULT_DECK_NAME + ' cannot be deleted!')
   }
   const deckEntries = decks.map((deck) => (
-    <tr className="bg-slate-800 border" height="50px" key={deck.name}>
+    <tr className="even: bg-slate-700 odd:bg-slate-800 shadow [&>*]:py-2" key={deck.name}>
       <td className="pl-5" width="300px">
         {toCardsByDeckBtn(deck.name)}
       </td>
@@ -73,24 +73,30 @@ function DeckTable({
   )
 }
 
-function triggerToast(positive: boolean, text: string) {
-  let timeVisible = 3
-  var uptime = setInterval(function () {
-    if (timeVisible <= 0) {
-      ;(document.getElementById('deckToast')! as HTMLElement).className = 'invisible'
-      clearInterval(uptime)
-    } else {
-      ;(document.getElementById('deckToast')! as HTMLElement).className = positive
+function triggerToast(positive: boolean, text: string): void {
+  let timeVisible = 2
+
+  const uptime = setInterval(function () {
+    if (document.getElementById('deckToast') && timeVisible <= 0) {
+      if (document.getElementById('deckToast')) {
+        ;(document.getElementById('deckToast') as HTMLElement).className = 'invisible'
+        clearInterval(uptime)
+      }
+    } else if (document.getElementById('deckToast') && timeVisible > 0) {
+      ;(document.getElementById('deckToast') as HTMLElement).className = positive
         ? 'rounded p-2 outline outline-green-500 bg-white absolute top-10 right-12'
         : 'rounded p-2 outline outline-red-500 bg-white absolute top-10 right-12'
-      ;(document.getElementById('deckToast')! as HTMLElement).innerHTML =
-        text + ' ' + timeVisible.toString()
+      ;(document.getElementById('deckToast') as HTMLElement).innerHTML = text
       timeVisible -= 1
     }
   }, 1000)
 }
 
-function DecksPage({ toCardsByDeckBtn }: { toCardsByDeckBtn: Function }): JSX.Element {
+function DecksPage({
+  toCardsByDeckBtn
+}: {
+  toCardsByDeckBtn: (selectedDeckName: string) => JSX.Element
+}): JSX.Element {
   const [decks, setDecks] = useState<Deck[]>([])
   const [isLoading, setLoading] = useState(true)
 

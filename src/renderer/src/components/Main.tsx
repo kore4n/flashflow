@@ -12,7 +12,7 @@ import More from './more/More'
 function Main(): JSX.Element {
   const [activeTab, setActiveTab] = useState<ActiveTab>('Decks')
 
-  const toCardsByDeckBtn = (selectedDeckName): JSX.Element => {
+  const toCardsByDeckBtn = (selectedDeckName: string): JSX.Element => {
     return (
       <div>
         <ToCardsByDeckBtn

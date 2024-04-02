@@ -6,7 +6,7 @@ function Deck({
   toCardsByDeckBtn
 }: {
   activeTab: ActiveTab
-  toCardsByDeckBtn: Function
+  toCardsByDeckBtn: (selectedDeckName: string) => JSX.Element
 }): JSX.Element {
   if (activeTab != 'Decks') return <></>
 

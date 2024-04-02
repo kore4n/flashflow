@@ -13,12 +13,12 @@ function ToCardsByDeckBtn({
   deckSelected: string
 }): JSX.Element {
   function switchTab(): void {
-    window.api.store.pushDeckToShow(deckSelected);
+    window.api.store.pushDeckToShow(deckSelected)
     setActiveTab(tabToOpenOnClick)
   }
 
   return (
-    <div onClick={switchTab} className={`hover:opacity-80 cursor-pointer bg-slate-800 width:200px`}>
+    <div onClick={switchTab} className={`hover:opacity-80 cursor-pointer width:200px`}>
       {children}
     </div>
   )
