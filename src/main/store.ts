@@ -1,8 +1,6 @@
 import { BrowserWindow, ipcMain } from 'electron'
 import Store from 'electron-store'
 import { Card, DatabaseSchema, Deck } from '../types/types'
-import { name } from 'autoprefixer'
-import cards from '../renderer/src/components/cards/Cards'
 
 const store = new Store<DatabaseSchema>()
 

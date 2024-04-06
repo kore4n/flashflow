@@ -25,7 +25,7 @@ function AddCardSubmitButton({
   }, [cardFront, cardBack])
 
   if (!cardValid) {
-    return <span className="  font-bold pt-10">Cannot submit!</span>
+    return <span className="  font-bold">Cannot submit!</span>
   }
   return (
     // <button className="bg-slate-800 hover:bg-slate-900" onClick={onClick}>
