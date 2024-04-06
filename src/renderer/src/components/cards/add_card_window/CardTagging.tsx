@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Tag, TagsInputProps } from 'src/types/types'
 import { getAllTags } from '../CardsTable'
+import AddTagWarnings from './AddTagWarnings'
 
 const allTags = getAllTags()
 const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
@@ -41,11 +42,11 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
       return
     }
     if (sanitizedText.length > 24) {
-      alert('Tag cannot exceed 24 characters')
+      // alert('Tag cannot exceed 24 characters')
       return
     }
     if (!sanitizedText.match(/^[A-Za-z0-9_+\-=().?!/ \\%$#@<>{}*&^–]+$/)) {
-      alert('Tag contains invalid characters')
+      // alert('Tag contains invalid characters')
       return
     }
     if (
@@ -53,7 +54,7 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
         (tag: { tagText: string }) => tag.tagText.toLowerCase() === sanitizedText.toLowerCase()
       )
     ) {
-      alert('Tag already exists')
+      // alert('Tag already exists')
       return
     }
     let newTagText: string = sanitizedText.toLowerCase()
@@ -184,6 +185,9 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
           ))}
         </div>
       )}
+      <div>
+        <AddTagWarnings tagToInput={inputValue} tempTagPool={tempTagPool} />
+      </div>
     </div>
   )
 }
