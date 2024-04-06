@@ -229,8 +229,6 @@ function StudySession(): JSX.Element {
           setViewedCards={setViewedCards}
         />
       )}
-      <CloseWindow />
-      <MagnifyingGlassIcon />
     </div>
   )
 }

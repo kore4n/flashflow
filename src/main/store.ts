@@ -114,7 +114,8 @@ function setupElectronStore(window: BrowserWindow): void {
 
       store.set('cards', cardsWithNewCard)
       // console.log('updating card')
-      window.webContents.send('on-electron-store-cards-updated')
+      if (window && window.webContents.isDestroyed() && !window.isDestroyed())
+        window.webContents.send('on-electron-store-cards-updated')
       return
     }
 
@@ -132,7 +133,8 @@ function setupElectronStore(window: BrowserWindow): void {
     const cards = [...store.get('cards'), cardToAdd]
     store.set('cards', cards)
     // console.log('adding/updating card')
-    window.webContents.send('on-electron-store-cards-updated')
+    if (window && window.webContents.isDestroyed() && !window.isDestroyed())
+      window.webContents.send('on-electron-store-cards-updated')
     return
   })
   ipcMain.handle('electron-store-get-card-by-front', async (event, frontOfCardToGet) => {
@@ -151,7 +153,7 @@ function setupElectronStore(window: BrowserWindow): void {
         return []
       }
     })
-  ipcMain.handle('electron-store-delete-card-by-id', async (event, IDOfCardToDelete) => {
+  ipcMain.handle('electron-store-delete-card-by-id', async (_event, IDOfCardToDelete) => {
     const cards = [...store.get('cards')]
 
     const newCards = cards.filter((card) => {
@@ -159,7 +161,8 @@ function setupElectronStore(window: BrowserWindow): void {
     })
 
     store.set('cards', newCards)
-    window.webContents.send('on-electron-store-cards-updated')
+    if (window && window.webContents.isDestroyed() && !window.isDestroyed())
+      window.webContents.send('on-electron-store-cards-updated')
   })
 }
 

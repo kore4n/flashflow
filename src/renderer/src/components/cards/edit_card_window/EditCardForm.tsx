@@ -5,6 +5,7 @@ import InputColumn from '../InputColumn'
 import InputLabel from '../InputLabel'
 import CheckMarkIcon from '../CheckMarkIcon'
 import CloseWindowButton from '../CloseWindowButton'
+import DeleteCardButton from '../DeleteCardButton'
 
 function EditCardInputs({ card }: { card: Card }): JSX.Element {
   const [cardFrontToEdit, setCardFrontToEdit] = useState<string>('')
@@ -35,6 +36,11 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
     window.close()
   }
 
+  const getCardID = (): number => {
+    if (card.cardID !== undefined) return card.cardID
+    return -1
+  }
+
   const onCardFrontChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const cardFront = event.target.value
     setCardFrontToEdit(cardFront)
@@ -58,6 +64,10 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
 
       <button className="bg-slate-000 hover:bg-slate-900 p-1 table-cell" onClick={saveAndExit}>
         Save <CheckMarkIcon width="40px" height="40px" />
+      </button>
+      <button className="bg-slate-000 hover:bg-slate-900 p-1 m-5 table-cell">
+        Delete
+        <DeleteCardButton cardID={getCardID()!} width="40px" height={'40px'} closeWindow={true} />
       </button>
       <button className="bg-slate-000 hover:bg-slate-900 p-1 m-5 table-cell">
         Cancel <CloseWindowButton width="40px" height="40px" />
