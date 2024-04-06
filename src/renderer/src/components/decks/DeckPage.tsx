@@ -77,20 +77,22 @@ function DeckTable({
 }
 
 function triggerToast(positive: boolean, text: string): void {
-  let timeVisible = 1
+  let cyclesVisible = 4
 
   const uptime = setInterval(function () {
-    if (document.getElementById('deckToast') && timeVisible <= 0) {
+    if (!document.getElementById('deckToast')) {
+      clearInterval(uptime)
+    } else if (document.getElementById('deckToast') && cyclesVisible <= 0) {
       ;(document.getElementById('deckToast') as HTMLElement).className = 'invisible'
       clearInterval(uptime)
-    } else if (document.getElementById('deckToast') && timeVisible > 0) {
+    } else if (document.getElementById('deckToast') && cyclesVisible > 0) {
       ;(document.getElementById('deckToast') as HTMLElement).className = positive
         ? 'rounded p-2 outline outline-green-500 bg-white absolute top-10 right-12'
         : 'rounded p-2 outline outline-red-500 bg-white absolute top-10 right-12'
       ;(document.getElementById('deckToast') as HTMLElement).innerHTML = text
-      timeVisible -= 1
+      cyclesVisible -= 1
     }
-  }, 1000)
+  }, 500)
 }
 
 function DecksPage({
