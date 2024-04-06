@@ -188,15 +188,10 @@ function AddCardForm(): JSX.Element {
         <br />
         <AddCardSubmitButton
           onClick={addCard}
-          // cardName={cardToAddName}
           cardFront={cardFrontInput}
           cardBack={cardBackInput}
         />
-        <AddCardWarnings
-          // cardToAddName={cardToAddName}
-          cardFrontInput={cardFrontInput}
-          cardBackInput={cardBackInput}
-        />
+        <AddCardWarnings cardFrontInput={cardFrontInput} cardBackInput={cardBackInput} />
       </div>
       <CloseWindow />
     </div>
