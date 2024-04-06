@@ -119,9 +119,12 @@ function AddCardForm(): JSX.Element {
   }
 
   return (
-    <div className="grid place-items-center">
+    <div className="grid place-items-center table-fixed ">
       <h1 className="text-2xl font-bold">Insert Card</h1>
-      <div className="flex flex-col gap-4">
+      <div
+        className="flex flex-col gap-4"
+        style={{ width: '500px', maxWidth: '100%', margin: '0 auto' }}
+      >
         <InputColumn>
           <InputLabel>Front</InputLabel>
           <input

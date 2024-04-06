@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Card } from 'src/types/types'
-import CloseWindow from '../../cards/CloseWindowButton'
-import MagnifyingGlassIcon from '../../cards/MagnifyingGlassIcon'
 
 function ShowProgress({
   viewedCards,
