@@ -1,12 +1,28 @@
 import DeleteIcon from './DeleteIcon'
 
-function DeleteCardButton({ cardID }: { cardID: number }): JSX.Element {
+function DeleteCardButton({
+  cardID,
+  width,
+  height,
+  closeWindow
+}: {
+  cardID: number
+  width: string
+  height: string
+  closeWindow: boolean
+}): JSX.Element {
   const handleDeleteCardByID = (): void => {
-    window.api.store.deleteCardByID(cardID)
+    if (confirm('Are you sure you want to delete this card?')) {
+      console.log('Card deleted.')
+      window.api.store.deleteCardByID(cardID)
+      if (closeWindow) window.close()
+    } else {
+      console.log('Delete canceled.')
+    }
   }
   return (
     <td className="grid place-items-center" onClick={handleDeleteCardByID}>
-      <DeleteIcon width={'30px'} height={'30px'} />
+      <DeleteIcon width={width} height={height} />
     </td>
   )
 }
