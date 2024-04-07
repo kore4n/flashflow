@@ -48,7 +48,7 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
                 type="checkbox"
                 checked={selectedDecks.some((selectedDeck) => selectedDeck.name === deck.name)}
                 onChange={() => handleSelectDeck(deck)}
-                className="form-checkbox h-5 w-5 text-blue-500"
+                className="form-checkbox h-5 w-5 text-blue-500 accent-slate-500"
               />
               <span className="text-lg">{deck.name}</span>
             </label>
