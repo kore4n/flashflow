@@ -54,7 +54,7 @@ const Guide = ({ onClose }) => {
             width: '10px',
             height: '10px',
             borderRadius: '50%',
-            background: index === currentStep ? 'blue' : 'lightgrey',
+            background: index === currentStep ? '#314459' : 'lightgrey',
             margin: '0 5px'
           }}
         />
@@ -71,7 +71,7 @@ const Guide = ({ onClose }) => {
     width: '400px', // Set a fixed width
     height: '200px', // Set a fixed height
     overflow: 'auto',
-    backgroundColor: 'white',
+    backgroundColor: '#e8e4ec',
     padding: '20px',
     zIndex: 100,
     borderRadius: '10px', // Round up the edges
