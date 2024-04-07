@@ -29,7 +29,12 @@ function Main(): JSX.Element {
   return (
     <div>
       <Navbar>
-        <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Decks">
+        <NavButton
+          specificClass={'rounded-bl-xl'}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          tabToOpenOnClick="Decks"
+        >
           Decks
         </NavButton>
         <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Cards">
@@ -41,7 +46,12 @@ function Main(): JSX.Element {
         <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="Stats">
           Stats
         </NavButton>
-        <NavButton activeTab={activeTab} setActiveTab={setActiveTab} tabToOpenOnClick="More">
+        <NavButton
+          specificClass={'rounded-br-xl'}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          tabToOpenOnClick="More"
+        >
           More
         </NavButton>
       </Navbar>
