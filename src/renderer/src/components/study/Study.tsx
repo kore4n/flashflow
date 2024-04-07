@@ -1,9 +1,10 @@
 import { ActiveTab, Deck } from 'src/types/types'
 import { useEffect, useState } from 'react'
 import MagnifyingGlassIcon from './MagnifyingGlassIcon'
+import { truncateText } from '../cards/CardsTable'
 
 /*
-	After clicking the study tab this will populate the window with all current decks to choose from 
+	After clicking the study tab this will populate the window with all current decks to choose from
 */
 function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
   const [decks, setDecks] = useState<Deck[]>([])
@@ -85,7 +86,7 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
                   onChange={() => handleSelectDeck(deck)}
                   className="form-checkbox h-5 w-4 border border-black"
                 />
-                <span className="text-lg">{deck.name}</span>
+                <span className="text-lg">{truncateText(deck.name, 22)}</span>
                 <button onClick={() => handleInspectDeck(deck)}>
                   <MagnifyingGlassIcon width="13px" height="13px" colour="#FFFFFF" />
                 </button>
@@ -100,7 +101,12 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
           <div className="w-1/2 pl-6 mt-5">
             <div className="border border-slate-800 shadow-md rounded-lg p-4 mt-6 bg-slate-700">
               <h2 className="text-lg font-bold mb-2 text-white">DECK INFO:</h2>
-              <p className="mt-4 text-white font-bold text-center ">{inspectDeck.name}</p>
+              <p
+                className="mt-4 text-white font-bold text-center "
+                style={{ whiteSpace: 'normal', wordWrap: 'break-word', wordBreak: 'break-word' }}
+              >
+                {inspectDeck.name}
+              </p>
               <p className="text-white">New: {deckInfo.new}</p>
               <p className="text-white">Learning: {deckInfo.learning}</p>
               <p className="text-white">To Review: {deckInfo.toReview}</p>

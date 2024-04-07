@@ -34,15 +34,6 @@ function DisplayCards({
     setFilteredCards(cards)
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  function truncateText(text, maxLength) {
-    if (text.length > maxLength) {
-      return text.substring(0, maxLength) + '...'
-    } else {
-      return text
-    }
-  }
-
   const cardsElement = filteredCards.map((card, index) => (
     <tr
       className="even: bg-slate-700 odd:bg-slate-800 shadow [&>*]:px-4 [&>*]:py-2"
@@ -117,7 +108,15 @@ function DisplayCards({
   )
 }
 
-function CardsTable(): JSX.Element {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+function truncateText(text: string, maxLength: number): string {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + '...'
+  } else {
+    return text
+  }
+}
+export function CardsTable(): JSX.Element {
   const [selectedDeckName, setSelectedDeckName] = useState<string>('')
   const [cards, setCards] = useState<Card[]>([])
   const [isLoading, setLoading] = useState(true)
@@ -198,4 +197,4 @@ async function getAllTags(): Promise<Record<string, string>> {
 }
 
 export default CardsTable
-export { getLargestCardID, getAllTags }
+export { getLargestCardID, getAllTags, truncateText }
