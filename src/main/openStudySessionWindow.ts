@@ -8,8 +8,8 @@ function setupOpenStudySessionWindow(parent: BrowserWindow): void {
     const openStudySessionWindow = new BrowserWindow({
       width: 900,
       height: 900,
-      x: 700,
-      y: 300,
+      x: 600,
+      y: 100,
       modal: true,
       parent: parent,
       show: false,
