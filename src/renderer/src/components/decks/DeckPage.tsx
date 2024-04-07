@@ -33,7 +33,7 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
         className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
       ></input>
       <button onClick={addDeck} className="align-middle p-5">
-        <AddSignIcon width="30px" height="30px" />
+        <AddSignIcon width="50px" height="50px" />
       </button>
     </div>
   )
@@ -75,14 +75,17 @@ function DeckTable({
     </tr>
   ))
   return (
-    <table width="400px">
-      <thead>
-        <tr>
-          <th>Decks</th>
-        </tr>
-      </thead>
-      <tbody>{deckEntries}</tbody>
-    </table>
+    <>
+      <div className="grid place-items-center font-bold text-2xl p-4 pb-7">Decks</div>
+      <table width="400px">
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>{deckEntries}</tbody>
+      </table>
+    </>
   )
 }
 

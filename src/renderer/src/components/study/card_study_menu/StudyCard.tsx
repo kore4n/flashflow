@@ -143,7 +143,7 @@ function ShowCard({
           {!showAnswer && (
             <button
               onClick={handleShowAnswer}
-              className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded mt-20"
+              className="bg-cyan-800 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mt-20"
             >
               Show Answer
             </button>

@@ -70,9 +70,9 @@ function DisplayCards({
       {/*  List of {selectedDeckName.localeCompare('') == 0 ? 'every' : selectedDeckName + "'s"} card*/}
       {/*</h1>*/}
 
-      <div className=" grid place-items-center py-2">
+      <div className=" grid place-items-center p-4">
         <button
-          className=" text-gray-300 text-2xl font-bold"
+          className="text-2xl font-bold"
           onClick={resetFilter}
           style={{ margin: '10px', padding: '5px' }}
         >

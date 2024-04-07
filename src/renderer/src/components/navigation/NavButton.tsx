@@ -26,7 +26,7 @@ function NavButton({
   return (
     <span
       onClick={switchTab}
-      className={`p-4 hover:opacity-80 cursor-pointer shadow-xl ${showSelected} ${specificClass}`}
+      className={`p-4 hover:opacity-80 font-bold cursor-pointer shadow-xl ${showSelected} ${specificClass}`}
     >
       {children}
     </span>
