@@ -8,7 +8,7 @@ function addCard(): void {
 
 function OpenAddCard(): JSX.Element {
   return (
-    <button onClick={addCard} className=" max-h-20 max-w-20">
+    <button onClick={addCard}>
       <AddSignIcon />
     </button>
   )

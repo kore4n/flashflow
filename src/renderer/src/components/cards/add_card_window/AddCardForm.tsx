@@ -64,6 +64,7 @@ function AddCardForm(): JSX.Element {
   const [decks, setDecks] = useState<Deck[]>([])
   const [showOptions, setShowOptions] = useState<boolean>(false)
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleExpertOptions = () => {
     setShowOptions(!showOptions)
   }
@@ -144,182 +145,189 @@ function AddCardForm(): JSX.Element {
   }
 
   return (
-    <div className="grid place-items-center table-fixed ">
-      <h1 className="text-2xl font-bold">Insert Card</h1>
-      {!showOptions && (
-        <button
-          onClick={() => handleExpertOptions()}
-          className="absolute top-0 left-0 m-4 bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4"
-        >
-          Enable Expert Options
-        </button>
-      )}
-      {showOptions && (
-        <div>
+    <div className="grid place-items-center table-fixed">
+      <div
+        style={{
+          width: '570px',
+          maxWidth: '100%',
+          margin: '0 auto'
+        }}
+      >
+        <h1 className="text-2xl font-bold">Insert Card</h1>
+        {!showOptions && (
           <button
             onClick={() => handleExpertOptions()}
-            className="absolute top-0 left-0 m-4 bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4"
+            className="flex top-0 right-0 mt-4 mb-4 mr-4 bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4"
           >
-            Disable Expert Options
+            Enable Expert Options
           </button>
-          <div className="mb-5"></div>
-          <div className="flex flex-wrap">
-            <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md text-white p-1">
-              <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-2 p-4">
-                Fields
-              </button>
-              <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">
-                Cards...
-              </button>
-              <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">
-                Type
-              </button>
-            </span>
-            <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1">
-              <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md flex items-center py-1 px-1 ">
-                <AddGearIcon width="20px" height="20px" />
-              </button>
-            </span>
-            <div className="flex ">
-              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white font-bold">
-                  B
-                </button>
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">
-                  I
-                </button>
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white underline">
-                  U
+        )}
+        {showOptions && (
+          <div>
+            <button
+              onClick={() => handleExpertOptions()}
+              className="flex top-0 right-0 mt-4 mb-4 mr-4  bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4"
+            >
+              Disable Expert Options
+            </button>
+            <div className="mb-5 items-center"></div>
+            <div className="flex flex-wrap">
+              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md text-white p-1">
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">
+                  Templates...
                 </button>
               </span>
-              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-1 p-4 w-9 flex items-center justify-center">
-                  <AddExponentIcon width="13px" height="13px" />
-                </button>
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 w-9 flex items-center justify-center">
-                  <AddSubscriptIcon width="13px" height="13px" />
+              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md text-white p-1">
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">
+                  Type
                 </button>
               </span>
-              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 text-white underline ">
-                  A
-                </button>
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                  <AddMarkerIcon width="13px" height="13px" />
+              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1">
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md flex items-center py-1 px-1 ">
+                  <AddGearIcon width="20px" height="20px" />
                 </button>
               </span>
-              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                  <AddEraserIcon width="13px" height="13px" colour="#FFFFFF" />
-                </button>
-              </span>
-              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                  <AddListIcon width="13px" height="13px" colour="#FFFFFF" />
-                </button>
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                  <AddNumberedListIcon width="13px" height="15px" colour="#FFFFFF" />
-                </button>
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                  <AddParagraphIcon width="13px" height="13px" colour="#FFFFFF" />
-                </button>
-              </span>
-              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-2 flex">
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                  <AddClipIcon width="13px" height="13px" colour="#FFFFFF" />
-                </button>
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                  <AddMicIcon width="13px" height="13px" colour="#FFFFFF" />
-                </button>
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">
-                  fx
-                </button>
-              </span>
+              <div className="flex mb-5">
+                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white font-bold">
+                    B
+                  </button>
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">
+                    I
+                  </button>
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white underline">
+                    U
+                  </button>
+                </span>
+                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-1 p-4 w-9 flex items-center justify-center">
+                    <AddExponentIcon width="13px" height="13px" />
+                  </button>
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 w-9 flex items-center justify-center">
+                    <AddSubscriptIcon width="13px" height="13px" />
+                  </button>
+                </span>
+                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 text-white underline ">
+                    A
+                  </button>
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                    <AddMarkerIcon width="13px" height="13px" />
+                  </button>
+                </span>
+                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                    <AddEraserIcon width="13px" height="13px" colour="#FFFFFF" />
+                  </button>
+                </span>
+                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                    <AddListIcon width="13px" height="13px" colour="#FFFFFF" />
+                  </button>
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                    <AddNumberedListIcon width="13px" height="15px" colour="#FFFFFF" />
+                  </button>
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                    <AddParagraphIcon width="13px" height="13px" colour="#FFFFFF" />
+                  </button>
+                </span>
+                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-2 flex">
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                    <AddClipIcon width="13px" height="13px" colour="#FFFFFF" />
+                  </button>
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                    <AddMicIcon width="13px" height="13px" colour="#FFFFFF" />
+                  </button>
+                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">
+                    fx
+                  </button>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      <div className="flex flex-col gap-4">
-        <InputColumn>
-          <InputLabel>Front</InputLabel>
-          {/* <input
+        )}
+        <div className="flex flex-col gap-4">
+          <InputColumn>
+            <InputLabel>Front</InputLabel>
+            {/* <input
             onChange={changeCardToAddFront}
             type="text"
             placeholder={'Front of the card'}
           ></input> */}
-          <CardInputField onChange={changeCardToAddFront} placeholder="Front of the Card" />
-        </InputColumn>
-        <InputColumn>
-          <InputLabel>Back</InputLabel>
-          {/* <input
+            <CardInputField onChange={changeCardToAddFront} placeholder="Front of the Card" />
+          </InputColumn>
+          <InputColumn>
+            <InputLabel>Back</InputLabel>
+            {/* <input
             onChange={changeCardToAddBack}
             type="text"
             placeholder={'Back of the card'}
           ></input> */}
-          <CardInputField onChange={changeCardToAddBack} placeholder="Back of the Card" />
-        </InputColumn>
-        <InputColumn>
-          <InputLabel>Side Note</InputLabel>
-          {/* <input
+            <CardInputField onChange={changeCardToAddBack} placeholder="Back of the Card" />
+          </InputColumn>
+          <InputColumn>
+            <InputLabel>Side Note</InputLabel>
+            {/* <input
             onChange={changeCardToAddSideNote}
             type="text"
             placeholder={'Your side note goes here ...'}
           ></input> */}
-          <CardInputField
-            onChange={changeCardToAddSideNote}
-            placeholder="Your side note goes here ..."
-          />
-        </InputColumn>
-        <InputColumn>
-          {expertNotesInput.map((expertNote, index) => (
-            <div key={index} className="flex flex-col gap-4">
-              <InputLabel>Expert Note {index + 1}</InputLabel>
-              <input
-                type="text"
-                placeholder="Subtitle"
-                value={expertNote.subtitle}
-                onChange={(e) => handleExpertNotesChange(index, 'subtitle', e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Body"
-                value={expertNote.body}
-                onChange={(e) => handleExpertNotesChange(index, 'body', e.target.value)}
-              />
-              <button onClick={() => deleteExpertNote(index)} className="ml-auto">
-                <DeleteIcon width="30px" height="30px" colour="#D52B1E" />
+            <CardInputField
+              onChange={changeCardToAddSideNote}
+              placeholder="Your side note goes here ..."
+            />
+          </InputColumn>
+          <InputColumn>
+            {expertNotesInput.map((expertNote, index) => (
+              <div key={index} className="flex flex-col gap-4">
+                <InputLabel>Expert Note {index + 1}</InputLabel>
+                <input
+                  type="text"
+                  placeholder="Subtitle"
+                  value={expertNote.subtitle}
+                  onChange={(e) => handleExpertNotesChange(index, 'subtitle', e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Body"
+                  value={expertNote.body}
+                  onChange={(e) => handleExpertNotesChange(index, 'body', e.target.value)}
+                />
+                <button onClick={() => deleteExpertNote(index)} className="ml-auto">
+                  <DeleteIcon width="30px" height="30px" colour="#D52B1E" />
+                </button>
+              </div>
+            ))}
+            {showOptions && (
+              <button onClick={addExpertNote} className="ml-2">
+                <AddSignIcon width="30px" height="30px" />
               </button>
+            )}
+          </InputColumn>
+          <InputColumn>
+            <InputLabel>Decks</InputLabel>
+            <div style={{ width: '100%', overflowX: 'auto' }}>
+              <table
+                style={{ width: '100%', display: 'block', maxHeight: '90px', overflowY: 'scroll' }}
+              >
+                {deckTblList}
+              </table>
             </div>
-          ))}
-          {showOptions && (
-            <button onClick={addExpertNote} className="ml-2">
-              <AddSignIcon width="30px" height="30px" />
-            </button>
-          )}
-        </InputColumn>
-        <InputColumn>
-          <InputLabel>Decks</InputLabel>
-          <div style={{ width: '100%', overflowX: 'auto' }}>
-            <table
-              style={{ width: '100%', display: 'block', maxHeight: '70px', overflowY: 'scroll' }}
-            >
-              {deckTblList}
-            </table>
-          </div>
-        </InputColumn>
-        <InputColumn>
-          <InputLabel>Tags</InputLabel>
-          <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
-        </InputColumn>
-        {/* <br /> */}
-        <AddCardSubmitButton
-          onClick={addCard}
-          cardFront={cardFrontInput}
-          cardBack={cardBackInput}
-        />
-        <AddCardWarnings cardFrontInput={cardFrontInput} cardBackInput={cardBackInput} />
+          </InputColumn>
+          <InputColumn>
+            <InputLabel>Tags</InputLabel>
+            <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
+          </InputColumn>
+          <AddCardSubmitButton
+            onClick={addCard}
+            cardFront={cardFrontInput}
+            cardBack={cardBackInput}
+          />
+          <AddCardWarnings cardFrontInput={cardFrontInput} cardBackInput={cardBackInput} />
+          <CloseWindow />
+          <div className="pt-4"></div>
+        </div>
       </div>
-      <CloseWindow />
     </div>
   )
 }
