@@ -91,7 +91,7 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
   }
 
   return (
-    <div className=" mb-6">
+    <div title="Click to Assign Tag" className=" mb-6">
       {tempTagPool.map((tag, index) => (
         <div
           key={index}

@@ -7,7 +7,10 @@ function EyeIcon({
   colour = '#CCCCCC'
 }): JSX.Element {
   return (
-    <div className="grid place-items-center hover:cursor-pointer hover:opacity-40">
+    <div
+      title="Modify Card"
+      className="grid place-items-center hover:cursor-pointer hover:opacity-40"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={width}

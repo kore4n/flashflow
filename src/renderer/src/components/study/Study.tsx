@@ -45,6 +45,7 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
           {decks.map((deck) => (
             <label key={deck.name} className="flex items-center gap-2 text-white">
               <input
+                title="Select Deck"
                 type="checkbox"
                 checked={selectedDecks.some((selectedDeck) => selectedDeck.name === deck.name)}
                 onChange={() => handleSelectDeck(deck)}

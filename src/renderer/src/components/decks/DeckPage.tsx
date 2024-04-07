@@ -32,7 +32,7 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
         placeholder="Add deck name here..."
         className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
       ></input>
-      <button onClick={addDeck} className="align-middle p-5">
+      <button title="Add Deck" onClick={addDeck} className="align-middle p-5">
         <AddSignIcon width="30px" height="30px" />
       </button>
     </div>
@@ -66,6 +66,7 @@ function DeckTable({
 
       <td>
         <button
+          title="Delete Deck"
           className={deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'pl-10 align-middle'}
           onClick={() => deleteDeck(deck.name)}
         >

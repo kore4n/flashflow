@@ -1,7 +1,7 @@
 // eslint-disable-next-line react/prop-types
 function AddSignIcon({ width = '50px', height = '50px', colour = '#568203' }): JSX.Element {
   return (
-    <div className=" flex flex-row hover:cursor-pointer hover:opacity-40">
+    <div title="Add New Card" className=" flex flex-row hover:cursor-pointer hover:opacity-40">
       <div className="grid place-items-center">
         <svg
           width={width}

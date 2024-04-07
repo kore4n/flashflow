@@ -1,7 +1,10 @@
 // eslint-disable-next-line react/prop-types
 function StatsIcon({ width = '50px', height = '50px', colour = '#ADD8E6' }): JSX.Element {
   return (
-    <div className="grid place-items-center pt-20">
+    <div
+      title="This tab is for demonstration purposes only"
+      className="grid place-items-center pt-20"
+    >
       <svg
         fill={colour}
         height={height}
