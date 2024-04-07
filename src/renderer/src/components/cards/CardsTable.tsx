@@ -34,16 +34,31 @@ function DisplayCards({
     setFilteredCards(cards)
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...'
+    } else {
+      return text
+    }
+  }
+
   const cardsElement = filteredCards.map((card, index) => (
     <tr
       className="even: bg-slate-700 odd:bg-slate-800 shadow [&>*]:px-4 [&>*]:py-2"
       key={card.cardID}
     >
       <td>{index + 1}</td>
-      <td>{card.cardFront}</td>
-      <td>{card.cardBack}</td>
-      <td>{card.belongsToDeck}</td>
-      <td>
+      <td style={{ whiteSpace: 'normal', wordWrap: 'break-word', wordBreak: 'break-word' }}>
+        {truncateText(card.cardFront, 26)}
+      </td>
+      <td style={{ whiteSpace: 'normal', wordWrap: 'break-word', wordBreak: 'break-word' }}>
+        {truncateText(card.cardBack, 26)}
+      </td>
+      <td style={{ whiteSpace: 'normal', wordWrap: 'break-word', wordBreak: 'break-word' }}>
+        {card.belongsToDeck}
+      </td>
+      <td style={{ whiteSpace: 'normal', wordWrap: 'break-word', wordBreak: 'break-word' }}>
         {(card.tags || []).length > 0 ? (
           card.tags.map((tag, tagIndex) => (
             <span
@@ -84,16 +99,16 @@ function DisplayCards({
                 : 'in deck: ' + selectedDeckName)}
         </button>
       </div>
-      <table className="list-decimal shadow-xl">
+      <table className="list-decimal shadow-xl" style={{ width: '800px', tableLayout: 'fixed' }}>
         <thead>
           <tr>
-            <th>Order</th>
-            <th>Front</th>
-            <th>Back</th>
-            <th>Deck</th>
-            <th>Tags</th>
-            <th>Delete</th>
-            <th>View/Edit</th>
+            <th style={{ width: '5%' }}>Order</th>
+            <th style={{ width: '22%' }}>Front</th>
+            <th style={{ width: '22%' }}>Back</th>
+            <th style={{ width: '17%' }}>Deck</th>
+            <th style={{ width: '17%' }}>Tags</th>
+            <th style={{ width: '8%' }}>Delete</th>
+            <th style={{ width: '8%' }}>View/Edit</th>
           </tr>
         </thead>
         <tbody>{cardsElement}</tbody>
@@ -179,24 +194,6 @@ async function getAllTags(): Promise<Record<string, string>> {
   } catch (error) {
     console.error('Failed to get cards:', error)
     return tagsSet
-  }
-}
-
-async function getCardsWithTag(tagText): Promise<any[]> {
-  const cardsSet = new Set()
-  try {
-    const cards = await window.api.store.getAllCards()
-    cards.forEach((card) => {
-      card.tags.forEach((tag) => {
-        if (tagText == tag.tagText) {
-          cardsSet.add(card)
-        }
-      })
-    })
-    return Array.from(cardsSet)
-  } catch (error) {
-    console.error('Failed to get cards:', error)
-    return []
   }
 }
 

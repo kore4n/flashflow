@@ -4,10 +4,10 @@ import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
 
 function setupOpenEditCardWindow(parent: BrowserWindow): void {
-  ipcMain.on('open-edit-card-window', (event, IDOfCardToEdit: number) => {
+  ipcMain.on('open-edit-card-window', (_event, IDOfCardToEdit: number) => {
     const openEditCardWindow = new BrowserWindow({
       width: 900,
-      height: 900,
+      height: 500,
       x: 700,
       y: 300,
       modal: true,

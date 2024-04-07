@@ -21,7 +21,7 @@ function DeleteCardButton({
     }
   }
   return (
-    <td className="grid place-items-center" onClick={handleDeleteCardByID}>
+    <td onClick={handleDeleteCardByID}>
       <DeleteIcon width={width} height={height} />
     </td>
   )

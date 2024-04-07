@@ -53,25 +53,35 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        width: '570px',
+        maxWidth: '100%',
+        margin: '0 auto'
+      }}
+    >
       <InputColumn>
         <InputLabel>Front</InputLabel>
+        <div className="pb-2 pt-2"></div>
         <CardInputField onChange={onCardFrontChange} defaultValue={cardFrontToEdit} />
       </InputColumn>
       <InputColumn>
+        <div className="pt-4 pb-2"></div>
         <InputLabel>Back</InputLabel>
+        <div className="pb-2 pt-2"></div>
         <CardInputField onChange={onCardBackChange} defaultValue={cardBackToEdit} />
       </InputColumn>
-
-      <button className="bg-slate-000 hover:bg-slate-900 p-1 m-5 table-cell" onClick={saveAndExit}>
-        <CheckMarkIcon width="50px" height="50px" />
-      </button>
-      <button className="bg-slate-000 hover:bg-slate-900 p-1 m-5 table-cell">
-        <DeleteCardButton cardID={getCardID()!} width="50px" height={'50px'} closeWindow={true} />
-      </button>
-      <button className="bg-slate-000 hover:bg-slate-900 p-1 m-5 table-cell">
-        <CloseWindowButton width="50px" height="50px" />
-      </button>
+      <div className="flex justify-center items-center h-32">
+        <button className="p-1 m-5 table-cell" onClick={saveAndExit}>
+          <CheckMarkIcon width="50px" height="50px" />
+        </button>
+        <button className="p-1 m-5 table-cell">
+          <DeleteCardButton cardID={getCardID()!} width="50px" height={'50px'} closeWindow={true} />
+        </button>
+        <button className="p-1 m-5 table-cell">
+          <CloseWindowButton width="50px" height="50px" />
+        </button>
+      </div>
     </div>
   )
 }
@@ -100,7 +110,7 @@ function EditCardForm(): JSX.Element {
 
   return (
     <div className="grid place-items-center">
-      <h1 className="text-xl font-bold">Currently editing a card!</h1>
+      <h1 className="text-xl font-bold pt-4 pb-4">Card Editor</h1>
       {/* <input onChange={changeCardToAddFront} type="text" placeholder={'Front'}></input> */}
       <EditCardInputs card={cardToEdit!} />
     </div>

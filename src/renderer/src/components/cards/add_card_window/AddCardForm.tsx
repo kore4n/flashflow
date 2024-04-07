@@ -153,7 +153,10 @@ function AddCardForm(): JSX.Element {
           margin: '0 auto'
         }}
       >
-        <h1 className="text-2xl font-bold">Insert Card</h1>
+        <div className="grid place-items-center">
+          <h1 className="text-xl font-bold pt-4 pb-4">Insert New Card</h1>
+          {/* <input onChange={changeCardToAddFront} type="text" placeholder={'Front'}></input> */}
+        </div>
         {!showOptions && (
           <button
             onClick={() => handleExpertOptions()}
@@ -299,7 +302,7 @@ function AddCardForm(): JSX.Element {
               </div>
             ))}
             {showOptions && (
-              <button onClick={addExpertNote} className="ml-2">
+              <button onClick={addExpertNote} className="mt-2 flex justify-center items-center h-1">
                 <AddSignIcon width="30px" height="30px" />
               </button>
             )}
@@ -325,7 +328,7 @@ function AddCardForm(): JSX.Element {
           />
           <AddCardWarnings cardFrontInput={cardFrontInput} cardBackInput={cardBackInput} />
           <CloseWindow />
-          <div className="pt-4"></div>
+          <div className="pb-4"></div>
         </div>
       </div>
     </div>

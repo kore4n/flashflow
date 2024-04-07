@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Deck } from 'src/types/types'
 import DeleteIcon from '../cards/DeleteIcon'
 import AddSignIcon from '../cards/AddSignIcon'
@@ -25,15 +25,24 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addDeck()
+      e.preventDefault()
+    }
+  }
+
   return (
     <div className="pt-2">
       <input
         id="deckNameInput"
         placeholder="Add deck name here..."
-        className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onKeyDown={handleKeyDown}
+        className="w-full bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
       ></input>
-      <button onClick={addDeck} className="align-middle p-5">
-        <AddSignIcon width="30px" height="30px" />
+      <button onClick={addDeck} className="pt-2 pl-44">
+        <AddSignIcon width="50px" height="50px" />
       </button>
     </div>
   )
@@ -60,13 +69,17 @@ function DeckTable({
 
   const deckEntries = decks.map((deck) => (
     <tr className="even: bg-slate-700 odd:bg-slate-800 shadow [&>*]:py-2" key={deck.name}>
-      <td className="pl-5" width="300px">
+      <td
+        className="pl-5"
+        width="300px"
+        style={{ whiteSpace: 'normal', wordWrap: 'break-word', wordBreak: 'break-word' }}
+      >
         {toCardsByDeckBtn(deck.name)}
       </td>
 
       <td>
         <button
-          className={deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'pl-10 align-middle'}
+          className={deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'pl-14 align-middle'}
           onClick={() => deleteDeck(deck.name)}
         >
           <DeleteIcon width="30px" height="30px" />
