@@ -2,7 +2,6 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { Card } from 'src/types/types'
 import DeleteCardButton from './DeleteCardButton'
 import EditCardButton from './EditCardButton'
-import { DEFAULT_DECK_NAME } from '../decks/DeckPage'
 
 function DisplayCards({
   cards,
@@ -19,9 +18,8 @@ function DisplayCards({
   const [selectedTag, setSelectedTag] = useState('')
 
   useEffect(() => {
-    // console.log('filteredCards.length')
-    // console.log(filteredCards.length)
-  })
+    setFilteredCards(cards)
+  }, [cards])
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleTagClick = (tagText: SetStateAction<string>) => {
@@ -67,10 +65,11 @@ function DisplayCards({
   ))
 
   return (
-    <>
+    <div>
       {/*<h1 className="text-blue-500 text-2xl font-bold">*/}
       {/*  List of {selectedDeckName.localeCompare('') == 0 ? 'every' : selectedDeckName + "'s"} card*/}
       {/*</h1>*/}
+
       <div className=" grid place-items-center py-2">
         <button
           className=" text-gray-300 text-2xl font-bold"
@@ -85,11 +84,9 @@ function DisplayCards({
                 : 'in deck: ' + selectedDeckName)}
         </button>
       </div>
-
       <table className="list-decimal shadow-xl">
         <thead>
           <tr>
-            {/* <th>Number</th> */}
             <th>Order</th>
             <th>Front</th>
             <th>Back</th>
@@ -101,7 +98,7 @@ function DisplayCards({
         </thead>
         <tbody>{cardsElement}</tbody>
       </table>
-    </>
+    </div>
   )
 }
 
@@ -125,11 +122,12 @@ function CardsTable(): JSX.Element {
       // console.log(JSON.stringify(cards))
       // console.log(cards.length)
 
-      // console.log('Getting requested cards.')
       if (cards) {
         setCards(cards)
         setSelectedDeckName(selectedDeckName)
         setLoading(false)
+
+        // console.log(JSON.stringify(cards, null, 2))
       }
     }
 

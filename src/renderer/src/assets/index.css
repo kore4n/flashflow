@@ -207,3 +207,22 @@ a:hover {
     width: 100%;
   }
 }
+
+.guide-popup {
+  border-radius: 10px;
+}
+
+.guide-popup .popup-button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+.guide-popup .popup-button:hover {
+  background-color: #blue;
+  color: white;
+}

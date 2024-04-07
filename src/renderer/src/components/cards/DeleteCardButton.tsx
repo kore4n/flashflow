@@ -13,11 +13,11 @@ function DeleteCardButton({
 }): JSX.Element {
   const handleDeleteCardByID = (): void => {
     if (confirm('Are you sure you want to delete this card?')) {
-      console.log('Card deleted.')
+      // console.log('Card deleted.')
       window.api.store.deleteCardByID(cardID)
       if (closeWindow) window.close()
     } else {
-      console.log('Delete canceled.')
+      // console.log('Delete canceled.')
     }
   }
   return (

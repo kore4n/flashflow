@@ -10,7 +10,7 @@ function CloseWindowIcon({
 }): JSX.Element {
   return (
     // <div className="flex flex-row min-w-48">
-    <div className="grid place-items-center">
+    <div className="flex flex-row hover:cursor-pointer hover:opacity-40">
       <svg
         width={width}
         height={height}

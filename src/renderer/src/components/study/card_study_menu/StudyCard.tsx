@@ -1,11 +1,15 @@
-import CloseWindow from '@renderer/components/cards/CloseWindowButton';
-import { useState, useEffect } from 'react';
-import { Card } from 'src/types/types';
+import CloseWindow from '@renderer/components/cards/CloseWindowButton'
+import { useState, useEffect } from 'react'
+import { Card } from 'src/types/types'
 
-
-
-function ShowProgress({ viewedCards, setShowProgress }: { viewedCards: Card[]; setShowProgress: (show: boolean) => void }): JSX.Element {
-    console.log('ShowProgress function is executed');
+function ShowProgress({
+  viewedCards,
+  setShowProgress
+}: {
+  viewedCards: Card[]
+  setShowProgress: (show: boolean) => void
+}): JSX.Element {
+  console.log('ShowProgress function is executed')
 
   const handleCloseProgress = () => {
     setShowProgress(false)
@@ -84,72 +88,122 @@ function ShowCard({
     setCurrentIndex(0)
   }, [])
 
-    if (cards.length === 0) {
-        return <div>You have no cards!</div>;
+  if (cards.length === 0) {
+    return <div>You have no cards!</div>
+  }
+
+  const currentCard = cards[currentIndex]
+
+  const handleShowAnswer = () => {
+    setShowAnswer(true)
+    setShowButtons(true)
+    setViewedCards([...viewedCards, currentCard])
+  }
+
+  const handleNextCard = (cardStatus: number) => {
+    setShowAnswer(false)
+    setShowButtons(false)
+    const updatedCards = [...viewedCards]
+    updatedCards[currentIndex].cardStatus = cardStatus
+    setViewedCards(updatedCards)
+    if (currentIndex === cards.length - 1) {
+      setFinishedDeck(true)
+    } else {
+      setCurrentIndex((prevIndex) => prevIndex + 1)
     }
+  }
 
-    const currentCard = cards[currentIndex];
+  return (
+    <div className="flex flex-col items-center justify-center h-screen relative">
+      {window.api.isMac ? (
+        <span className="absolute top-0 right-0">
+          <CloseWindow />
+        </span>
+      ) : (
+        <></>
+      )}
 
-    const handleShowAnswer = () => {
-        setShowAnswer(true);
-        setShowButtons(true);
-		setViewedCards([...viewedCards, currentCard]);
-    };
-	
-	const handleNextCard = (cardStatus: number) => {
-        setShowAnswer(false);
-        setShowButtons(false);
-        const updatedCards = [...viewedCards];
-        updatedCards[currentIndex].cardStatus = cardStatus;
-        setViewedCards(updatedCards);
-        if (currentIndex === cards.length - 1) {
-            setFinishedDeck(true);
-        } else {
-            setCurrentIndex(prevIndex => prevIndex + 1);
-        }
-    };
-
-	return (
-		<div className="flex flex-col items-center justify-center h-screen relative">
-			<span className="absolute top-0 right-0"><CloseWindow/></span>
-			{finishedDeck ? (
-				<div>
-					<h2>You finished your Deck/Decks</h2>
-				</div>
-			) : (
-				<div className="flex flex-col items-center justify-center flex-grow">
-					<h2 className="font-bold text-lg text-white my-15">{showAnswer ? 'Back Field' : 'Front Field'}</h2>
-					<div className="p-8 bg-gray-200 rounded-lg shadow-lg" style={{ width: '250px', height: '300px' }}>
-						<p>{currentCard.cardFront}</p>
-						<div className="border-b border-gray-400"></div>
-						{showAnswer && <p>{currentCard.cardBack}</p>}
-					</div>
-					{!showAnswer && (
-						<button
-							onClick={handleShowAnswer}
-							className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded mt-20">Show Answer</button>
-					)}
-					{showButtons && (
-						<div className="flex flex-row justify-center space-x-4 mt-20">
-							<button onClick={() => handleNextCard(1)} className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded">Again</button>
-							<div className="flex gap-4">
-								<button onClick={() => handleNextCard(2)} className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded">Hard</button>
-								<button onClick={() => handleNextCard(3)} className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded">Good</button>
-								<button onClick={() => handleNextCard(4)} className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded">Easy</button>
-							</div>
-						</div>
-					)}
-				</div>
-			)}
-			<div className="absolute bottom-0 left-0 m-4">
-				<button onClick={() => {}} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-			</div>
-			<div className="flex flex-row items-center justify-end absolute bottom-0 right-0 m-4">
-				<button onClick={() => setShowProgress(true)} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-4">Show Study Progress</button>
-				<button onClick={() => {}} className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">More</button>
-			</div>
-		</div>
-	);
+      {finishedDeck ? (
+        <div>
+          <h2>You finished your Deck/Decks</h2>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center flex-grow">
+          <h2 className="font-bold text-lg text-white my-15">
+            {showAnswer ? 'Back Field' : 'Front Field'}
+          </h2>
+          <div
+            className="p-8 bg-gray-200 rounded-lg shadow-lg"
+            style={{ width: '250px', height: '300px' }}
+          >
+            <p>{currentCard.cardFront}</p>
+            <div className="border-b border-gray-400"></div>
+            {showAnswer && <p>{currentCard.cardBack}</p>}
+          </div>
+          {!showAnswer && (
+            <button
+              onClick={handleShowAnswer}
+              className="bg-cyan-800 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mt-20"
+            >
+              Show Answer
+            </button>
+          )}
+          {showButtons && (
+            <div className="flex flex-row justify-center space-x-4 mt-20">
+              <button
+                onClick={() => handleNextCard(1)}
+                className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded"
+              >
+                Again
+              </button>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => handleNextCard(2)}
+                  className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded"
+                >
+                  Hard
+                </button>
+                <button
+                  onClick={() => handleNextCard(3)}
+                  className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded"
+                >
+                  Good
+                </button>
+                <button
+                  onClick={() => handleNextCard(4)}
+                  className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded"
+                >
+                  Easy
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+      <div className="absolute bottom-0 left-0 m-4">
+        <button
+          onClick={() => {}}
+          className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Edit
+        </button>
+      </div>
+      <div className="flex flex-row items-center justify-end absolute bottom-0 right-0 m-4">
+        <button
+          onClick={() => setShowProgress(true)}
+          className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-4"
+        >
+          Show Study Progress
+        </button>
+        <button
+          onClick={() => {}}
+          className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        >
+          More
+        </button>
+      </div>
+    </div>
+  )
 }
 
 function StudySession(): JSX.Element {
