@@ -8,8 +8,8 @@ function setupOpenAddCardWindow(parent: BrowserWindow): void {
     const openAddCardWindow = new BrowserWindow({
       width: 900,
       height: 1000,
-      x: 700,
-      y: 300,
+      x: 600,
+      y: 20,
       modal: true,
       parent: parent,
       show: false,

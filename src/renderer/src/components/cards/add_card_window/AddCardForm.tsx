@@ -96,6 +96,7 @@ function AddCardForm(): JSX.Element {
         <input
           className="w-4 h-4 text-blue-600 accent-slate-500 bg-black border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
           type="checkbox"
+          title="Add to Deck"
           onClick={() => toggleDeck(deck.name)}
         ></input>
         {' ' + deck.name}

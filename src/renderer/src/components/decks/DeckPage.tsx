@@ -41,7 +41,7 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
         onKeyDown={handleKeyDown}
         className="w-full bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
       ></input>
-      <button onClick={addDeck} className="pt-2 pl-44">
+      <button title="Add Deck" onClick={addDeck} className="pt-2 pl-44">
         <AddSignIcon width="50px" height="50px" />
       </button>
     </div>
@@ -79,6 +79,8 @@ function DeckTable({
 
       <td>
         <button
+          title="Delete Deck"
+          className={deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'pl-10 align-middle'}
           className={deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'pl-14 align-middle'}
           onClick={() => deleteDeck(deck.name)}
         >
@@ -88,14 +90,17 @@ function DeckTable({
     </tr>
   ))
   return (
-    <table width="400px">
-      <thead>
-        <tr>
-          <th>Decks</th>
-        </tr>
-      </thead>
-      <tbody>{deckEntries}</tbody>
-    </table>
+    <>
+      <div className="grid place-items-center font-bold text-2xl p-4 pb-7">Decks</div>
+      <table width="400px">
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>{deckEntries}</tbody>
+      </table>
+    </>
   )
 }
 

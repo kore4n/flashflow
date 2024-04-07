@@ -115,28 +115,35 @@ function ShowCard({
 
   return (
     <div className="flex flex-col items-center justify-center h-screen relative">
-      <span className="absolute top-0 right-0">
-        <CloseWindow />
-      </span>
+      {window.api.isMac ? (
+        <span className="absolute top-5 right-5">
+          <CloseWindow />
+        </span>
+      ) : (
+        <></>
+      )}
+
       {finishedDeck ? (
         <div>
           <h2>You finished your Deck/Decks</h2>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center flex-grow">
-          <h2 className="font-bold text-lg text-white my-15">{showAnswer ? 'Back' : 'Front'}</h2>
+          <h2 className="font-bold text-lg text-white my-15 p-5">
+            {showAnswer ? 'Answer' : 'Question'}
+          </h2>
           <div
-            className="p-8 bg-gray-200 rounded-lg shadow-lg"
+            className="p-8 bg-gray-200 rounded-lg shadow-lg text-2xl text-black"
             style={{ width: '500px', height: '300px' }}
           >
             <p>{currentCard.cardFront}</p>
-            <div className="border-b border-gray-400"></div>
-            {showAnswer && <p>{currentCard.cardBack}</p>}
+            <div className="border-b border-gray-400 p-8"></div>
+            {showAnswer && <p className="text-emerald-800 pt-5">{currentCard.cardBack}</p>}
           </div>
           {!showAnswer && (
             <button
               onClick={handleShowAnswer}
-              className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded mt-20"
+              className="bg-cyan-800 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mt-20"
             >
               Show Answer
             </button>

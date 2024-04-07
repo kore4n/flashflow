@@ -21,7 +21,7 @@ function DeleteCardButton({
     }
   }
   return (
-    <td onClick={handleDeleteCardByID}>
+    <td title="Delete Card" onClick={handleDeleteCardByID}>
       <DeleteIcon width={width} height={height} />
     </td>
   )

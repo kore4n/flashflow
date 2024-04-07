@@ -24,7 +24,8 @@ const slides = [
   },
   {
     title: "That's All!",
-    content: 'Thank you for choosing Flashflow! We wish you the best of luck on your studies.'
+    content:
+      "If you're confused about the function of anything, just hover over it and a tooltip will appear!"
   }
 ]
 
@@ -35,7 +36,7 @@ const Guide = ({ onClose }) => {
     if (currentStep < slides.length - 1) {
       setCurrentStep(currentStep + 1)
     } else {
-      onClose(); // Close the guide on the last step
+      onClose() // Close the guide on the last step
     }
   }
 
