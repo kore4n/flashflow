@@ -111,7 +111,7 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
       <div className="flex justify-center items-center mt-4">
         <button
           onClick={handleStartStudy}
-          className="bg-blue-500 hover:bg-blue-00 text-white font-bold py-2 px-4 rounded uppercase"
+          className="bg-cyan-800 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded uppercase"
         >
           Study Now
         </button>
