@@ -76,8 +76,6 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
 	return (
 		<div id="Study" className="mt-8 flex flex-col h-screen">
 		  <div className="flex-grow flex">
-	
-			{/* Left section with checkboxes */}
 			<div className="w-1/2 pr-6 mt-11">
 			  
 			  <div className="grid gap-1 border rounded-lg border-slate-800 bg-slate-700 shadow-lg rounded p-6">
@@ -99,8 +97,6 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
 			  </div>
 			  {showMessage && <p className="text-red-300 mt-2">You need to select at least one deck to study.</p>}
 			</div>
-	
-			{/* Right section to display deck details */}
 			{inspectDeck && (
 			  <div className="w-1/2 pl-6 mt-5">
 				<div className="border border-slate-800 shadow-md rounded-lg p-4 mt-6 bg-slate-700">
