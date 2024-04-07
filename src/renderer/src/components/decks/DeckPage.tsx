@@ -43,11 +43,17 @@ function DeckTable({
   toCardsByDeckBtn: (selectedDeckName: string) => JSX.Element
 }): JSX.Element | string {
   function deleteDeck(name: string): void {
-    if (name !== DEFAULT_DECK_NAME) {
-      triggerToast(true, 'Deleted Deck!')
-      window.api.store.deleteDeck(name)
-    } else alert(DEFAULT_DECK_NAME + ' cannot be deleted!')
+    if (confirm('Are you sure you want to delete this deck: ' + name + '?')) {
+      console.log('Deck ' + name + ' deleted.')
+      if (name !== DEFAULT_DECK_NAME) {
+        triggerToast(true, 'Deck ' + name + ' has been deleted')
+        window.api.store.deleteDeck(name)
+      } else alert('The deck ' + DEFAULT_DECK_NAME + ' cannot be deleted!')
+    } else {
+      console.log('Delete canceled.')
+    }
   }
+
   const deckEntries = decks.map((deck) => (
     <tr className="even: bg-slate-700 odd:bg-slate-800 shadow [&>*]:py-2" key={deck.name}>
       <td className="pl-5" width="300px">

@@ -61,7 +61,7 @@ function DisplayCards({
           <span></span> // no tags
         )}
       </td>
-      <DeleteCardButton cardID={card.cardID!} />
+      <DeleteCardButton cardID={card.cardID!} width={'30px'} height={'30px'} closeWindow={false} />
       <EditCardButton cardID={card.cardID!} />
     </tr>
   ))

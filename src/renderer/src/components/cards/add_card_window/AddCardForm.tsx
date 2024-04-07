@@ -11,11 +11,7 @@ import AddCardSubmitButton from './AddCardSubmitButton'
 import InputColumn from '../InputColumn'
 import InputLabel from '../InputLabel'
 import { DEFAULT_DECK_NAME } from '../../decks/DeckPage'
-
-
-
-
-
+import CardInputField from '../CardInputField'
 
 function AddCardForm(): JSX.Element {
   async function addCard(): Promise<void> {
@@ -82,9 +78,16 @@ function AddCardForm(): JSX.Element {
   const sortedDecks = decks.sort((a, b) => a.name.localeCompare(b.name))
 
   const deckTblList = sortedDecks.map((deck) => (
-    <tr className="bg-slate-100 w-full block" key={deck.name}>
-      <td className="pl-2 w-full">
-        <input type="checkbox" onClick={() => toggleDeck(deck.name)}></input>
+    <tr
+      className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      key={deck.name}
+    >
+      <td className="pl-2 w-full ">
+        <input
+          className="w-4 h-4 text-blue-600 accent-slate-500 bg-black border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+          type="checkbox"
+          onClick={() => toggleDeck(deck.name)}
+        ></input>
         {' ' + deck.name}
       </td>
     </tr>
@@ -135,7 +138,7 @@ function AddCardForm(): JSX.Element {
   }
 
   return (
-    <div className="grid place-items-center">
+    <div className="grid place-items-center table-fixed ">
       <h1 className="text-2xl font-bold">Insert Card</h1>
 	  {!showOptions && (
   		<button onClick={() => handleExpertOptions()} className="absolute top-0 left-0 m-4 bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">Enable Expert Options</button>
@@ -189,27 +192,33 @@ function AddCardForm(): JSX.Element {
       <div className="flex flex-col gap-4">
         <InputColumn>
           <InputLabel>Front</InputLabel>
-          <input
+          {/* <input
             onChange={changeCardToAddFront}
             type="text"
             placeholder={'Front of the card'}
-          ></input>
+          ></input> */}
+          <CardInputField onChange={changeCardToAddFront} placeholder="Front of the Card" />
         </InputColumn>
         <InputColumn>
           <InputLabel>Back</InputLabel>
-          <input
+          {/* <input
             onChange={changeCardToAddBack}
             type="text"
             placeholder={'Back of the card'}
-          ></input>
+          ></input> */}
+          <CardInputField onChange={changeCardToAddBack} placeholder="Back of the Card" />
         </InputColumn>
         <InputColumn>
           <InputLabel>Side Note</InputLabel>
-          <input
+          {/* <input
             onChange={changeCardToAddSideNote}
             type="text"
             placeholder={'Your side note goes here ...'}
-          ></input>
+          ></input> */}
+          <CardInputField
+            onChange={changeCardToAddSideNote}
+            placeholder="Your side note goes here ..."
+          />
         </InputColumn>
         <InputColumn>
 		  
@@ -253,18 +262,13 @@ function AddCardForm(): JSX.Element {
           <InputLabel>Tags</InputLabel>
           <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
         </InputColumn>
-        <br />
+        {/* <br /> */}
         <AddCardSubmitButton
           onClick={addCard}
-          // cardName={cardToAddName}
           cardFront={cardFrontInput}
           cardBack={cardBackInput}
         />
-        <AddCardWarnings
-          // cardToAddName={cardToAddName}
-          cardFrontInput={cardFrontInput}
-          cardBackInput={cardBackInput}
-        />
+        <AddCardWarnings cardFrontInput={cardFrontInput} cardBackInput={cardBackInput} />
       </div>
       <CloseWindow />
     </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Tag, TagsInputProps } from 'src/types/types'
 import { getAllTags } from '../CardsTable'
+import AddTagWarnings from './AddTagWarnings'
 
 const allTags = getAllTags()
 const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
@@ -41,11 +42,11 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
       return
     }
     if (sanitizedText.length > 24) {
-      alert('Tag cannot exceed 24 characters')
+      // alert('Tag cannot exceed 24 characters')
       return
     }
     if (!sanitizedText.match(/^[A-Za-z0-9_+\-=().?!/ \\%$#@<>{}*&^–]+$/)) {
-      alert('Tag contains invalid characters')
+      // alert('Tag contains invalid characters')
       return
     }
     if (
@@ -53,7 +54,7 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
         (tag: { tagText: string }) => tag.tagText.toLowerCase() === sanitizedText.toLowerCase()
       )
     ) {
-      alert('Tag already exists')
+      // alert('Tag already exists')
       return
     }
     let newTagText: string = sanitizedText.toLowerCase()
@@ -90,7 +91,7 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
   }
 
   return (
-    <div>
+    <div className=" mb-6">
       {tempTagPool.map((tag, index) => (
         <div
           key={index}
@@ -146,6 +147,7 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
           }}
         ></span>
         <input
+          className="min-h-4 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
           ref={inputRef}
           value={inputValue}
           onChange={handleInputChange}
@@ -184,6 +186,9 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
           ))}
         </div>
       )}
+      <div>
+        <AddTagWarnings tagToInput={inputValue} tempTagPool={tempTagPool} />
+      </div>
     </div>
   )
 }

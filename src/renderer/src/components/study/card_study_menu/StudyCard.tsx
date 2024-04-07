@@ -7,67 +7,82 @@ import { Card } from 'src/types/types';
 function ShowProgress({ viewedCards, setShowProgress }: { viewedCards: Card[]; setShowProgress: (show: boolean) => void }): JSX.Element {
     console.log('ShowProgress function is executed');
 
-	const handleCloseProgress = () => {
-        setShowProgress(false);
-    };
+  const handleCloseProgress = () => {
+    setShowProgress(false)
+  }
 
-	return (
-        <div id="ShowProgress" className="flex flex-col items-center justify-center h-screen ">
-            <div className="p-8  rounded-lg shadow-lg w-96">
-                <h2 className="text-lg text-gray-200 font-semibold mb-4 text-center">Viewed Cards</h2>
-                {viewedCards.length === 0 ? (
-                    <p className="text-gray-200 mb-4 text-center">No recently viewed cards.</p>
-                ) : (
-                    <table className="table-auto w-full">
-                        <thead>
-                            <tr className="bg-slate-600">
-                                <th className="px-4 text-gray-200 py-2">Card</th>
-                                <th className="px-4  text-gray-200 py-2">Rating</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {viewedCards.map((card, index) => (
-                                <tr key={index}>
-                                    <td className="border text-gray-200 border-black px-4 py-2">{card.cardFront}</td>
-                                    <td className="border text-gray-200 border-black px-4 py-2">{getRating(card.cardStatus)}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                )}
-                <button onClick={handleCloseProgress} className="mt-4 bg-slate-700 hover:bg-slate-700  font-bold py-2 px-4 rounded w-full">Return</button>
-            </div>
-        </div>
-    );
+  return (
+    <div id="ShowProgress" className="flex flex-col items-center justify-center h-screen ">
+      <div className="p-8  rounded-lg shadow-lg w-96">
+        <h2 className="text-lg text-gray-200 font-semibold mb-4 text-center">Viewed Cards</h2>
+        {viewedCards.length === 0 ? (
+          <p className="text-gray-200 mb-4 text-center">No recently viewed cards.</p>
+        ) : (
+          <table className="table-auto w-full">
+            <thead>
+              <tr className="bg-slate-600">
+                <th className="px-4 text-gray-200 py-2">Card</th>
+                <th className="px-4  text-gray-200 py-2">Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              {viewedCards.map((card, index) => (
+                <tr key={index}>
+                  <td className="border text-gray-200 border-black px-4 py-2">{card.cardFront}</td>
+                  <td className="border text-gray-200 border-black px-4 py-2">
+                    {getRating(card.cardStatus)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        <button
+          onClick={handleCloseProgress}
+          className="mt-4 bg-slate-700 hover:bg-slate-700  font-bold py-2 px-4 rounded w-full"
+        >
+          Return
+        </button>
+      </div>
+    </div>
+  )
 }
 
 function getRating(cardStatus: number): string {
-    switch (cardStatus) {
-        case 1:
-            return 'Again';
-        case 2:
-            return 'Hard';
-        case 3:
-            return 'Good';
-        case 4:
-            return 'Easy';
-        default:
-            return 'Unknown';
-    }
+  switch (cardStatus) {
+    case 1:
+      return 'Again'
+    case 2:
+      return 'Hard'
+    case 3:
+      return 'Good'
+    case 4:
+      return 'Easy'
+    default:
+      return 'Unknown'
+  }
 }
 
+function ShowCard({
+  cards,
+  setShowProgress,
+  viewedCards,
+  setViewedCards
+}: {
+  cards: Card[]
+  showProgress: boolean
+  setShowProgress: (show: boolean) => void
+  viewedCards: Card[]
+  setViewedCards: (cards: Card[]) => void
+}): JSX.Element {
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const [showAnswer, setShowAnswer] = useState<boolean>(false)
+  const [showButtons, setShowButtons] = useState<boolean>(false)
+  const [finishedDeck, setFinishedDeck] = useState<boolean>(false)
 
-
-
-function ShowCard({ cards, setShowProgress, viewedCards, setViewedCards }: { cards: Card[]; showProgress: boolean; setShowProgress: (show: boolean) => void; viewedCards: Card[]; setViewedCards: (cards: Card[]) => void }): JSX.Element {
-    const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const [showAnswer, setShowAnswer] = useState<boolean>(false);
-    const [showButtons, setShowButtons] = useState<boolean>(false);
-	const [finishedDeck, setFinishedDeck] = useState<boolean>(false);
-
-	useEffect(() => {
-        setCurrentIndex(0);
-    }, []);
+  useEffect(() => {
+    setCurrentIndex(0)
+  }, [])
 
     if (cards.length === 0) {
         return <div>You have no cards!</div>;
@@ -103,7 +118,7 @@ function ShowCard({ cards, setShowProgress, viewedCards, setViewedCards }: { car
 				</div>
 			) : (
 				<div className="flex flex-col items-center justify-center flex-grow">
-					<h2 className="font-bold text-lg text-white my-20">{showAnswer ? 'Back Field' : 'Front Field'}</h2>
+					<h2 className="font-bold text-lg text-white my-15">{showAnswer ? 'Back Field' : 'Front Field'}</h2>
 					<div className="p-8 bg-gray-200 rounded-lg shadow-lg" style={{ width: '250px', height: '300px' }}>
 						<p>{currentCard.cardFront}</p>
 						<div className="border-b border-gray-400"></div>
@@ -138,34 +153,40 @@ function ShowCard({ cards, setShowProgress, viewedCards, setViewedCards }: { car
 }
 
 function StudySession(): JSX.Element {
-    const [cards, setCards] = useState<Card[]>([]);
-    const [isLoading, setLoading] = useState<boolean>(true);
-    const [showProgress, setShowProgress] = useState<boolean>(false);
-    const [viewedCards, setViewedCards] = useState<Card[]>([]);
+  const [cards, setCards] = useState<Card[]>([])
+  const [isLoading, setLoading] = useState<boolean>(true)
+  const [showProgress, setShowProgress] = useState<boolean>(false)
+  const [viewedCards, setViewedCards] = useState<Card[]>([])
 
-    useEffect(() => {
-        async function GetAllCards(): Promise<void> {
-            const cards = await window.api.store.getAllCards();
-            setCards(cards);
-            setLoading(false);
-        }
-
-        GetAllCards();
-    }, []);
-
-    if (isLoading) {
-        return <div>Loading...</div>;
+  useEffect(() => {
+    async function GetAllCards(): Promise<void> {
+      const cards = await window.api.store.getAllCards()
+      setCards(cards)
+      setLoading(false)
     }
 
-    return (
-        <div>
-            {showProgress ? (
-                <ShowProgress viewedCards={viewedCards} setShowProgress={setShowProgress} />
-            ) : (
-                <ShowCard cards={cards} showProgress={showProgress} setShowProgress={setShowProgress} viewedCards={viewedCards} setViewedCards={setViewedCards} />
-            )}
-        </div>
-    );
+    GetAllCards()
+  }, [])
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <div>
+      {showProgress ? (
+        <ShowProgress viewedCards={viewedCards} setShowProgress={setShowProgress} />
+      ) : (
+        <ShowCard
+          cards={cards}
+          showProgress={showProgress}
+          setShowProgress={setShowProgress}
+          viewedCards={viewedCards}
+          setViewedCards={setViewedCards}
+        />
+      )}
+    </div>
+  )
 }
 
-export default StudySession;
+export default StudySession
