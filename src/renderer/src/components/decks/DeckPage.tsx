@@ -81,7 +81,6 @@ function DeckTable({
         <button
           title="Delete Deck"
           className={deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'pl-10 align-middle'}
-          className={deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'pl-14 align-middle'}
           onClick={() => deleteDeck(deck.name)}
         >
           <DeleteIcon width="30px" height="30px" />
