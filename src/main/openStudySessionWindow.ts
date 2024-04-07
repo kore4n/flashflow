@@ -7,7 +7,7 @@ function setupOpenStudySessionWindow(parent: BrowserWindow): void {
   ipcMain.on('open-study-session-window', () => {
     const openStudySessionWindow = new BrowserWindow({
       width: 900,
-      height: 670,
+      height: 900,
       x: 700,
       y: 300,
       modal: true,
@@ -22,9 +22,9 @@ function setupOpenStudySessionWindow(parent: BrowserWindow): void {
     })
 
     openStudySessionWindow.on('ready-to-show', () => {
-		openStudySessionWindow.show()
+      openStudySessionWindow.show()
       // Change default page of new window
-    	openStudySessionWindow.webContents.send('changeRoute', '/StudyCard')
+      openStudySessionWindow.webContents.send('changeRoute', '/StudyCard')
     })
 
     openStudySessionWindow.webContents.setWindowOpenHandler((details) => {
@@ -35,9 +35,9 @@ function setupOpenStudySessionWindow(parent: BrowserWindow): void {
     // HMR for renderer base on electron-vite cli.
     // Load the remote URL for development or the local html file for production.
     if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-		openStudySessionWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+      openStudySessionWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
     } else {
-		openStudySessionWindow.loadFile(join(__dirname, '../renderer/index.html'))
+      openStudySessionWindow.loadFile(join(__dirname, '../renderer/index.html'))
     }
   })
 }

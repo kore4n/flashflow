@@ -67,10 +67,11 @@ function DisplayCards({
   ))
 
   return (
-    <>
+    <div>
       {/*<h1 className="text-blue-500 text-2xl font-bold">*/}
       {/*  List of {selectedDeckName.localeCompare('') == 0 ? 'every' : selectedDeckName + "'s"} card*/}
       {/*</h1>*/}
+
       <div className=" grid place-items-center py-2">
         <button
           className=" text-gray-300 text-2xl font-bold"
@@ -85,11 +86,9 @@ function DisplayCards({
                 : 'in deck: ' + selectedDeckName)}
         </button>
       </div>
-
       <table className="list-decimal shadow-xl">
         <thead>
           <tr>
-            {/* <th>Number</th> */}
             <th>Order</th>
             <th>Front</th>
             <th>Back</th>
@@ -101,7 +100,7 @@ function DisplayCards({
         </thead>
         <tbody>{cardsElement}</tbody>
       </table>
-    </>
+    </div>
   )
 }
 
