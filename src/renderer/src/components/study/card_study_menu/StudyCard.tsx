@@ -129,21 +129,21 @@ function ShowCard({
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center flex-grow">
-          <h2 className="font-bold text-lg text-white my-15">
-            {showAnswer ? 'Back Field' : 'Front Field'}
+          <h2 className="font-bold text-lg text-white my-15 p-5">
+            {showAnswer ? 'Answer' : 'Question'}
           </h2>
           <div
-            className="p-8 bg-gray-200 rounded-lg shadow-lg"
-            style={{ width: '250px', height: '300px' }}
+            className="p-8 bg-gray-200 rounded-lg shadow-lg text-2xl text-black"
+            style={{ width: '500px', height: '300px' }}
           >
             <p>{currentCard.cardFront}</p>
-            <div className="border-b border-gray-400"></div>
-            {showAnswer && <p>{currentCard.cardBack}</p>}
+            <div className="border-b border-gray-400 p-8"></div>
+            {showAnswer && <p className="text-emerald-800 pt-5">{currentCard.cardBack}</p>}
           </div>
           {!showAnswer && (
             <button
               onClick={handleShowAnswer}
-              className="bg-cyan-800 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mt-20"
+              className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded mt-20"
             >
               Show Answer
             </button>
