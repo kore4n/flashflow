@@ -1,5 +1,7 @@
+import CloseWindow from '@renderer/components/cards/CloseWindowButton';
 import { useState, useEffect } from 'react';
 import { Card } from 'src/types/types';
+
 
 
 function ShowProgress({ viewedCards, setShowProgress }: { viewedCards: Card[]; setShowProgress: (show: boolean) => void }): JSX.Element {
@@ -94,6 +96,7 @@ function ShowCard({ cards, setShowProgress, viewedCards, setViewedCards }: { car
 
 	return (
 		<div className="flex flex-col items-center justify-center h-screen relative">
+			<span className="absolute top-0 right-0"><CloseWindow/></span>
 			{finishedDeck ? (
 				<div>
 					<h2>You finished your Deck/Decks</h2>
@@ -101,7 +104,7 @@ function ShowCard({ cards, setShowProgress, viewedCards, setViewedCards }: { car
 			) : (
 				<div className="flex flex-col items-center justify-center flex-grow">
 					<h2 className="font-bold text-lg text-white my-20">{showAnswer ? 'Back Field' : 'Front Field'}</h2>
-					<div className="p-8 bg-gray-200 rounded-lg shadow-lg">
+					<div className="p-8 bg-gray-200 rounded-lg shadow-lg" style={{ width: '250px', height: '300px' }}>
 						<p>{currentCard.cardFront}</p>
 						<div className="border-b border-gray-400"></div>
 						{showAnswer && <p>{currentCard.cardBack}</p>}
