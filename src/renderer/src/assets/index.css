@@ -209,12 +209,9 @@ a:hover {
 }
 
 .guide-popup {
-  /* ... other styles for the popup */
   border-radius: 10px;
-  /* ... */
 }
 
-/* Now target buttons within the .guide-popup container */
 .guide-popup .popup-button {
   padding: 10px 15px;
   margin: 0 5px;
