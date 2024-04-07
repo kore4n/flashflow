@@ -1,10 +1,12 @@
 import { IpcRenderer, contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { Card, Deck } from '../types/types'
+import os from 'os'
 
 // Custom APIs for renderer
 const api = {
   test: (): void => console.log('Hello world'),
+  isMac: os.platform() === 'darwin',
   closeCurrentWindow: (): void => {
     console.log('Should be closing focused window')
     ipcRenderer.send('close-current-window')

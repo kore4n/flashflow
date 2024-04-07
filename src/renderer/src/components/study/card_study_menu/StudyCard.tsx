@@ -115,9 +115,14 @@ function ShowCard({
 
   return (
     <div className="flex flex-col items-center justify-center h-screen relative">
-      <span className="absolute top-0 right-0">
-        <CloseWindow />
-      </span>
+      {window.api.isMac ? (
+        <span className="absolute top-0 right-0">
+          <CloseWindow />
+        </span>
+      ) : (
+        <></>
+      )}
+
       {finishedDeck ? (
         <div>
           <h2>You finished your Deck/Decks</h2>
