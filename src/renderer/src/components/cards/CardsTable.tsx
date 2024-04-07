@@ -2,7 +2,6 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { Card } from 'src/types/types'
 import DeleteCardButton from './DeleteCardButton'
 import EditCardButton from './EditCardButton'
-import { DEFAULT_DECK_NAME } from '../decks/DeckPage'
 
 function DisplayCards({
   cards,
@@ -19,9 +18,8 @@ function DisplayCards({
   const [selectedTag, setSelectedTag] = useState('')
 
   useEffect(() => {
-    // console.log('filteredCards.length')
-    // console.log(filteredCards.length)
-  })
+    setFilteredCards(cards)
+  }, [cards])
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleTagClick = (tagText: SetStateAction<string>) => {
@@ -125,11 +123,12 @@ function CardsTable(): JSX.Element {
       // console.log(JSON.stringify(cards))
       // console.log(cards.length)
 
-      // console.log('Getting requested cards.')
       if (cards) {
         setCards(cards)
         setSelectedDeckName(selectedDeckName)
         setLoading(false)
+
+        // console.log(JSON.stringify(cards, null, 2))
       }
     }
 

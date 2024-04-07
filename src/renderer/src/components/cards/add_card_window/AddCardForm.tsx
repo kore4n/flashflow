@@ -4,7 +4,18 @@ import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
 import { getLargestCardID } from '../CardsTable'
 import AddSignIcon from '../AddSignIcon'
-import { AddGearIcon, AddExponentIcon, AddSubscriptIcon, AddMarkerIcon, AddEraserIcon, AddListIcon, AddNumberedListIcon, AddParagraphIcon, AddClipIcon, AddMicIcon } from './OptionIcons'
+import {
+  AddGearIcon,
+  AddExponentIcon,
+  AddSubscriptIcon,
+  AddMarkerIcon,
+  AddEraserIcon,
+  AddListIcon,
+  AddNumberedListIcon,
+  AddParagraphIcon,
+  AddClipIcon,
+  AddMicIcon
+} from './OptionIcons'
 import DeleteIcon from '../DeleteIcon'
 import AddCardWarnings from './AddCardWarnings'
 import AddCardSubmitButton from './AddCardSubmitButton'
@@ -51,13 +62,11 @@ function AddCardForm(): JSX.Element {
   const [belongsToDeckInput, setBelongsToDeck] = useState<DeckName[]>([])
   const [expertNotesInput, setExpertNotes] = useState<ExpertNote[]>([])
   const [decks, setDecks] = useState<Deck[]>([])
-  const [showOptions, setShowOptions] = useState<boolean>(false);
-
+  const [showOptions, setShowOptions] = useState<boolean>(false)
 
   const handleExpertOptions = () => {
-	setShowOptions(!showOptions);
-  };
-
+    setShowOptions(!showOptions)
+  }
 
   async function GetDecks(): Promise<void> {
     setDecks(await window.api.store.getAllDecks())
@@ -92,9 +101,6 @@ function AddCardForm(): JSX.Element {
       </td>
     </tr>
   ))
-
-
-
 
   function changeCardToAddFront(event: React.ChangeEvent<HTMLInputElement>): void {
     setCardFront(event.target.value)
@@ -140,55 +146,99 @@ function AddCardForm(): JSX.Element {
   return (
     <div className="grid place-items-center table-fixed ">
       <h1 className="text-2xl font-bold">Insert Card</h1>
-	  {!showOptions && (
-  		<button onClick={() => handleExpertOptions()} className="absolute top-0 left-0 m-4 bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">Enable Expert Options</button>
-		)}
-		{showOptions && (
-		<div>
-			<button onClick={() => handleExpertOptions()} className="absolute top-0 left-0 m-4 bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">
-				Disable Expert Options
-			</button>
-		<div className="mb-5"></div>
-		<div className="flex flex-wrap">
-          <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md text-white p-1">
-            <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-2 p-4">Fields</button>
-            <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">Cards...</button>
-            <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">Type</button>
-          </span>
-          <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1">
-            <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md flex items-center py-1 px-1 "><AddGearIcon width="20px" height="20px"/></button>
-          </span>
-          <div className="flex ">
-		  	<span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-				<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white font-bold">B</button>
-				<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">I</button>
-				<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white underline">U</button>
-			</span>
-			<span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-				<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-1 p-4 w-9 flex items-center justify-center"><AddExponentIcon width="13px" height="13px"/></button>
-				<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 w-9 flex items-center justify-center"><AddSubscriptIcon width="13px" height="13px"/></button>
-			</span>
-			<span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-				<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 text-white underline ">A</button>
-				<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center"><AddMarkerIcon width="13px" height="13px"/></button>
-			</span>
-			<span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-            	<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center"><AddEraserIcon width="13px" height="13px" colour='#FFFFFF'/></button>
-			</span>
-			<span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-			<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center"><AddListIcon width="13px" height="13px" colour='#FFFFFF'/></button>
-			<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center"><AddNumberedListIcon width="13px" height="15px" colour='#FFFFFF'/></button>
-			<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center"><AddParagraphIcon width="13px" height="13px" colour='#FFFFFF'/></button>
-			</span>
-			<span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-2 flex">
-			<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center"><AddClipIcon width="13px" height="13px" colour='#FFFFFF'/></button>
-			<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center"><AddMicIcon width="13px" height="13px" colour='#FFFFFF'/></button>
-			<button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">fx</button>
-			</span>
+      {!showOptions && (
+        <button
+          onClick={() => handleExpertOptions()}
+          className="absolute top-0 left-0 m-4 bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4"
+        >
+          Enable Expert Options
+        </button>
+      )}
+      {showOptions && (
+        <div>
+          <button
+            onClick={() => handleExpertOptions()}
+            className="absolute top-0 left-0 m-4 bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4"
+          >
+            Disable Expert Options
+          </button>
+          <div className="mb-5"></div>
+          <div className="flex flex-wrap">
+            <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md text-white p-1">
+              <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-2 p-4">
+                Fields
+              </button>
+              <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">
+                Cards...
+              </button>
+              <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">
+                Type
+              </button>
+            </span>
+            <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1">
+              <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md flex items-center py-1 px-1 ">
+                <AddGearIcon width="20px" height="20px" />
+              </button>
+            </span>
+            <div className="flex ">
+              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white font-bold">
+                  B
+                </button>
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">
+                  I
+                </button>
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white underline">
+                  U
+                </button>
+              </span>
+              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-1 p-4 w-9 flex items-center justify-center">
+                  <AddExponentIcon width="13px" height="13px" />
+                </button>
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 w-9 flex items-center justify-center">
+                  <AddSubscriptIcon width="13px" height="13px" />
+                </button>
+              </span>
+              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 text-white underline ">
+                  A
+                </button>
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                  <AddMarkerIcon width="13px" height="13px" />
+                </button>
+              </span>
+              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                  <AddEraserIcon width="13px" height="13px" colour="#FFFFFF" />
+                </button>
+              </span>
+              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                  <AddListIcon width="13px" height="13px" colour="#FFFFFF" />
+                </button>
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                  <AddNumberedListIcon width="13px" height="15px" colour="#FFFFFF" />
+                </button>
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                  <AddParagraphIcon width="13px" height="13px" colour="#FFFFFF" />
+                </button>
+              </span>
+              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-2 flex">
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                  <AddClipIcon width="13px" height="13px" colour="#FFFFFF" />
+                </button>
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
+                  <AddMicIcon width="13px" height="13px" colour="#FFFFFF" />
+                </button>
+                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">
+                  fx
+                </button>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-		)}
+      )}
       <div className="flex flex-col gap-4">
         <InputColumn>
           <InputLabel>Front</InputLabel>
@@ -221,7 +271,6 @@ function AddCardForm(): JSX.Element {
           />
         </InputColumn>
         <InputColumn>
-		  
           {expertNotesInput.map((expertNote, index) => (
             <div key={index} className="flex flex-col gap-4">
               <InputLabel>Expert Note {index + 1}</InputLabel>
@@ -242,11 +291,11 @@ function AddCardForm(): JSX.Element {
               </button>
             </div>
           ))}
-		  {showOptions && (
-			<button onClick={addExpertNote} className="ml-2">
-				<AddSignIcon width="30px" height="30px" />
-			</button>
-		  )}
+          {showOptions && (
+            <button onClick={addExpertNote} className="ml-2">
+              <AddSignIcon width="30px" height="30px" />
+            </button>
+          )}
         </InputColumn>
         <InputColumn>
           <InputLabel>Decks</InputLabel>
