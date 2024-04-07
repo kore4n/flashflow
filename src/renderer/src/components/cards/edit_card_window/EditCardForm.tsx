@@ -6,6 +6,7 @@ import InputLabel from '../InputLabel'
 import CheckMarkIcon from '../CheckMarkIcon'
 import CloseWindowButton from '../CloseWindowButton'
 import DeleteCardButton from '../DeleteCardButton'
+import CardInputField from '../CardInputField'
 
 function EditCardInputs({ card }: { card: Card }): JSX.Element {
   const [cardFrontToEdit, setCardFrontToEdit] = useState<string>('')
@@ -55,22 +56,21 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
     <div>
       <InputColumn>
         <InputLabel>Front</InputLabel>
-        <input type={'text'} onChange={onCardFrontChange} defaultValue={cardFrontToEdit}></input>
+        <CardInputField onChange={onCardFrontChange} defaultValue={cardFrontToEdit} />
       </InputColumn>
       <InputColumn>
         <InputLabel>Back</InputLabel>
-        <input type={'text'} onChange={onCardBackChange} defaultValue={cardBackToEdit}></input>
+        <CardInputField onChange={onCardBackChange} defaultValue={cardBackToEdit} />
       </InputColumn>
 
-      <button className="bg-slate-000 hover:bg-slate-900 p-1 table-cell" onClick={saveAndExit}>
-        Save <CheckMarkIcon width="40px" height="40px" />
+      <button className="bg-slate-000 hover:bg-slate-900 p-1 m-5 table-cell" onClick={saveAndExit}>
+        <CheckMarkIcon width="50px" height="50px" />
       </button>
       <button className="bg-slate-000 hover:bg-slate-900 p-1 m-5 table-cell">
-        Delete
-        <DeleteCardButton cardID={getCardID()!} width="40px" height={'40px'} closeWindow={true} />
+        <DeleteCardButton cardID={getCardID()!} width="50px" height={'50px'} closeWindow={true} />
       </button>
       <button className="bg-slate-000 hover:bg-slate-900 p-1 m-5 table-cell">
-        Cancel <CloseWindowButton width="40px" height="40px" />
+        <CloseWindowButton width="50px" height="50px" />
       </button>
     </div>
   )
