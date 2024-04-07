@@ -1,7 +1,6 @@
 import { ActiveTab, Deck } from 'src/types/types';
 import { useEffect, useState } from 'react';
-import  MagnifyingGlassIcon  from './MagnifyingGlassIcon'
-
+import  MagnifyingGlassIcon from './MagnifyingGlassIcon'
 
 
 /*
