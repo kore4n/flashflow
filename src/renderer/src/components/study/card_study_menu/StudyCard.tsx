@@ -116,6 +116,7 @@ function ShowCard({
 
   return (
     <div className="flex flex-col items-center justify-center h-screen relative">
+	<p>{currentIndex + 1}/{cards.length} Cards Left</p>
       {window.api.isMac ? (
         <span className="absolute top-5 right-5">
           <CloseWindow />

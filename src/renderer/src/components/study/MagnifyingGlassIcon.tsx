@@ -1,4 +1,6 @@
 // eslint-disable-next-line react/prop-types
+import React from 'react'
+
 function MagnifyingGlassIcon({ width = '50px', height = '50px', colour = '#94e3fe' }): JSX.Element {
   return (
     <svg
