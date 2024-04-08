@@ -1,6 +1,7 @@
 import { cardIsValid } from '@renderer/utils/cardValidity'
 import { useEffect, useState } from 'react'
 import CheckMarkIcon from '../CheckMarkIcon'
+import React from 'react'
 
 function AddCardSubmitButton({
   onClick,

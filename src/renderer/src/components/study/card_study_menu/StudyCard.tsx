@@ -126,7 +126,14 @@ function ShowCard({
 
       {finishedDeck ? (
         <div>
-          <h2>You finished your Deck/Decks</h2>
+          <h2 className="text-2xl">You finished your selected deck(s)</h2>
+          {window.api.isMac ? (
+            <></>
+          ) : (
+            <span className="grid place-items-center justify-center pt-10">
+              <CloseWindow />
+            </span>
+          )}
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center flex-grow">

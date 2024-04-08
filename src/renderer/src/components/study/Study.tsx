@@ -2,6 +2,7 @@ import { ActiveTab, Deck } from 'src/types/types'
 import { useEffect, useState } from 'react'
 import MagnifyingGlassIcon from './MagnifyingGlassIcon'
 import { truncateText } from '../cards/CardsTable'
+import React from 'react'
 
 /*
 	After clicking the study tab this will populate the window with all current decks to choose from
@@ -71,13 +72,15 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
 
   if (activeTab !== 'Study') return <></>
 
+  const sortedDecks = decks.sort((a, b) => a.name.localeCompare(b.name))
+
   return (
     <div id="Study" className="mt-8 flex flex-col h-[90vh]">
       <div className="flex-grow flex">
         <div className="w-1/2 pr-6 mt-11">
           <div className="grid gap-1 border rounded-lg border-slate-800 bg-slate-700 shadow-lg p-6">
             <h1 className="text-xl font-bold text-white mb-4">CHOOSE DECKS TO STUDY</h1>
-            {decks.map((deck) => (
+            {sortedDecks.map((deck) => (
               <div key={deck.name} className="flex items-center gap-2 text-white">
                 <input
                   title="Select Deck"
@@ -124,14 +127,26 @@ function Study({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
         </button>
       </div>
 
-      <div className="flex justify-center items-center mt-20 mb-10">
-        <button className="bg-slate-800 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded uppercase text-sm">
+      <div
+        title="For UI demonstration purposes only"
+        className="flex justify-center items-center mt-20 mb-10"
+      >
+        <button
+          title="For UI demonstration purposes only"
+          className="bg-slate-800 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded uppercase text-sm"
+        >
           Options
         </button>
-        <button className="bg-slate-800 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded uppercase text-sm">
+        <button
+          title="For UI demonstration purposes only"
+          className="bg-slate-800 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded uppercase text-sm"
+        >
           Custom Study
         </button>
-        <button className="bg-slate-800 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded uppercase text-sm">
+        <button
+          title="For UI demonstration purposes only"
+          className="bg-slate-800 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded uppercase text-sm"
+        >
           Description
         </button>
       </div>

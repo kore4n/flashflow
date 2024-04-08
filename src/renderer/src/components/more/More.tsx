@@ -1,6 +1,7 @@
 import { ActiveTab } from 'src/types/types'
 import DummyButton from '../etc/DummyButton'
 import React from 'react'
+import CloseWindow from '../cards/CloseWindowButton'
 
 function More({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
   if (activeTab != 'More') return <></>
@@ -20,6 +21,8 @@ function More({ activeTab }: { activeTab: ActiveTab }): JSX.Element {
       <h1 className="text-xl">Emily Grant</h1>
       <h1 className="text-xl">Zhong Jie (James) Gao</h1>
       <h1 className="text-xl">Jadd Miguel Arriola</h1>
+      <div className="pt-28"></div>
+      <CloseWindow />
     </div>
   )
 }

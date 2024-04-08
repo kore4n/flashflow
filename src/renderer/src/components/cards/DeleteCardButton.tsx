@@ -1,3 +1,4 @@
+import React from 'react'
 import DeleteIcon from './DeleteIcon'
 
 function DeleteCardButton({

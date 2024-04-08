@@ -108,7 +108,7 @@ function AddCardForm(): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const addExpertNote = () => {
     const lastNote = expertNotesInput[expertNotesInput.length - 1]
-    if (!lastNote || lastNote.subtitle.trim() !== '' || lastNote.body.trim() !== '') {
+    if (!lastNote || lastNote.subtitle.trim().length || lastNote.body.trim().length) {
       setExpertNotes([...expertNotesInput, { subtitle: '', body: '' }])
     } else {
       alert('An empty Expert Note detected. Complete it before adding a new one.')
@@ -118,11 +118,11 @@ function AddCardForm(): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleExpertNotesChange = (index: number, type: 'subtitle' | 'body', value: string) => {
     const updatedExpertNote = [...expertNotesInput]
-    if (value.trim().length > 0) {
+    if (value.trim()) {
       if (type === 'subtitle') {
-        updatedExpertNote[index].subtitle = value
+        updatedExpertNote[index].subtitle = value.trim()
       } else {
-        updatedExpertNote[index].body = value
+        updatedExpertNote[index].body = value.trim()
       }
       setExpertNotes(updatedExpertNote)
     }
@@ -204,16 +204,43 @@ function AddCardForm(): JSX.Element {
           <InputColumn>
             {expertNotesInput.map((_expertNote, index) => (
               <div key={index} className="flex flex-col gap-4">
-                <InputLabel>Expert Note {index + 1}</InputLabel>
-                <CardInputField
+                <>
+                  {expertNotesInput[index].subtitle.trim().length > 1 && (
+                    <InputLabel>
+                      {truncateText(expertNotesInput[index].subtitle.trim(), 26)}
+                    </InputLabel>
+                  )}
+
+                  {expertNotesInput[index].subtitle.trim().length <= 1 && (
+                    <InputLabel>Expert Note {index + 1}</InputLabel>
+                  )}
+                </>
+                <input
                   onChange={(e) => handleExpertNotesChange(index, 'subtitle', e.target.value)}
-                  placeholder="Subtitle"
-                />
+                  placeholder="Subtitle (Field)"
+                  className="h-12 w-full bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                ></input>
                 <CardInputField
                   onChange={(e) => handleExpertNotesChange(index, 'body', e.target.value)}
-                  placeholder="Body"
+                  placeholder="Your extra note goes here ..."
                 />
-                <button onClick={() => deleteExpertNote(index)} className="ml-auto">
+                <button
+                  onClick={() => {
+                    let isConfirmed = true
+                    const noteContent = expertNotesInput[index]
+                    if (
+                      noteContent &&
+                      noteContent.subtitle.trim().length + noteContent.body.trim().length > 0
+                    )
+                      isConfirmed = confirm(
+                        'This note has been edited. Are you sure you want to delete it?'
+                      )
+                    if (isConfirmed) {
+                      deleteExpertNote(index)
+                    }
+                  }}
+                  className="ml-auto"
+                >
                   <DeleteIcon width="30px" height="30px" colour="#D52B1E" />
                 </button>
               </div>
@@ -225,7 +252,7 @@ function AddCardForm(): JSX.Element {
             )}
           </InputColumn>
           <InputColumn>
-            <InputLabel>Decks</InputLabel>
+            <InputLabel>Add to Decks</InputLabel>
             <div className="pb-2 pt-2"></div>
             <div
               className="min-h-20 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"

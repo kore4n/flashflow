@@ -74,11 +74,11 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
         <CardInputField onChange={onCardBackChange} defaultValue={cardBackToEdit} />
       </InputColumn>
       <div className="flex justify-center items-center h-32">
-        <button className="p-1 m-5 table-cell" onClick={saveAndExit}>
-          <CheckMarkIcon width="50px" height="50px" />
-        </button>
         <button className="p-1 m-5 table-cell">
           <DeleteCardButton cardID={getCardID()!} width="50px" height={'50px'} closeWindow={true} />
+        </button>
+        <button className="p-1 m-5 table-cell" onClick={saveAndExit}>
+          <CheckMarkIcon width="50px" height="50px" />
         </button>
         <button className="p-1 m-5 table-cell">
           <CloseWindowButton width="50px" height="50px" />
