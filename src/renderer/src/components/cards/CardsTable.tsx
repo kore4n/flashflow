@@ -2,6 +2,7 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { Card } from 'src/types/types'
 import DeleteCardButton from './DeleteCardButton'
 import EditCardButton from './EditCardButton'
+import React from 'react'
 
 function DisplayCards({
   cards,
@@ -11,8 +12,13 @@ function DisplayCards({
   selectedDeckName: any
 }): JSX.Element | string {
   if (cards.length == 0 && selectedDeckName.localeCompare('') != 0) {
-    return selectedDeckName + ' has no cards!'
-  } else if (cards.length == 0) return 'You have no cards!'
+    return (
+      <h1 className="text-2xl font-bold pt-4">
+        There is no cards in {truncateText(selectedDeckName, 15)}
+      </h1>
+    )
+  } else if (cards.length == 0)
+    return <h1 className="text-2xl font-bold pt-4">You have no cards in the database</h1>
 
   const [filteredCards, setFilteredCards] = useState(cards)
   const [selectedTag, setSelectedTag] = useState('')
@@ -80,14 +86,14 @@ function DisplayCards({
         <button
           className="text-2xl font-bold"
           onClick={resetFilter}
-          style={{ margin: '10px', padding: '5px' }}
+          style={{ margin: '10px auto', padding: '10px' }}
         >
           {selectedTag
             ? 'Cards with the tag: #' + selectedTag + ' (click to clear filter)'
-            : 'All cards ' +
+            : 'All cards in ' +
               (selectedDeckName.localeCompare('') == 0
-                ? 'in your database'
-                : 'in deck: ' + selectedDeckName)}
+                ? 'your database'
+                : truncateText(selectedDeckName, 15))}
         </button>
       </div>
       <table className="list-decimal shadow-xl" style={{ width: '800px', tableLayout: 'fixed' }}>

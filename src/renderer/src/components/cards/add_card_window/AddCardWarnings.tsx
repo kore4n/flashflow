@@ -5,6 +5,7 @@ import {
   cardFrontIsValid,
   frontOfCardAlreadyExists
 } from '@renderer/utils/cardValidity'
+import React from 'react'
 
 function AddCardWarnings({
   // cardToAddName,

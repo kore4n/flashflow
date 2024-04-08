@@ -7,7 +7,7 @@ function setupOpenAddCardWindow(parent: BrowserWindow): void {
   ipcMain.on('open-add-card-window', () => {
     const openAddCardWindow = new BrowserWindow({
       width: 900,
-      height: 1000,
+      height: 1050,
       x: 600,
       y: 20,
       modal: true,

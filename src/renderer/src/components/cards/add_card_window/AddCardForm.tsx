@@ -2,20 +2,8 @@ import React, { useState } from 'react'
 import { Card, DeckName, Tag, ExpertNote, Deck } from 'src/types/types'
 import CardTagging from './CardTagging'
 import CloseWindow from '../CloseWindowButton'
-import { getLargestCardID } from '../CardsTable'
+import { getLargestCardID, truncateText } from '../CardsTable'
 import AddSignIcon from '../AddSignIcon'
-import {
-  AddGearIcon,
-  AddExponentIcon,
-  AddSubscriptIcon,
-  AddMarkerIcon,
-  AddEraserIcon,
-  AddListIcon,
-  AddNumberedListIcon,
-  AddParagraphIcon,
-  AddClipIcon,
-  AddMicIcon
-} from './OptionIcons'
 import DeleteIcon from '../DeleteIcon'
 import AddCardWarnings from './AddCardWarnings'
 import AddCardSubmitButton from './AddCardSubmitButton'
@@ -23,6 +11,7 @@ import InputColumn from '../InputColumn'
 import InputLabel from '../InputLabel'
 import { DEFAULT_DECK_NAME } from '../../decks/DeckPage'
 import CardInputField from '../CardInputField'
+import { ExpertToolA, ExpertToolB } from '../ExpertTools'
 
 function AddCardForm(): JSX.Element {
   async function addCard(): Promise<void> {
@@ -89,30 +78,30 @@ function AddCardForm(): JSX.Element {
 
   const deckTblList = sortedDecks.map((deck) => (
     <tr
-      className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      //className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
       key={deck.name}
     >
-      <td className="pl-2 w-full ">
+      <td className="pl-2 w-full">
         <input
-          className="w-4 h-4 text-blue-600 accent-slate-500 bg-black border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+          //className="w-4 h-4 text-blue-600 accent-slate-500 bg-black border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
           type="checkbox"
           title="Add to Deck"
           onClick={() => toggleDeck(deck.name)}
         ></input>
-        {' ' + deck.name}
+        {' ' + truncateText(deck.name, 42)}
       </td>
     </tr>
   ))
 
-  function changeCardToAddFront(event: React.ChangeEvent<HTMLInputElement>): void {
+  function changeCardToAddFront(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     setCardFront(event.target.value)
   }
 
-  function changeCardToAddBack(event: React.ChangeEvent<HTMLInputElement>): void {
+  function changeCardToAddBack(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     setCardBack(event.target.value)
   }
 
-  function changeCardToAddSideNote(event: React.ChangeEvent<HTMLInputElement>): void {
+  function changeCardToAddSideNote(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     setSideNote(event.target.value)
   }
 
@@ -163,7 +152,7 @@ function AddCardForm(): JSX.Element {
             onClick={() => handleExpertOptions()}
             className="flex top-0 right-0 mt-4 mb-4 mr-4 bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4"
           >
-            Enable Expert Options
+            ⚫ Expert Options
           </button>
         )}
         {showOptions && (
@@ -172,105 +161,36 @@ function AddCardForm(): JSX.Element {
               onClick={() => handleExpertOptions()}
               className="flex top-0 right-0 mt-4 mb-4 mr-4  bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4"
             >
-              Disable Expert Options
+              🟢 Expert Options
             </button>
-            <div className="mb-5 items-center"></div>
-            <div className="flex flex-wrap">
-              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md text-white p-1">
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">
-                  Templates...
-                </button>
-              </span>
-              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md text-white p-1">
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4">
-                  Type
-                </button>
-              </span>
-              <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1">
-                <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md flex items-center py-1 px-1 ">
-                  <AddGearIcon width="20px" height="20px" />
-                </button>
-              </span>
-              <div className="flex mb-5">
-                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white font-bold">
-                    B
-                  </button>
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">
-                    I
-                  </button>
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white underline">
-                    U
-                  </button>
-                </span>
-                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-1 p-4 w-9 flex items-center justify-center">
-                    <AddExponentIcon width="13px" height="13px" />
-                  </button>
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 w-9 flex items-center justify-center">
-                    <AddSubscriptIcon width="13px" height="13px" />
-                  </button>
-                </span>
-                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 text-white underline ">
-                    A
-                  </button>
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                    <AddMarkerIcon width="13px" height="13px" />
-                  </button>
-                </span>
-                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                    <AddEraserIcon width="13px" height="13px" colour="#FFFFFF" />
-                  </button>
-                </span>
-                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-1 flex">
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                    <AddListIcon width="13px" height="13px" colour="#FFFFFF" />
-                  </button>
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                    <AddNumberedListIcon width="13px" height="15px" colour="#FFFFFF" />
-                  </button>
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                    <AddParagraphIcon width="13px" height="13px" colour="#FFFFFF" />
-                  </button>
-                </span>
-                <span className="bg-gray-700 border border-gray-800 rounded-lg shadow-md p-2 flex">
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                    <AddClipIcon width="13px" height="13px" colour="#FFFFFF" />
-                  </button>
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4 flex items-center justify-center">
-                    <AddMicIcon width="13px" height="13px" colour="#FFFFFF" />
-                  </button>
-                  <button className="bg-gray-700 border-gray-900 rounded-lg shadow-md py-1 px-3 p-4  text-white italic">
-                    fx
-                  </button>
-                </span>
-              </div>
-            </div>
+            <ExpertToolA />
+            <ExpertToolB />
           </div>
         )}
         <div className="flex flex-col gap-4">
           <InputColumn>
             <InputLabel>Front</InputLabel>
+            <div className="pb-2 pt-2"></div>
             {/* <input
             onChange={changeCardToAddFront}
             type="text"
             placeholder={'Front of the card'}
           ></input> */}
-            <CardInputField onChange={changeCardToAddFront} placeholder="Front of the Card" />
+            <CardInputField onChange={changeCardToAddFront} placeholder="Front of the card" />
           </InputColumn>
           <InputColumn>
             <InputLabel>Back</InputLabel>
+            <div className="pb-2 pt-2"></div>
             {/* <input
             onChange={changeCardToAddBack}
             type="text"
             placeholder={'Back of the card'}
           ></input> */}
-            <CardInputField onChange={changeCardToAddBack} placeholder="Back of the Card" />
+            <CardInputField onChange={changeCardToAddBack} placeholder="Back of the card" />
           </InputColumn>
           <InputColumn>
             <InputLabel>Side Note</InputLabel>
+            <div className="pb-2 pt-2"></div>
             {/* <input
             onChange={changeCardToAddSideNote}
             type="text"
@@ -282,20 +202,16 @@ function AddCardForm(): JSX.Element {
             />
           </InputColumn>
           <InputColumn>
-            {expertNotesInput.map((expertNote, index) => (
+            {expertNotesInput.map((_expertNote, index) => (
               <div key={index} className="flex flex-col gap-4">
                 <InputLabel>Expert Note {index + 1}</InputLabel>
-                <input
-                  type="text"
-                  placeholder="Subtitle"
-                  value={expertNote.subtitle}
+                <CardInputField
                   onChange={(e) => handleExpertNotesChange(index, 'subtitle', e.target.value)}
+                  placeholder="Subtitle"
                 />
-                <input
-                  type="text"
-                  placeholder="Body"
-                  value={expertNote.body}
+                <CardInputField
                   onChange={(e) => handleExpertNotesChange(index, 'body', e.target.value)}
+                  placeholder="Body"
                 />
                 <button onClick={() => deleteExpertNote(index)} className="ml-auto">
                   <DeleteIcon width="30px" height="30px" colour="#D52B1E" />
@@ -310,16 +226,24 @@ function AddCardForm(): JSX.Element {
           </InputColumn>
           <InputColumn>
             <InputLabel>Decks</InputLabel>
-            <div style={{ width: '100%', overflowX: 'auto' }}>
-              <table
-                style={{ width: '100%', display: 'block', maxHeight: '90px', overflowY: 'scroll' }}
-              >
-                {deckTblList}
-              </table>
+            <div className="pb-2 pt-2"></div>
+            <div
+              className="min-h-20 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              style={{
+                width: '100%',
+                overflowX: 'hidden',
+                maxHeight: '90px',
+                overflowY: 'scroll',
+                fontSize: '1.1rem',
+                lineHeight: '2rem'
+              }}
+            >
+              <table>{deckTblList}</table>
             </div>
           </InputColumn>
           <InputColumn>
             <InputLabel>Tags</InputLabel>
+            <div className="pt-2"></div>
             <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
           </InputColumn>
           <AddCardSubmitButton

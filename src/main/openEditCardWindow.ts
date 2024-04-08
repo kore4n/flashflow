@@ -7,7 +7,7 @@ function setupOpenEditCardWindow(parent: BrowserWindow): void {
   ipcMain.on('open-edit-card-window', (_event, IDOfCardToEdit: number) => {
     const openEditCardWindow = new BrowserWindow({
       width: 900,
-      height: 500,
+      height: 560,
       x: 600,
       y: 100,
       modal: true,

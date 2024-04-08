@@ -7,6 +7,8 @@ import CheckMarkIcon from '../CheckMarkIcon'
 import CloseWindowButton from '../CloseWindowButton'
 import DeleteCardButton from '../DeleteCardButton'
 import CardInputField from '../CardInputField'
+import { ExpertToolB } from '../ExpertTools'
+import React from 'react'
 
 function EditCardInputs({ card }: { card: Card }): JSX.Element {
   const [cardFrontToEdit, setCardFrontToEdit] = useState<string>('')
@@ -42,12 +44,12 @@ function EditCardInputs({ card }: { card: Card }): JSX.Element {
     return -1
   }
 
-  const onCardFrontChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const onCardFrontChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const cardFront = event.target.value
     setCardFrontToEdit(cardFront)
   }
 
-  const onCardBackChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const onCardBackChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const cardBack = event.target.value
     setCardBackToEdit(cardBack)
   }
@@ -111,6 +113,15 @@ function EditCardForm(): JSX.Element {
   return (
     <div className="grid place-items-center">
       <h1 className="text-xl font-bold pt-4 pb-4">Card Editor</h1>
+      <div
+        style={{
+          width: '570px',
+          maxWidth: '100%',
+          margin: '0 auto'
+        }}
+      >
+        <ExpertToolB />
+      </div>
       {/* <input onChange={changeCardToAddFront} type="text" placeholder={'Front'}></input> */}
       <EditCardInputs card={cardToEdit!} />
     </div>

@@ -1,4 +1,5 @@
 import CloseWindow from '@renderer/components/cards/CloseWindowButton'
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { Card } from 'src/types/types'
 
@@ -130,7 +131,7 @@ function ShowCard({
       ) : (
         <div className="flex flex-col items-center justify-center flex-grow">
           <h2 className="font-bold text-lg text-white my-15 p-5">
-            {showAnswer ? 'Answer' : 'Question'}
+            {showAnswer ? 'Answer' : 'Prompt'}
           </h2>
           <div
             className="p-8 bg-gray-200 rounded-lg shadow-lg text-2xl text-black"
@@ -138,7 +139,13 @@ function ShowCard({
           >
             <p>{currentCard.cardFront}</p>
             <div className="border-b border-gray-400 p-8"></div>
-            {showAnswer && <p className="text-emerald-800 pt-5">{currentCard.cardBack}</p>}
+            {showAnswer && (
+              <p className="text-blue-800 pt-5">
+                {currentCard.cardBack
+                  ? currentCard.cardBack
+                  : '(This seems to be an information card. Just study the information again.)'}
+              </p>
+            )}
           </div>
           {!showAnswer && (
             <button

@@ -15,13 +15,13 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
     }
 
     if (decks.find((x) => x.name.localeCompare(deckName) == 0)) {
-      triggerToast(false, 'Name already exists!')
+      triggerToast(false, 'Warning: Deck name already exists')
     } else if (!deckName.trim()) {
-      triggerToast(false, 'Must enter text!')
+      triggerToast(false, 'Warning: Deck name is required')
     } else {
       deckNameForm.value = ''
       window.api.store.addDeck(newDeck)
-      triggerToast(true, 'Added Deck!')
+      triggerToast(true, 'Success: Deck added')
     }
   }
 
@@ -39,11 +39,13 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
         id="deckNameInput"
         placeholder="Add deck name here..."
         onKeyDown={handleKeyDown}
-        className="w-full bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        className="h-12 w-full bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
       ></input>
-      <button title="Add Deck" onClick={addDeck} className="pt-2 pl-44">
-        <AddSignIcon width="50px" height="50px" />
-      </button>
+      <div className="grid place-items-center pt-10 pb-7">
+        <button title="Add Deck" onClick={addDeck}>
+          <AddSignIcon width="50px" height="50px" />
+        </button>
+      </div>
     </div>
   )
 }
@@ -70,9 +72,12 @@ function DeckTable({
   const deckEntries = decks.map((deck) => (
     <tr className="even: bg-slate-700 odd:bg-slate-800 shadow [&>*]:py-2" key={deck.name}>
       <td
-        className="pl-5"
-        width="300px"
-        style={{ whiteSpace: 'normal', wordWrap: 'break-word', wordBreak: 'break-word' }}
+        className="pl-4"
+        style={{
+          whiteSpace: 'normal',
+          wordWrap: 'break-word',
+          wordBreak: 'break-word'
+        }}
       >
         {toCardsByDeckBtn(deck.name)}
       </td>
@@ -80,7 +85,9 @@ function DeckTable({
       <td>
         <button
           title="Delete Deck"
-          className={deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'pl-10 align-middle'}
+          className={
+            deck.name.localeCompare('DEFAULT') == 0 ? 'invisible' : 'float-right pr-4 align-middle'
+          }
           onClick={() => deleteDeck(deck.name)}
         >
           <DeleteIcon width="30px" height="30px" />
@@ -89,17 +96,18 @@ function DeckTable({
     </tr>
   ))
   return (
-    <>
+    <div>
       <div className="grid place-items-center font-bold text-2xl p-4 pb-7">Decks</div>
-      <table width="400px">
+      <table className="list-decimal shadow-xl" style={{ width: '570px', tableLayout: 'fixed' }}>
         <thead>
           <tr>
-            <th></th>
+            <th style={{ width: '85%' }}></th>
+            <th style={{ width: '15%' }}></th>
           </tr>
         </thead>
         <tbody>{deckEntries}</tbody>
       </table>
-    </>
+    </div>
   )
 }
 
@@ -114,8 +122,8 @@ function triggerToast(positive: boolean, text: string): void {
       clearInterval(uptime)
     } else if (document.getElementById('deckToast') && cyclesVisible > 0) {
       ;(document.getElementById('deckToast') as HTMLElement).className = positive
-        ? 'rounded p-2 outline outline-green-500 bg-white absolute top-10 right-12'
-        : 'rounded p-2 outline outline-red-500 bg-white absolute top-10 right-12'
+        ? 'bg-green-700 text-center font-bold text-gray-800 rounded-md shadow-md p-2 mt-2 mb-2.5'
+        : 'bg-red-700 text-center font-bold text-gray-200 rounded-md shadow-md p-2 mt-2 mb-2.5'
       ;(document.getElementById('deckToast') as HTMLElement).innerHTML = text
       cyclesVisible -= 1
     }
