@@ -2,7 +2,7 @@ import { ActiveTab, Deck } from 'src/types/types'
 import { useEffect, useState } from 'react'
 import MagnifyingGlassIcon from './MagnifyingGlassIcon'
 import { truncateText } from '../cards/CardsTable'
-
+import React from 'react'
 /*
 	After clicking the study tab this will populate the window with all current decks to choose from
 */
