@@ -90,6 +90,11 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
     inputRef.current?.focus()
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const handleClick = () => {
+    addTag(inputValue)
+  }
+
   return (
     <div title="Click to Assign Tag" className=" mb-4">
       {tempTagPool.map((tag, index) => (
@@ -167,7 +172,9 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
             position: 'absolute',
             zIndex: 1000,
             backgroundColor: '#dddddd66',
-            border: '0px solid #ddd'
+            border: '0px solid #ddd',
+            verticalAlign: 'middle',
+            minWidth: '570px'
           }}
         >
           {colours.map((colour) => (
@@ -184,6 +191,33 @@ const CardTagging: React.FC<TagsInputProps> = ({ tempTagPool, setTags }) => {
               }}
             ></div>
           ))}
+          <div className="pl-2 pr-2 text-gray-200">
+            <button
+              className="hover:cursor-pointer hover:opacity-40"
+              style={{
+                backgroundColor: '#003794',
+                color: 'white',
+                padding: '2px 20px',
+                borderRadius: '5px',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 'bolder',
+                margin: 'auto 18px auto 0px'
+              }}
+              onClick={handleClick}
+            >
+              ADD
+            </button>
+            Shortcut:{' '}
+            <b>
+              <i>Enter</i>
+            </b>{' '}
+            or comma ({' '}
+            <b>
+              <i>,</i>
+            </b>{' '}
+            )
+          </div>
         </div>
       )}
       <div>

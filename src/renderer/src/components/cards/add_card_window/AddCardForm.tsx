@@ -273,6 +273,7 @@ function AddCardForm(): JSX.Element {
             <div className="pt-2"></div>
             <CardTagging tempTagPool={tagsInput} setTags={setCardTags} />
           </InputColumn>
+          <div className="pb-4"></div>
           <AddCardSubmitButton
             onClick={addCard}
             cardFront={cardFrontInput}
