@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import AddTagWarning from './AddTagWarning'
 import { Tag } from 'src/types/types'
+import React from 'react'
 
 function AddTagWarnings({
   tagToInput,

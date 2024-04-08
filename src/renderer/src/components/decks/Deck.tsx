@@ -1,5 +1,6 @@
 import { ActiveTab } from 'src/types/types'
 import DeckPage from './DeckPage'
+import React from 'react'
 
 function Deck({
   activeTab,

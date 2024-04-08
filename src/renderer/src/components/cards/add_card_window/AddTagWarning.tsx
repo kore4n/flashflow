@@ -1,3 +1,4 @@
+import React from 'react'
 import { ReactNode } from 'react'
 
 function AddTagWarning({ children }: { children: ReactNode }): JSX.Element {

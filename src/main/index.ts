@@ -11,7 +11,7 @@ function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
-    height: 900,
+    height: 1000,
     show: false,
     title: 'Flashflow',
     autoHideMenuBar: true,

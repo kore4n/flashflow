@@ -8,7 +8,6 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
   function addDeck(): void {
     const deckNameForm = document.getElementById('deckNameInput') as HTMLInputElement
     const deckName = deckNameForm.value.toUpperCase()
-
     const newDeck: Deck = {
       name: deckName.toUpperCase(),
       cards: []
@@ -18,6 +17,8 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
       triggerToast(false, 'Warning: Deck name already exists')
     } else if (!deckName.trim()) {
       triggerToast(false, 'Warning: Deck name is required')
+    } else if (deckName.trim().length > 30) {
+      triggerToast(false, 'Warning: Deck name is too long (30 characters max)')
     } else {
       deckNameForm.value = ''
       window.api.store.addDeck(newDeck)
@@ -37,7 +38,7 @@ function AddDeckForm({ decks }: { decks: Deck[] }): JSX.Element | string {
     <div className="pt-2">
       <input
         id="deckNameInput"
-        placeholder="Add deck name here..."
+        placeholder="Add deck name here... (30 characters max)"
         onKeyDown={handleKeyDown}
         className="h-12 w-full bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
       ></input>
@@ -58,10 +59,18 @@ function DeckTable({
   toCardsByDeckBtn: (selectedDeckName: string) => JSX.Element
 }): JSX.Element | string {
   function deleteDeck(name: string): void {
-    if (confirm('Are you sure you want to delete this deck: ' + name + '?')) {
+    if (
+      confirm(
+        'Are you sure you want to delete this deck: ' +
+          name +
+          '? Cards in this deck will be moved to ' +
+          DEFAULT_DECK_NAME +
+          '.'
+      )
+    ) {
       console.log('Deck ' + name + ' deleted.')
       if (name !== DEFAULT_DECK_NAME) {
-        triggerToast(true, 'Deck ' + name + ' has been deleted')
+        triggerToast(true, 'Deck has been deleted with its cards moved to ' + DEFAULT_DECK_NAME)
         window.api.store.deleteDeck(name)
       } else alert('The deck ' + DEFAULT_DECK_NAME + ' cannot be deleted!')
     } else {
